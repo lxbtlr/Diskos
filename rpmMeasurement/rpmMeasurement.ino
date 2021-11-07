@@ -11,32 +11,29 @@ Requirements
 #define     RPM_SETPOINT                20 
 #define     MAX_SPEED_PERCENTAGE        85
 
-#define     SHUTOFF_RPM                 200
+#define     SHUTOFF_RPM                 9000
 #define     MAX_ALLOWABLE_RPM           150
 
-#define     OP_SNS_THRESHOLD            500 // to be adjusted by avery 
 #define     POT_FILTER_SZ               10  // size for moving avg filter
 #define     POT_POLL_RATE               10  // Hz
+#define     FILTER_SZ                   5
 
 
-const int   op_sns_pin      = A0;
+uint32_t rotations = 0; 
+uint32_t RPM[FILTER_SZ] = { 0 };
+uint32_t filtered_RPM = 0; 
+uint32_t timeOne;
+
+uint8_t pointer_RPM = 0; 
+
 const int   pot_pin         = A1;
-const int   button_pin      = 2; 
+const int   button_pin      = 3; 
+const int   interruptPin    = 2;
 
-const float shaftDiameter   = 5; //this is in mm
-const int   shaftMarkers    = 2; //the number of markings on the shaft
 
-//Constants
-uint16_t  op_sns_value  = 0; 
 uint16_t  pot_value[POT_FILTER_SZ]     = { 0 }; 
 uint16_t  filtered_pot_value = 0; 
 uint16_t  button_value  = 0; 
-
-float     estimated_RPM = 0;
-uint32_t  deltaTime     = 0;
-uint32_t  timeOne       = 0;
-uint32_t  timeTwo       = 0;
-const int deltaTheta    = (360)/shaftMarkers;
 
 uint8_t fault_flag      = 0; 
 uint8_t PWM_value       = 0; 
@@ -74,25 +71,28 @@ void button_check(){
 //  Serial.print("button_value: "); Serial.print(button_value); Serial.println(); 
 }
 
-void poll_optical_sensor(){
-  op_sns_value  = analogRead(op_sns_pin); 
-}
 
 void estimate_RPM(){
-  poll_optical_sensor(); 
-
-  if(analogRead(op_sns_pin) < OP_SNS_THRESHOLD){
+  if(((millis()-timeOne))> 1000){
     timeOne = millis();
-    
-  }
-  if(op_sns_value > OP_SNS_THRESHOLD){
-    timeTwo = millis();
-    deltaTime = (timeTwo-timeOne);
-    angularVelocity = deltaTheta/deltaTime;
-    estimated_RPM = angularVelocity*(1/6);
+    RPM[pointer] = rotations*15;
+    pointer = (pointer + 1) % FILTER_SZ; 
+
+    filtered_RPM = 0; 
+//    calculated filtered value
+    for (int i = 0; i< FILTER_SZ; i++){
+      filtered_RPM += RPM[i]; 
+    }
+
+    filtered_RPM /= FILTER_SZ;
+    rotations = 0;
   }
 }
 
+
+void leading_edge_crossed() {
+  rotations += 1; 
+}
 
 /* handles polling & filtering potentiometer value for driving motor speed */
 void poll_filter_pot(){
@@ -116,9 +116,9 @@ void poll_filter_pot(){
     }
     filtered_pot_value /= POT_FILTER_SZ; 
 
-    Serial.print("pot value: "); Serial.print(filtered_pot_value); Serial.print(" "); //Serial.println(); 
-    Serial.print("PWM value: "); Serial.print(PWM_value); Serial.print(" "); 
-    Serial.println("uT");
+//    Serial.print("pot value: "); Serial.print(filtered_pot_value); Serial.print(" "); //Serial.println(); 
+//    Serial.print("PWM value: "); Serial.print(PWM_value); Serial.print(" "); 
+//    Serial.println("uT");
     
   } else {
     return; 
@@ -144,22 +144,21 @@ void drive_PWM(){
 }
 
 void serial_output(){
-  Serial.print("estimated_RPM: "); Serial.print(estimated_RPM); Serial.println(); 
-  if (system_state == RUN) {
-    Serial.print("system_state: "); Serial.print("RUN"); Serial.println(); 
-  } else {
-    Serial.print("system_state: "); Serial.print("STOP"); Serial.println(); 
-  }
+  Serial.print("filtered_RPM: "); Serial.print(filtered_RPM); Serial.println(); 
+//  if (system_state == RUN) {
+//    Serial.print("system_state: "); Serial.print("RUN"); Serial.println(); 
+//  } else {
+//    Serial.print("system_state: "); Serial.print("STOP"); Serial.println(); 
+//  }
 }
 
 void fault_check(){
   button_check(); 
   
-  if (estimated_RPM>SHUTOFF_RPM){
+  if (filtered_RPM>SHUTOFF_RPM){
     system_state = STOP; 
     fault_flag &= 0b00000001; 
   }
-  
 }
 
 void trigger_e_brake(){
@@ -189,11 +188,15 @@ void setup() {
   Serial.begin(115200);
   ESC.attach(9, 1000, 2000); // PWM signal on pin 9, min pulse width & max pulse width 
   pinMode(button_pin, INPUT); 
+  pinMode(interruptPin, INPUT);
+  attachInterrupt(digitalPinToInterrupt(interruptPin), leading_edge_crossed, FALLING);
+  timeOne = millis();  
 }
 
 void loop() {
 
   fault_check(); 
+  estimate_RPM(); 
 
   switch (system_state)
   {
@@ -206,7 +209,5 @@ void loop() {
   // default:
   //   break;
   }
-
-//  serial_output(); 
-  
+  serial_output(); 
 }

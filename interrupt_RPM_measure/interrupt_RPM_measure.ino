@@ -1,8 +1,11 @@
-const byte interruptPin = 2;
-//volatile byte state = LOW;
-uint32_t rotations = 0; 
-uint32_t RPM = 0;
-uint32_t timeOne;
+// moving average 
+
+//#define 
+
+
+
+
+
 
 void setup() {
   pinMode(interruptPin, INPUT);
@@ -11,12 +14,27 @@ void setup() {
   timeOne = millis();
 }
 
-void loop() {
-  if(((millis()-timeOne))> 100){
+
+void estimate_RPM(){
+  if(((millis()-timeOne))> 1000){
     timeOne = millis();
-    RPM = rotations*600;
-    Serial.println(RPM);
+    RPM[pointer] = rotations*15;
+    pointer = (pointer + 1) % FILTER_SZ; 
+
+    filtered_RPM = 0; 
+//    calculated filtered value
+    for (int i = 0; i< FILTER_SZ; i++){
+      filtered_RPM += RPM[i]; 
+    }
+
+    filtered_RPM /= FILTER_SZ;
     rotations = 0;
+  }
+}
+void loop() {
+//    Serial.println(RPM[pointer]);
+    Serial.println(filtered_RPM); 
+    
   }
 }
 
