@@ -42,4 +42,10 @@ ch2n 	pb0 pb14 PA12		--> pb0 cn7 34
 ch3	pc2 pa10 		--> pc2 cn7 35 
 ch3n 	pb1 pb15 pb9 PF0-OSC_IN --> pb1 cn10 24
 
+
+adc1_in5 pb14 --> sh_sns_a --> cn10 28
+adc2_in15 pb15 --> sh_sns_b --> cn10 26
+adc12_in14 pb11 --> sh_sns_c --> cn10 18
+
+tim4_ch1 --> load PWM cn10 14
 pg 57

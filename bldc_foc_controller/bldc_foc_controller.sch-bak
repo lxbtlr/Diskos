@@ -4063,12 +4063,12 @@ $EndComp
 $Comp
 L Mechanical:MountingHole_Pad H?
 U 1 1 6209CC98
-P 5900 5325
-F 0 "H?" V 6137 5328 50  0000 C CNN
-F 1 "MountingHole_Pad" V 6046 5328 50  0000 C CNN
-F 2 "" H 5900 5325 50  0001 C CNN
-F 3 "~" H 5900 5325 50  0001 C CNN
-	1    5900 5325
+P 975 8375
+F 0 "H?" V 1212 8378 50  0000 C CNN
+F 1 "MountingHole_Pad" V 1121 8378 50  0000 C CNN
+F 2 "" H 975 8375 50  0001 C CNN
+F 3 "~" H 975 8375 50  0001 C CNN
+	1    975  8375
 	0    -1   -1   0   
 $EndComp
 $EndSCHEMATC

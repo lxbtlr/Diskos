@@ -1140,7 +1140,7 @@ Connection ~ 9325 975
 Wire Wire Line
 	9325 975  9725 975 
 Text Notes 8725 875  0    50   ~ 0
-20x THT 6.3mm 35v \n100uF 50mohm ESR \nAluminum Polymers
+4x THT 6.3mm 35v \n100uF 50mohm ESR \nAluminum Polymers
 $Comp
 L Device:CP1 C?
 U 1 1 61F31377
