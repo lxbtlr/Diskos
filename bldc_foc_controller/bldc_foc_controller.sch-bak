@@ -418,7 +418,7 @@ L formula:C_.22uF C?
 U 1 1 618F5A11
 P 4625 7025
 F 0 "C?" H 4740 7121 50  0000 L CNN
-F 1 "C_.22uF" V 4475 6850 50  0000 L CNN
+F 1 "C_220nF" V 4475 6850 50  0000 L CNN
 F 2 "footprints:C_0805_OEM" H 4663 7625 50  0001 C CNN
 F 3 "https://www.yageo.com/upload/media/product/productsearch/datasheet/mlcc/UPY-GPHC_Y5V_6.3V-to-50V_9.pdf" H 4650 7875 50  0001 C CNN
 F 4 "https://www.digikey.com/product-detail/en/yageo/CC0805ZRY5V9BB224/311-4362-1-ND/8025451" H 5050 7525 60  0001 C CNN "PurchasingLink"
@@ -428,12 +428,12 @@ $EndComp
 $Comp
 L power:GND #PWR0114
 U 1 1 618FD046
-P 3750 7275
-F 0 "#PWR0114" H 3750 7025 50  0001 C CNN
-F 1 "GND" H 3755 7102 50  0000 C CNN
-F 2 "" H 3750 7275 50  0001 C CNN
-F 3 "" H 3750 7275 50  0001 C CNN
-	1    3750 7275
+P 3475 7275
+F 0 "#PWR0114" H 3475 7025 50  0001 C CNN
+F 1 "GND" H 3480 7102 50  0000 C CNN
+F 2 "" H 3475 7275 50  0001 C CNN
+F 3 "" H 3475 7275 50  0001 C CNN
+	1    3475 7275
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -496,7 +496,6 @@ F 3 "~" H 3925 6775 50  0001 C CNN
 	1    3925 6775
 	1    0    0    -1  
 $EndComp
-Connection ~ 3750 7275
 Wire Wire Line
 	4175 6925 4175 6950
 Connection ~ 3925 6625
@@ -605,7 +604,7 @@ Text Notes 675  6400 0    50   ~ 0
 add PTC fuse? Buck has\ninternal overcurrent limit 
 Wire Wire Line
 	1575 7075 1575 7175
-Text Notes 1600 7700 0    35   ~ 0
+Text Notes 925  7650 0    35   ~ 0
 layout note: AGND \nconn to GND using \nbroad PCB trace
 $Comp
 L formula:R_100K R?
@@ -684,7 +683,7 @@ L formula:C_.22uF C?
 U 1 1 61BE54B3
 P 5150 3300
 F 0 "C?" H 5265 3396 50  0000 L CNN
-F 1 "C_.22uF" H 5265 3305 50  0000 L CNN
+F 1 "C_220nF" H 5265 3305 50  0000 L CNN
 F 2 "footprints:C_0805_OEM" H 5188 3900 50  0001 C CNN
 F 3 "https://www.yageo.com/upload/media/product/productsearch/datasheet/mlcc/UPY-GPHC_Y5V_6.3V-to-50V_9.pdf" H 5175 4150 50  0001 C CNN
 F 4 "https://www.digikey.com/product-detail/en/yageo/CC0805ZRY5V9BB224/311-4362-1-ND/8025451" H 5575 3800 60  0001 C CNN "PurchasingLink"
@@ -1140,7 +1139,7 @@ Connection ~ 9325 975
 Wire Wire Line
 	9325 975  9725 975 
 Text Notes 8725 875  0    50   ~ 0
-20x THT 6.3mm 35v \n100uF 50mohm ESR \nAluminum Polymers
+4x THT 6.3mm 35v \n100uF 50mohm ESR \nAluminum Polymers
 $Comp
 L Device:CP1 C?
 U 1 1 61F31377
@@ -1236,10 +1235,6 @@ Wire Wire Line
 Connection ~ 1875 6625
 Wire Wire Line
 	4625 7125 4625 7275
-Wire Wire Line
-	3625 7275 3750 7275
-Wire Wire Line
-	3750 7275 3925 7275
 Connection ~ 3925 7275
 Wire Wire Line
 	3925 7275 4625 7275
@@ -1257,18 +1252,12 @@ Wire Wire Line
 	3925 6950 3925 6975
 Wire Wire Line
 	3475 7075 3475 7175
-Connection ~ 3475 7175
-Wire Wire Line
-	3475 7175 3475 7275
 Wire Wire Line
 	3475 6625 3600 6625
 Wire Wire Line
 	3475 6875 3750 6875
 Wire Wire Line
 	3475 6975 3625 6975
-Wire Wire Line
-	3475 7275 3625 7275
-Connection ~ 3475 7275
 Connection ~ 3625 7275
 Text Notes 7600 4975 0    50   ~ 0
 bidirectional shunt amp \nfor system shunt current \nsense  
@@ -1698,7 +1687,7 @@ Wire Wire Line
 	1425 6975 1875 6975
 Connection ~ 1425 7275
 Wire Wire Line
-	1425 7275 1575 7275
+	1425 7275 1525 7275
 Connection ~ 975  7275
 Connection ~ 1250 6625
 Wire Wire Line
@@ -2891,17 +2880,6 @@ Wire Wire Line
 Wire Wire Line
 	8600 6700 8600 6875
 $Comp
-L Device:R R?
-U 1 1 668AC918
-P 9675 6900
-F 0 "R?" V 9575 6850 50  0000 R CNN
-F 1 "DNP" V 9575 7025 50  0000 R CNN
-F 2 "footprints:R_0805_OEM" V 9605 6900 50  0001 C CNN
-F 3 "~" H 9675 6900 50  0001 C CNN
-	1    9675 6900
-	0    -1   -1   0   
-$EndComp
-$Comp
 L Device:C C?
 U 1 1 668AC91E
 P 9950 7150
@@ -2912,29 +2890,6 @@ F 3 "~" H 9950 7150 50  0001 C CNN
 	1    9950 7150
 	1    0    0    -1  
 $EndComp
-$Comp
-L formula:R_0 R?
-U 1 1 668AC927
-P 9675 6800
-F 0 "R?" V 9575 6900 50  0000 C CNN
-F 1 "R_0" V 9575 6775 50  0000 C CNN
-F 2 "footprints:R_0603_1608Metric" H 9605 6800 50  0001 C CNN
-F 3 "http://industrial.panasonic.com/www-cgi/jvcr13pz.cgi?E+PZ+3+AOA0001+ERJ3GEY0R00V+7+WW" H 9755 6800 50  0001 C CNN
-F 4 "DK" H 9675 6800 60  0001 C CNN "MFN"
-F 5 "P0.0GCT-ND" H 9675 6800 60  0001 C CNN "MPN"
-F 6 "https://www.digikey.com/product-detail/en/panasonic-electronic-components/ERJ-3GEY0R00V/P0.0GCT-ND/134711" H 10155 7200 60  0001 C CNN "PurchasingLink"
-	1    9675 6800
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	9825 6900 9875 6900
-Wire Wire Line
-	9825 6800 9875 6800
-Wire Wire Line
-	9875 6800 9875 6900
-Connection ~ 9875 6900
-Wire Wire Line
-	9875 6900 9950 6900
 Wire Wire Line
 	9950 6900 9950 7000
 $Comp
@@ -2950,15 +2905,6 @@ F 3 "~" H 9350 6750 50  0001 C CNN
 $EndComp
 Text Label 8025 6775 0    50   ~ 0
 B_UNFILTERED
-Wire Wire Line
-	9350 6900 9475 6900
-Wire Wire Line
-	9475 6900 9475 6800
-Wire Wire Line
-	9475 6800 9525 6800
-Connection ~ 9475 6900
-Wire Wire Line
-	9475 6900 9525 6900
 Wire Wire Line
 	9350 6900 9225 6900
 Connection ~ 9350 6900
@@ -2977,29 +2923,6 @@ F 3 "~" H 11325 7150 50  0001 C CNN
 	1    11325 7150
 	1    0    0    -1  
 $EndComp
-$Comp
-L formula:R_0 R?
-U 1 1 66AD4877
-P 11050 6800
-F 0 "R?" V 10950 6900 50  0000 C CNN
-F 1 "R_0" V 10950 6775 50  0000 C CNN
-F 2 "footprints:R_0603_1608Metric" H 10980 6800 50  0001 C CNN
-F 3 "http://industrial.panasonic.com/www-cgi/jvcr13pz.cgi?E+PZ+3+AOA0001+ERJ3GEY0R00V+7+WW" H 11130 6800 50  0001 C CNN
-F 4 "DK" H 11050 6800 60  0001 C CNN "MFN"
-F 5 "P0.0GCT-ND" H 11050 6800 60  0001 C CNN "MPN"
-F 6 "https://www.digikey.com/product-detail/en/panasonic-electronic-components/ERJ-3GEY0R00V/P0.0GCT-ND/134711" H 11530 7200 60  0001 C CNN "PurchasingLink"
-	1    11050 6800
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	11200 6900 11250 6900
-Wire Wire Line
-	11200 6800 11250 6800
-Wire Wire Line
-	11250 6800 11250 6900
-Connection ~ 11250 6900
-Wire Wire Line
-	11250 6900 11325 6900
 Wire Wire Line
 	11325 6900 11325 7000
 $Comp
@@ -3014,32 +2937,12 @@ F 3 "~" H 10725 6750 50  0001 C CNN
 	-1   0    0    1   
 $EndComp
 Wire Wire Line
-	10725 6900 10850 6900
-Wire Wire Line
-	10850 6900 10850 6800
-Wire Wire Line
-	10850 6800 10900 6800
-Connection ~ 10850 6900
-Wire Wire Line
-	10850 6900 10900 6900
-Wire Wire Line
 	10725 6900 10600 6900
 Connection ~ 10725 6900
 Text Label 10600 6875 2    50   ~ 0
 X_UNFILTERED
 Text Label 12675 6900 0    50   ~ 0
 ENCODER_A
-$Comp
-L Device:R R?
-U 1 1 66B0A5FB
-P 12400 6900
-F 0 "R?" V 12300 6850 50  0000 R CNN
-F 1 "DNP" V 12300 7025 50  0000 R CNN
-F 2 "footprints:R_0805_OEM" V 12330 6900 50  0001 C CNN
-F 3 "~" H 12400 6900 50  0001 C CNN
-	1    12400 6900
-	0    -1   -1   0   
-$EndComp
 $Comp
 L Device:C C?
 U 1 1 66B0A601
@@ -3051,29 +2954,6 @@ F 3 "~" H 12675 7150 50  0001 C CNN
 	1    12675 7150
 	1    0    0    -1  
 $EndComp
-$Comp
-L formula:R_0 R?
-U 1 1 66B0A60A
-P 12400 6800
-F 0 "R?" V 12300 6900 50  0000 C CNN
-F 1 "R_0" V 12300 6775 50  0000 C CNN
-F 2 "footprints:R_0603_1608Metric" H 12330 6800 50  0001 C CNN
-F 3 "http://industrial.panasonic.com/www-cgi/jvcr13pz.cgi?E+PZ+3+AOA0001+ERJ3GEY0R00V+7+WW" H 12480 6800 50  0001 C CNN
-F 4 "DK" H 12400 6800 60  0001 C CNN "MFN"
-F 5 "P0.0GCT-ND" H 12400 6800 60  0001 C CNN "MPN"
-F 6 "https://www.digikey.com/product-detail/en/panasonic-electronic-components/ERJ-3GEY0R00V/P0.0GCT-ND/134711" H 12880 7200 60  0001 C CNN "PurchasingLink"
-	1    12400 6800
-	0    1    1    0   
-$EndComp
-Wire Wire Line
-	12550 6900 12600 6900
-Wire Wire Line
-	12550 6800 12600 6800
-Wire Wire Line
-	12600 6800 12600 6900
-Connection ~ 12600 6900
-Wire Wire Line
-	12600 6900 12675 6900
 Wire Wire Line
 	12675 6900 12675 7000
 $Comp
@@ -3087,15 +2967,6 @@ F 3 "~" H 12075 6750 50  0001 C CNN
 	1    12075 6750
 	-1   0    0    1   
 $EndComp
-Wire Wire Line
-	12075 6900 12200 6900
-Wire Wire Line
-	12200 6900 12200 6800
-Wire Wire Line
-	12200 6800 12250 6800
-Connection ~ 12200 6900
-Wire Wire Line
-	12200 6900 12250 6900
 Connection ~ 12075 6900
 $Comp
 L power:+5V #PWR0143
@@ -4050,25 +3921,134 @@ Connection ~ 2375 1425
 Wire Wire Line
 	2375 1425 2850 1425
 $Comp
-L Device:R R?
-U 1 1 66AD4868
-P 11050 6900
-F 0 "R?" V 10950 6850 50  0000 R CNN
-F 1 "DNP" V 10950 7025 50  0000 R CNN
-F 2 "footprints:R_0805_OEM" V 10980 6900 50  0001 C CNN
-F 3 "~" H 11050 6900 50  0001 C CNN
-	1    11050 6900
-	0    -1   -1   0   
-$EndComp
-$Comp
 L Mechanical:MountingHole_Pad H?
 U 1 1 6209CC98
 P 975 8375
-F 0 "H?" V 1212 8378 50  0000 C CNN
-F 1 "MountingHole_Pad" V 1121 8378 50  0000 C CNN
+F 0 "H?" V 1200 8275 50  0000 C CNN
+F 1 "MotorConnector_Pad" V 1100 8225 50  0000 C CNN
 F 2 "" H 975 8375 50  0001 C CNN
 F 3 "~" H 975 8375 50  0001 C CNN
 	1    975  8375
 	0    -1   -1   0   
+$EndComp
+$Comp
+L Mechanical:MountingHole_Pad H?
+U 1 1 62191C11
+P 975 8700
+F 0 "H?" V 1200 8600 50  0000 C CNN
+F 1 "MotorConnector_Pad" V 1100 8550 50  0000 C CNN
+F 2 "" H 975 8700 50  0001 C CNN
+F 3 "~" H 975 8700 50  0001 C CNN
+	1    975  8700
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Mechanical:MountingHole_Pad H?
+U 1 1 621DED84
+P 975 9025
+F 0 "H?" V 1200 8925 50  0000 C CNN
+F 1 "MotorConnector_Pad" V 1100 8875 50  0000 C CNN
+F 2 "" H 975 9025 50  0001 C CNN
+F 3 "~" H 975 9025 50  0001 C CNN
+	1    975  9025
+	0    -1   -1   0   
+$EndComp
+Text Label 1425 9025 0    50   ~ 0
+PH_A
+Text Label 1425 8700 0    50   ~ 0
+PH_B
+Text Label 1425 8375 0    50   ~ 0
+PH_C
+Wire Wire Line
+	1075 8375 1425 8375
+Wire Wire Line
+	1425 8700 1075 8700
+Wire Wire Line
+	1075 9025 1425 9025
+Wire Notes Line
+	700  8050 1825 8050
+Wire Notes Line
+	1825 8050 1825 9125
+Wire Notes Line
+	1825 9125 700  9125
+Wire Notes Line
+	700  9125 700  8050
+Text Notes 850  8050 0    50   ~ 0
+MOTOR CONNECTORS\n
+Wire Wire Line
+	3475 7175 3550 7175
+Wire Wire Line
+	3550 7175 3550 7275
+Connection ~ 3475 7175
+Wire Wire Line
+	3550 7275 3625 7275
+Wire Wire Line
+	3625 7275 3925 7275
+Wire Wire Line
+	3625 7275 3625 7550
+Wire Wire Line
+	3625 7550 2825 7550
+$Comp
+L Device:Net-Tie_2 NT?
+U 1 1 6246A93E
+P 2725 7550
+F 0 "NT?" H 2725 7731 50  0000 C CNN
+F 1 "Net-Tie_2" H 2725 7640 50  0000 C CNN
+F 2 "" H 2725 7550 50  0001 C CNN
+F 3 "~" H 2725 7550 50  0001 C CNN
+	1    2725 7550
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	1525 7275 1525 7550
+Wire Wire Line
+	1525 7550 2625 7550
+Connection ~ 1525 7275
+Wire Wire Line
+	1525 7275 1575 7275
+Wire Wire Line
+	9350 6900 9525 6900
+$Comp
+L Device:R R?
+U 1 1 626F8325
+P 9675 6900
+F 0 "R?" V 9468 6900 50  0000 C CNN
+F 1 "R_0_0205" V 9559 6900 50  0000 C CNN
+F 2 "" V 9605 6900 50  0001 C CNN
+F 3 "~" H 9675 6900 50  0001 C CNN
+	1    9675 6900
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	9825 6900 9950 6900
+$Comp
+L Device:R R?
+U 1 1 6283898B
+P 11050 6900
+F 0 "R?" V 10843 6900 50  0000 C CNN
+F 1 "R_0_0205" V 10934 6900 50  0000 C CNN
+F 2 "" V 10980 6900 50  0001 C CNN
+F 3 "~" H 11050 6900 50  0001 C CNN
+	1    11050 6900
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	11200 6900 11325 6900
+Wire Wire Line
+	10725 6900 10900 6900
+Wire Wire Line
+	12550 6900 12675 6900
+Wire Wire Line
+	12075 6900 12250 6900
+$Comp
+L Device:R R?
+U 1 1 62A0A0C1
+P 12400 6900
+F 0 "R?" V 12193 6900 50  0000 C CNN
+F 1 "R_0_0205" V 12284 6900 50  0000 C CNN
+F 2 "" V 12330 6900 50  0001 C CNN
+F 3 "~" H 12400 6900 50  0001 C CNN
+	1    12400 6900
+	0    1    1    0   
 $EndComp
 $EndSCHEMATC
