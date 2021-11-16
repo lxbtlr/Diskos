@@ -4125,7 +4125,7 @@ Connection ~ 2125 2575
 Wire Wire Line
 	2125 2575 2125 2600
 Text Label 2225 2575 0    50   ~ 0
-SHDN
+~SHDN
 Connection ~ 3075 2200
 Wire Wire Line
 	3075 2200 3600 2200
