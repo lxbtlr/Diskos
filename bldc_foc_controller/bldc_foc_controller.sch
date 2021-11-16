@@ -16,12 +16,12 @@ $EndDescr
 $Comp
 L Connector_Generic:Conn_02x19_Odd_Even J?
 U 1 1 61844723
-P 7000 5375
-F 0 "J?" H 7050 6492 50  0000 C CNN
-F 1 "Conn_02x19_Odd_Even" H 7050 6401 50  0000 C CNN
-F 2 "" H 7000 5375 50  0001 C CNN
-F 3 "~" H 7000 5375 50  0001 C CNN
-	1    7000 5375
+P 6850 5375
+F 0 "J?" H 6900 6492 50  0000 C CNN
+F 1 "Conn_02x19_Odd_Even" H 6900 6401 50  0000 C CNN
+F 2 "" H 6850 5375 50  0001 C CNN
+F 3 "~" H 6850 5375 50  0001 C CNN
+	1    6850 5375
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -37,7 +37,7 @@ F 3 "~" H 8700 5375 50  0001 C CNN
 $EndComp
 Text Notes 7125 4175 0    50   ~ 0
 Header plugins for STM32G431 Nucleo board\nNucleo sits underneath motor drive PCB
-Text Notes 6900 6525 0    50   ~ 0
+Text Notes 6750 6525 0    50   ~ 0
 Left Side \nconn CN7
 Text Notes 8550 6525 0    50   ~ 0
 Right Side \nconn CN10
@@ -97,27 +97,27 @@ Text Label 8500 6075 2    50   ~ 0
 DRV_nFAULT
 Text Label 8500 5975 2    50   ~ 0
 DRV_EN
-Text Label 7300 5775 0    50   ~ 0
+Text Label 7150 5775 0    50   ~ 0
 THERM_0
-Text Label 7300 5875 0    50   ~ 0
+Text Label 7150 5875 0    50   ~ 0
 THERM_1
-Text Label 7300 5975 0    50   ~ 0
+Text Label 7150 5975 0    50   ~ 0
 THERM_2
-Text Label 7300 6075 0    50   ~ 0
+Text Label 7150 6075 0    50   ~ 0
 INLB
 Wire Wire Line
-	7300 5375 7300 5475
+	7150 5375 7150 5475
 Wire Wire Line
-	7300 5375 7425 5375
+	7150 5375 7275 5375
 $Comp
 L power:GND #PWR0104
 U 1 1 618BE450
-P 7425 5375
-F 0 "#PWR0104" H 7425 5125 50  0001 C CNN
-F 1 "GND" H 7425 5225 50  0000 C CNN
-F 2 "" H 7425 5375 50  0001 C CNN
-F 3 "" H 7425 5375 50  0001 C CNN
-	1    7425 5375
+P 7275 5375
+F 0 "#PWR0104" H 7275 5125 50  0001 C CNN
+F 1 "GND" H 7275 5225 50  0000 C CNN
+F 2 "" H 7275 5375 50  0001 C CNN
+F 3 "" H 7275 5375 50  0001 C CNN
+	1    7275 5375
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -293,17 +293,17 @@ Connection ~ 3950 3500
 $Comp
 L power:+10V #PWR0109
 U 1 1 61AC46E9
-P 7650 5575
-F 0 "#PWR0109" H 7650 5425 50  0001 C CNN
-F 1 "+10V" H 7665 5748 50  0000 C CNN
-F 2 "" H 7650 5575 50  0001 C CNN
-F 3 "" H 7650 5575 50  0001 C CNN
-	1    7650 5575
+P 7500 5575
+F 0 "#PWR0109" H 7500 5425 50  0001 C CNN
+F 1 "+10V" H 7515 5748 50  0000 C CNN
+F 2 "" H 7500 5575 50  0001 C CNN
+F 3 "" H 7500 5575 50  0001 C CNN
+	1    7500 5575
 	1    0    0    -1  
 $EndComp
-Connection ~ 7300 5375
+Connection ~ 7150 5375
 Wire Wire Line
-	7300 5575 7650 5575
+	7150 5575 7500 5575
 Text Notes 7800 5575 1    50   ~ 0
 Vin
 $Comp
@@ -345,30 +345,30 @@ $EndComp
 $Comp
 L power:+5V #PWR0111
 U 1 1 61AFC367
-P 7650 5275
-F 0 "#PWR0111" H 7650 5125 50  0001 C CNN
-F 1 "+5V" H 7665 5448 50  0000 C CNN
-F 2 "" H 7650 5275 50  0001 C CNN
-F 3 "" H 7650 5275 50  0001 C CNN
-	1    7650 5275
+P 7500 5275
+F 0 "#PWR0111" H 7500 5125 50  0001 C CNN
+F 1 "+5V" H 7515 5448 50  0000 C CNN
+F 2 "" H 7500 5275 50  0001 C CNN
+F 3 "" H 7500 5275 50  0001 C CNN
+	1    7500 5275
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	7300 5275 7650 5275
+	7150 5275 7500 5275
 $Comp
 L power:+3V3 #PWR0112
 U 1 1 61B02E50
-P 7525 5175
-F 0 "#PWR0112" H 7525 5025 50  0001 C CNN
-F 1 "+3V3" H 7540 5348 50  0000 C CNN
-F 2 "" H 7525 5175 50  0001 C CNN
-F 3 "" H 7525 5175 50  0001 C CNN
-	1    7525 5175
+P 7375 5175
+F 0 "#PWR0112" H 7375 5025 50  0001 C CNN
+F 1 "+3V3" H 7390 5348 50  0000 C CNN
+F 2 "" H 7375 5175 50  0001 C CNN
+F 3 "" H 7375 5175 50  0001 C CNN
+	1    7375 5175
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	7300 5175 7525 5175
-Text Notes 7725 4950 2    50   ~ 0
+	7150 5175 7375 5175
+Text Notes 7575 4950 2    50   ~ 0
 Vout
 $Comp
 L power:GND #PWR0113
@@ -1148,11 +1148,11 @@ Text Label 8500 5575 2    50   ~ 0
 INHA
 Text Label 8500 5475 2    50   ~ 0
 INHB
-Text Label 6800 6175 2    50   ~ 0
+Text Label 6650 6175 2    50   ~ 0
 INHC
 Text Label 9000 5575 0    50   ~ 0
 INLC
-Text Label 6800 5575 2    50   ~ 0
+Text Label 6650 5575 2    50   ~ 0
 INLA
 Wire Wire Line
 	1775 5125 1775 5025
@@ -2703,8 +2703,6 @@ GHA
 Text Label 15575 1950 2    50   ~ 0
 GLA
 Wire Notes Line
-	6475 6600 9400 6600
-Wire Notes Line
 	9400 6600 9400 3900
 Text Notes 15350 1000 0    50   ~ 0
 47nF x7r
@@ -3264,43 +3262,43 @@ Wire Wire Line
 $Comp
 L Mechanical:MountingHole_Pad H?
 U 1 1 6209CC98
-P 925 8775
-F 0 "H?" V 1150 8675 50  0000 C CNN
-F 1 "MotorConnector_Pad" V 1050 8625 50  0000 C CNN
-F 2 "" H 925 8775 50  0001 C CNN
-F 3 "~" H 925 8775 50  0001 C CNN
-	1    925  8775
+P 925 9675
+F 0 "H?" V 1150 9575 50  0000 C CNN
+F 1 "MotorConnector_Pad" V 1050 9525 50  0000 C CNN
+F 2 "" H 925 9675 50  0001 C CNN
+F 3 "~" H 925 9675 50  0001 C CNN
+	1    925  9675
 	0    -1   -1   0   
 $EndComp
 $Comp
 L Mechanical:MountingHole_Pad H?
 U 1 1 62191C11
-P 925 9100
-F 0 "H?" V 1150 9000 50  0000 C CNN
-F 1 "MotorConnector_Pad" V 1050 8950 50  0000 C CNN
-F 2 "" H 925 9100 50  0001 C CNN
-F 3 "~" H 925 9100 50  0001 C CNN
-	1    925  9100
+P 925 10000
+F 0 "H?" V 1150 9900 50  0000 C CNN
+F 1 "MotorConnector_Pad" V 1050 9850 50  0000 C CNN
+F 2 "" H 925 10000 50  0001 C CNN
+F 3 "~" H 925 10000 50  0001 C CNN
+	1    925  10000
 	0    -1   -1   0   
 $EndComp
 $Comp
 L Mechanical:MountingHole_Pad H?
 U 1 1 621DED84
-P 925 9425
-F 0 "H?" V 1150 9325 50  0000 C CNN
-F 1 "MotorConnector_Pad" V 1050 9275 50  0000 C CNN
-F 2 "" H 925 9425 50  0001 C CNN
-F 3 "~" H 925 9425 50  0001 C CNN
-	1    925  9425
+P 925 10325
+F 0 "H?" V 1150 10225 50  0000 C CNN
+F 1 "MotorConnector_Pad" V 1050 10175 50  0000 C CNN
+F 2 "" H 925 10325 50  0001 C CNN
+F 3 "~" H 925 10325 50  0001 C CNN
+	1    925  10325
 	0    -1   -1   0   
 $EndComp
-Text Label 1375 9425 0    50   ~ 0
+Text Label 1375 10325 0    50   ~ 0
 PH_A
-Text Label 1375 9100 0    50   ~ 0
+Text Label 1375 10000 0    50   ~ 0
 PH_B
-Text Label 1375 8775 0    50   ~ 0
+Text Label 1375 9675 0    50   ~ 0
 PH_C
-Text Notes 650  8450 0    91   ~ 0
+Text Notes 650  9350 0    91   ~ 0
 MOTOR CONNECTORS\n
 Wire Wire Line
 	3525 5675 3825 5675
@@ -3416,77 +3414,77 @@ $EndComp
 $Comp
 L formula:D_TVS_35V D?
 U 1 1 61ADF1C6
-P 1900 9175
-F 0 "D?" H 2275 9125 60  0000 R CNN
-F 1 "D_TVS_35V" V 2475 9100 60  0000 R CNN
-F 2 "SMC_DIO" H 2100 8815 60  0001 C CNN
-F 3 "https://www.diodes.com/assets/Datasheets/ds40741.pdf" H 1900 9175 60  0001 C CNN
-F 4 "SMCJ22A-13-F" H 2050 9425 50  0001 C CNN "MPN"
-	1    1900 9175
+P 1900 10075
+F 0 "D?" H 2275 10025 60  0000 R CNN
+F 1 "D_TVS_35V" V 2475 10000 60  0000 R CNN
+F 2 "SMC_DIO" H 2100 9715 60  0001 C CNN
+F 3 "https://www.diodes.com/assets/Datasheets/ds40741.pdf" H 1900 10075 60  0001 C CNN
+F 4 "SMCJ22A-13-F" H 2050 10325 50  0001 C CNN "MPN"
+	1    1900 10075
 	0    -1   -1   0   
 $EndComp
 $Comp
 L formula:D_TVS_35V D?
 U 1 1 61B241D5
-P 2100 9500
-F 0 "D?" H 2475 9450 60  0000 R CNN
-F 1 "D_TVS_35V" V 2900 9625 60  0000 R CNN
-F 2 "SMC_DIO" H 2300 9140 60  0001 C CNN
-F 3 "https://www.diodes.com/assets/Datasheets/ds40741.pdf" H 2100 9500 60  0001 C CNN
-F 4 "SMCJ22A-13-F" H 2250 9750 50  0001 C CNN "MPN"
-	1    2100 9500
+P 2100 10400
+F 0 "D?" H 2475 10350 60  0000 R CNN
+F 1 "D_TVS_35V" V 2900 10525 60  0000 R CNN
+F 2 "SMC_DIO" H 2300 10040 60  0001 C CNN
+F 3 "https://www.diodes.com/assets/Datasheets/ds40741.pdf" H 2100 10400 60  0001 C CNN
+F 4 "SMCJ22A-13-F" H 2250 10650 50  0001 C CNN "MPN"
+	1    2100 10400
 	0    -1   -1   0   
 $EndComp
 $Comp
 L formula:D_TVS_35V D?
 U 1 1 61B698BF
-P 2350 9825
-F 0 "D?" H 2725 9775 60  0000 R CNN
-F 1 "D_TVS_35V" V 3375 10200 60  0000 R CNN
-F 2 "SMC_DIO" H 2550 9465 60  0001 C CNN
-F 3 "https://www.diodes.com/assets/Datasheets/ds40741.pdf" H 2350 9825 60  0001 C CNN
-F 4 "SMCJ22A-13-F" H 2500 10075 50  0001 C CNN "MPN"
-	1    2350 9825
+P 2350 10725
+F 0 "D?" H 2725 10675 60  0000 R CNN
+F 1 "D_TVS_35V" V 3375 11100 60  0000 R CNN
+F 2 "SMC_DIO" H 2550 10365 60  0001 C CNN
+F 3 "https://www.diodes.com/assets/Datasheets/ds40741.pdf" H 2350 10725 60  0001 C CNN
+F 4 "SMCJ22A-13-F" H 2500 10975 50  0001 C CNN "MPN"
+	1    2350 10725
 	0    -1   -1   0   
 $EndComp
 Wire Wire Line
-	1025 9425 2350 9425
+	1025 10325 2350 10325
 Wire Wire Line
-	1025 9100 2100 9100
+	1025 10000 2100 10000
 Wire Wire Line
-	1025 8775 1900 8775
+	1025 9675 1900 9675
 Wire Wire Line
-	1900 9175 1900 9825
+	1900 10075 1900 10725
 Wire Wire Line
-	1900 9825 1975 9825
+	1900 10725 1975 10725
 Wire Wire Line
-	2100 9500 2100 9825
-Connection ~ 2100 9825
+	2100 10400 2100 10725
+Connection ~ 2100 10725
 Wire Wire Line
-	2100 9825 2350 9825
+	2100 10725 2350 10725
 $Comp
 L power:GND #PWR?
 U 1 1 61D0E860
-P 1975 9825
-F 0 "#PWR?" H 1975 9575 50  0001 C CNN
-F 1 "GND" H 1980 9652 50  0000 C CNN
-F 2 "" H 1975 9825 50  0001 C CNN
-F 3 "" H 1975 9825 50  0001 C CNN
-	1    1975 9825
+P 1975 10725
+F 0 "#PWR?" H 1975 10475 50  0001 C CNN
+F 1 "GND" H 1980 10552 50  0000 C CNN
+F 2 "" H 1975 10725 50  0001 C CNN
+F 3 "" H 1975 10725 50  0001 C CNN
+	1    1975 10725
 	1    0    0    -1  
 $EndComp
-Connection ~ 1975 9825
+Connection ~ 1975 10725
 Wire Wire Line
-	1975 9825 2100 9825
+	1975 10725 2100 10725
 Wire Notes Line
-	650  10125 2475 10125
+	650  11025 2475 11025
 Wire Notes Line
-	2475 10125 2475 8450
+	2475 11025 2475 9350
 Wire Notes Line
-	650  8450 2475 8450
+	650  9350 2475 9350
 Wire Notes Line
-	650  8450 650  10125
-Text Notes 775  9750 0    50   ~ 0
+	650  9350 650  11025
+Text Notes 775  10650 0    50   ~ 0
 Unidirectional TVS \ndiodes for ESD protection 
 Wire Wire Line
 	2700 6125 2775 6125
@@ -3536,7 +3534,7 @@ $Comp
 L formula:R_10K R?
 U 1 1 6210E634
 P 18075 2375
-F 0 "R?" V 18075 2300 50  0000 L CNN
+F 0 "R?" V 18075 2275 50  0000 L CNN
 F 1 "R_10K" H 18450 2300 50  0000 L CNN
 F 2 "footprints:R_0805_OEM" H 18005 2375 50  0001 C CNN
 F 3 "http://www.bourns.com/data/global/pdfs/CRS.pdf" H 18155 2375 50  0001 C CNN
@@ -3596,10 +3594,6 @@ Connection ~ 18225 2225
 Wire Wire Line
 	18225 2225 18175 2225
 Wire Notes Line
-	6475 6325 6475 6600
-Wire Notes Line
-	6475 6275 6475 3900
-Wire Notes Line
 	6475 3900 9400 3900
 Wire Notes Line
 	14775 3200 18750 3200
@@ -3645,7 +3639,7 @@ Wire Notes Line
 	550  6425 550  4550
 Text Notes 550  4550 0    91   ~ 0
 Buck Converter\n
-Text Notes 6450 3900 0    91   ~ 0
+Text Notes 6150 3900 0    91   ~ 0
 STM32 Nucleo
 Connection ~ 14975 5075
 Wire Wire Line
@@ -4083,4 +4077,20 @@ F 3 "http://www.ti.com/lit/ds/symlink/ina240.pdf" H 13000 7525 50  0001 C CNN
 	1    12850 7375
 	1    0    0    -1  
 $EndComp
+Text Label 7150 6175 0    50   ~ 0
+SNS_SH_SYSTEM
+Text Label 7150 6275 0    50   ~ 0
+SNS_SH_REGEN_LOAD
+Text Label 7150 4475 0    50   ~ 0
+ENCODER_A
+Text Label 7150 4575 0    50   ~ 0
+ENCODER_B
+Text Label 6650 4475 2    50   ~ 0
+ENCODER_X
+Wire Notes Line
+	6425 3900 6150 3900
+Wire Notes Line
+	6150 3900 6150 6600
+Wire Notes Line
+	6150 6600 9400 6600
 $EndSCHEMATC
