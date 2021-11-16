@@ -1,4 +1,4 @@
-19479213372483053
+19485761352300053
 Battery
 BatteryHolder_Bulgin_BX0036_1xC
 Bulgin Battery Holder, BX0036, Battery Type C (https://www.bulgin.com/products/pub/media/bulgin/data/Battery_holders.pdf)
@@ -83475,6 +83475,13 @@ CMS SOT
 4
 4
 footprints
+LMP8481ASQDGKRQ1
+
+
+0
+8
+8
+footprints
 LMT85-Q1
 
 
@@ -84014,6 +84021,13 @@ QFN20
 20
 20
 footprints
+QFN50P500X500X80-33N
+
+
+0
+38
+38
+footprints
 QFP50P900X900X120-48N
 BQ79606PHPRQ1
 Integrated Circuit
@@ -84167,6 +84181,13 @@ SK6812
 0
 4
 4
+footprints
+SMCJ22A-13-F
+
+
+0
+2
+2
 footprints
 SM_5
 
@@ -84545,6 +84566,13 @@ Ultrafit_5
 0
 6
 5
+footprints
+WSL27261L000FEB
+
+
+0
+4
+4
 footprints
 ZXRE160
 SOT-353, SC-70-5
