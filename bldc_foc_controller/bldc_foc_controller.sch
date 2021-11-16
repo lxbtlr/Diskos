@@ -289,7 +289,6 @@ F 3 "" H 3950 3500 50  0001 C CNN
 	1    3950 3500
 	1    0    0    -1  
 $EndComp
-Connection ~ 3950 3500
 $Comp
 L power:+10V #PWR0109
 U 1 1 61AC46E9
@@ -590,23 +589,23 @@ STM_VREF
 $Comp
 L Device:R R?
 U 1 1 61B4CA23
-P 2850 2450
-F 0 "R?" H 2920 2496 50  0000 L CNN
-F 1 "R_845K" H 2925 2400 50  0000 L CNN
-F 2 "footprints:R_0805_OEM" V 2780 2450 50  0001 C CNN
-F 3 "https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0805FT845K/1713403" H 2850 2450 50  0001 C CNN
-	1    2850 2450
+P 2600 2450
+F 0 "R?" H 2670 2496 50  0000 L CNN
+F 1 "R_845K" H 2675 2400 50  0000 L CNN
+F 2 "footprints:R_0805_OEM" V 2530 2450 50  0001 C CNN
+F 3 "https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0805FT845K/1713403" H 2600 2450 50  0001 C CNN
+	1    2600 2450
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:R R?
 U 1 1 61B5D3A0
-P 2850 2750
-F 0 "R?" H 2920 2796 50  0000 L CNN
-F 1 "R_2M" H 2920 2705 50  0000 L CNN
-F 2 "footprints:R_0805_OEM" V 2780 2750 50  0001 C CNN
-F 3 "https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0805FT2M00/1760219" H 2850 2750 50  0001 C CNN
-	1    2850 2750
+P 2600 2750
+F 0 "R?" H 2670 2796 50  0000 L CNN
+F 1 "R_2M" H 2670 2705 50  0000 L CNN
+F 2 "footprints:R_0805_OEM" V 2530 2750 50  0001 C CNN
+F 3 "https://www.digikey.com/en/products/detail/stackpole-electronics-inc/RMCF0805FT2M00/1760219" H 2600 2750 50  0001 C CNN
+	1    2600 2750
 	1    0    0    -1  
 $EndComp
 Connection ~ 5325 1475
@@ -2750,7 +2749,7 @@ Text Label 1750 1175 0    50   ~ 0
 REGEN_LOAD+
 Connection ~ 1075 3500
 Wire Wire Line
-	1075 3500 1900 3500
+	1075 3500 1825 3500
 Text Label 1100 3500 0    50   ~ 0
 REGEN_LOAD_-
 Wire Wire Line
@@ -2847,44 +2846,37 @@ Wire Wire Line
 	4175 10050 4225 10050
 Text Label 4225 10050 0    50   ~ 0
 SNS_SH_SYSTEM
-Connection ~ 2850 1425
-Wire Wire Line
-	2850 1425 3025 1425
 $Comp
 L formula:R_300K R?
 U 1 1 692D0260
-P 2850 3050
-F 0 "R?" H 2920 3096 50  0000 L CNN
-F 1 "R_300K" H 2920 3005 50  0000 L CNN
-F 2 "footprints:R_0805_OEM" H 2780 3050 50  0001 C CNN
-F 3 "https://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf" H 2930 3050 50  0001 C CNN
-F 4 "DK" H 2850 3050 60  0001 C CNN "MFN"
-F 5 "P300KDACT-ND" H 2850 3050 60  0001 C CNN "MPN"
-F 6 "https://www.digikey.com/product-detail/en/panasonic-electronic-components/ERA-6AEB304V/P300KDACT-ND/1466006" H 3330 3450 60  0001 C CNN "PurchasingLink"
-	1    2850 3050
+P 2600 3050
+F 0 "R?" H 2670 3096 50  0000 L CNN
+F 1 "R_300K" H 2670 3005 50  0000 L CNN
+F 2 "footprints:R_0805_OEM" H 2530 3050 50  0001 C CNN
+F 3 "https://industrial.panasonic.com/cdbs/www-data/pdf/RDM0000/AOA0000C307.pdf" H 2680 3050 50  0001 C CNN
+F 4 "DK" H 2600 3050 60  0001 C CNN "MFN"
+F 5 "P300KDACT-ND" H 2600 3050 60  0001 C CNN "MPN"
+F 6 "https://www.digikey.com/product-detail/en/panasonic-electronic-components/ERA-6AEB304V/P300KDACT-ND/1466006" H 3080 3450 60  0001 C CNN "PurchasingLink"
+	1    2600 3050
 	1    0    0    -1  
 $EndComp
 $Comp
 L Device:R R?
 U 1 1 693C1FA4
-P 2850 3350
-F 0 "R?" H 2920 3396 50  0000 L CNN
-F 1 "R_97.6K" H 2920 3305 50  0000 L CNN
-F 2 "footprints:R_0805_OEM" V 2780 3350 50  0001 C CNN
-F 3 "~" H 2850 3350 50  0001 C CNN
-	1    2850 3350
+P 2600 3350
+F 0 "R?" H 2670 3396 50  0000 L CNN
+F 1 "R_97.6K" H 2670 3305 50  0000 L CNN
+F 2 "footprints:R_0805_OEM" V 2530 3350 50  0001 C CNN
+F 3 "~" H 2600 3350 50  0001 C CNN
+	1    2600 3350
 	1    0    0    -1  
 $EndComp
-Connection ~ 2850 3500
+Connection ~ 2600 3500
 Wire Wire Line
 	3525 3100 3525 3200
 Wire Wire Line
-	3250 2200 2850 2200
-Wire Wire Line
-	2850 1425 2850 2200
-Connection ~ 2850 2200
-Wire Wire Line
-	3550 2200 3600 2200
+	2600 1425 2600 2200
+Connection ~ 2600 2200
 $Comp
 L formula:Conn_01x10 J?
 U 1 1 696E449C
@@ -3193,48 +3185,27 @@ $EndComp
 $Comp
 L formula:C_10uF C?
 U 1 1 61D5384B
-P 3375 2300
-F 0 "C?" H 3400 2425 50  0000 L CNN
-F 1 "C_10uF" H 3400 2250 50  0000 L CNN
-F 2 "footprints:C_0805_OEM" H 3413 2900 50  0001 C CNN
-F 3 "http://www.samsungsem.com/kr/support/product-search/mlcc/__icsFiles/afieldfile/2018/06/20/CL21A106KPFNNNE.pdf" H 3400 3150 50  0001 C CNN
-F 4 "DK" H 3375 2350 60  0001 C CNN "MFN"
-F 5 "1276-1052-1-ND" H 3375 3050 60  0001 C CNN "MPN"
-F 6 "https://www.digikey.com/product-detail/en/samsung-electro-mechanics/CL21A106KPFNNNE/1276-1052-1-ND/3889138" H 3800 2800 60  0001 C CNN "PurchasingLink"
-	1    3375 2300
+P 3075 2400
+F 0 "C?" H 3100 2525 50  0000 L CNN
+F 1 "C_10uF" H 3100 2350 50  0000 L CNN
+F 2 "footprints:C_0805_OEM" H 3113 3000 50  0001 C CNN
+F 3 "http://www.samsungsem.com/kr/support/product-search/mlcc/__icsFiles/afieldfile/2018/06/20/CL21A106KPFNNNE.pdf" H 3100 3250 50  0001 C CNN
+F 4 "DK" H 3075 2450 60  0001 C CNN "MFN"
+F 5 "1276-1052-1-ND" H 3075 3150 60  0001 C CNN "MPN"
+F 6 "https://www.digikey.com/product-detail/en/samsung-electro-mechanics/CL21A106KPFNNNE/1276-1052-1-ND/3889138" H 3500 2900 60  0001 C CNN "PurchasingLink"
+	1    3075 2400
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	3375 2100 3550 2100
-Wire Wire Line
-	3550 2100 3550 2200
-Wire Wire Line
-	3375 2100 3250 2100
-Wire Wire Line
-	3250 2100 3250 2200
-Connection ~ 3375 2100
 $Comp
 L power:GND #PWR?
 U 1 1 61DF8D8D
-P 3375 2400
-F 0 "#PWR?" H 3375 2150 50  0001 C CNN
-F 1 "GND" H 3500 2350 50  0000 C CNN
-F 2 "" H 3375 2400 50  0001 C CNN
-F 3 "" H 3375 2400 50  0001 C CNN
-	1    3375 2400
+P 3075 2500
+F 0 "#PWR?" H 3075 2250 50  0001 C CNN
+F 1 "GND" H 3200 2450 50  0000 C CNN
+F 2 "" H 3075 2500 50  0001 C CNN
+F 3 "" H 3075 2500 50  0001 C CNN
+	1    3075 2500
 	1    0    0    -1  
-$EndComp
-$Comp
-L formula:D_TVS_35V D?
-U 1 1 61F5EEBD
-P 2375 2600
-F 0 "D?" H 2625 2475 60  0000 R CNN
-F 1 "D_TVS_35V" H 2800 2725 60  0000 R CNN
-F 2 "SMC_DIO" H 2575 2240 60  0001 C CNN
-F 3 "https://www.diodes.com/assets/Datasheets/ds40741.pdf" H 2375 2600 60  0001 C CNN
-F 4 "SMCJ22A-13-F" H 2525 2850 50  0001 C CNN "MPN"
-	1    2375 2600
-	0    -1   -1   0   
 $EndComp
 $Comp
 L formula:D_TVS_35V D?
@@ -3248,17 +3219,6 @@ F 4 "SMCJ22A-13-F" H 6000 2700 50  0001 C CNN "MPN"
 	1    5850 2450
 	0    -1   -1   0   
 $EndComp
-Wire Wire Line
-	2375 2600 2375 3500
-Wire Wire Line
-	2375 3500 2850 3500
-Wire Wire Line
-	2375 2200 2375 1425
-Wire Wire Line
-	1075 1425 2375 1425
-Connection ~ 2375 1425
-Wire Wire Line
-	2375 1425 2850 1425
 $Comp
 L Mechanical:MountingHole_Pad H?
 U 1 1 6209CC98
@@ -3336,21 +3296,12 @@ Wire Wire Line
 	9725 7700 9850 7700
 Wire Wire Line
 	9250 7700 9425 7700
-Connection ~ 2850 2900
-Connection ~ 2850 3200
-Wire Wire Line
-	2850 2900 3425 2900
-Wire Wire Line
-	2850 3200 3525 3200
-Connection ~ 2375 3500
+Connection ~ 2600 2900
+Connection ~ 2600 3200
 Wire Wire Line
 	3425 2900 3425 2800
 Wire Wire Line
-	1900 3500 2375 3500
-Wire Wire Line
-	2850 3500 3950 3500
-Wire Wire Line
-	2850 2200 2850 2300
+	2600 2200 2600 2250
 Connection ~ 1775 5025
 $Comp
 L formula:TLS4120D0EPVXUMA1 U?
@@ -4093,4 +4044,91 @@ Wire Notes Line
 	6150 3900 6150 6600
 Wire Notes Line
 	6150 6600 9400 6600
+Connection ~ 2600 1425
+Wire Wire Line
+	2600 1425 3025 1425
+Wire Wire Line
+	2600 2900 3425 2900
+Wire Wire Line
+	2600 3200 3525 3200
+Wire Wire Line
+	2600 3500 3950 3500
+Connection ~ 3950 3500
+Wire Wire Line
+	2600 2200 3075 2200
+Wire Wire Line
+	1075 1425 1825 1425
+Wire Wire Line
+	1825 2200 1825 1425
+Wire Wire Line
+	1825 2600 1825 3500
+$Comp
+L formula:D_TVS_35V D?
+U 1 1 61F5EEBD
+P 1825 2600
+F 0 "D?" H 2075 2475 60  0000 R CNN
+F 1 "D_TVS_35V" H 2250 2725 60  0000 R CNN
+F 2 "SMC_DIO" H 2025 2240 60  0001 C CNN
+F 3 "https://www.diodes.com/assets/Datasheets/ds40741.pdf" H 1825 2600 60  0001 C CNN
+F 4 "SMCJ22A-13-F" H 1975 2850 50  0001 C CNN "MPN"
+	1    1825 2600
+	0    -1   -1   0   
+$EndComp
+$Comp
+L formula:R_1.54K R?
+U 1 1 61D037A0
+P 2125 2400
+F 0 "R?" H 2195 2446 50  0000 L CNN
+F 1 "R_1.54K" H 2195 2355 50  0000 L CNN
+F 2 "footprints:R_0805_OEM" H 2055 2400 50  0001 C CNN
+F 3 "https://industrial.panasonic.com/cdbs/www-data/pdf/RDA0000/AOA0000C304.pdf" H 2205 2400 50  0001 C CNN
+F 4 "Panasonic" H 2125 2400 50  0001 C CNN "MFN"
+F 5 "ERJ-6ENF1541V" H 2125 2400 50  0001 C CNN "MPN"
+F 6 "https://www.digikey.com/en/products/detail/panasonic-electronic-components/ERJ-6ENF1541V/111317" H 2125 2400 50  0001 C CNN "Purchasing Link"
+	1    2125 2400
+	1    0    0    -1  
+$EndComp
+$Comp
+L formula:R_500 U?
+U 1 1 61D01F28
+P 2125 2750
+F 0 "U?" V 2079 2838 50  0000 L CNN
+F 1 "R_500" V 2170 2838 50  0000 L CNN
+F 2 "footprints:R_0805_OEM" H 2125 2750 50  0001 C CNN
+F 3 "" H 2125 2750 50  0001 C CNN
+	1    2125 2750
+	0    1    1    0   
+$EndComp
+Connection ~ 1825 1425
+Connection ~ 1825 3500
+Wire Wire Line
+	1825 3500 1900 3500
+Wire Wire Line
+	1825 1425 2600 1425
+Wire Wire Line
+	2125 2550 2125 2575
+Wire Wire Line
+	2125 2250 2600 2250
+Connection ~ 2600 2250
+Wire Wire Line
+	2600 2250 2600 2300
+Wire Wire Line
+	2125 2900 2125 3500
+Wire Wire Line
+	1900 3500 2125 3500
+Connection ~ 2125 3500
+Wire Wire Line
+	2125 3500 2600 3500
+Wire Wire Line
+	2125 2575 2225 2575
+Connection ~ 2125 2575
+Wire Wire Line
+	2125 2575 2125 2600
+Text Label 2225 2575 0    50   ~ 0
+~SHDN
+Connection ~ 3075 2200
+Wire Wire Line
+	3075 2200 3600 2200
+Text Label 3600 2500 2    50   ~ 0
+~SHDN
 $EndSCHEMATC
