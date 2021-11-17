@@ -2500,8 +2500,6 @@ Connection ~ 17675 1950
 Wire Wire Line
 	17675 1950 17750 1950
 Wire Wire Line
-	16825 1450 16975 1450
-Wire Wire Line
 	17100 1450 17100 1350
 Wire Wire Line
 	16825 1650 17450 1650
@@ -2544,8 +2542,6 @@ F 4 "https://www.digikey.com/product-detail/en/yageo/CC0805ZKY5V9BB105/311-1909-
 	1    14975 1650
 	1    0    0    -1  
 $EndComp
-Wire Wire Line
-	15050 1750 15300 1750
 Wire Wire Line
 	15300 1750 15300 1650
 Wire Wire Line
@@ -4703,20 +4699,15 @@ Text Notes 7125 4175 0    50   ~ 0
 Header plugins for STM32G431 Nucleo board\nNucleo sits underneath motor drive PCB
 Wire Wire Line
 	8000 1250 8125 1250
-Wire Wire Line
-	15125 1450 15775 1450
-Wire Wire Line
-	15050 1450 15125 1450
-Connection ~ 15125 1450
 $Comp
 L formula:VBUS_20V #PWR0148
 U 1 1 67E5888A
-P 15125 1450
-F 0 "#PWR0148" H 15125 1300 50  0001 C CNN
-F 1 "VBUS_20V" H 15140 1623 50  0000 C CNN
-F 2 "" H 15125 1450 50  0001 C CNN
-F 3 "" H 15125 1450 50  0001 C CNN
-	1    15125 1450
+P 14975 1425
+F 0 "#PWR0148" H 14975 1275 50  0001 C CNN
+F 1 "VBUS_20V" H 14990 1598 50  0000 C CNN
+F 2 "" H 14975 1425 50  0001 C CNN
+F 3 "" H 14975 1425 50  0001 C CNN
+	1    14975 1425
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -4749,4 +4740,96 @@ Wire Notes Line
 	14625 8175 18750 8175
 Wire Notes Line
 	14625 9300 18750 9300
+Wire Wire Line
+	16525 1000 15775 1000
+Wire Wire Line
+	15775 1000 15775 1350
+Wire Wire Line
+	16825 1000 16825 1350
+Wire Wire Line
+	16825 1450 17100 1450
+Wire Wire Line
+	17100 1350 17150 1350
+Connection ~ 17150 1350
+Wire Wire Line
+	17150 1350 17200 1350
+Connection ~ 17250 1350
+Wire Wire Line
+	17250 1350 17750 1350
+$Comp
+L formula:CONN_01x02 J?
+U 1 1 61AF1248
+P 12425 10200
+F 0 "J?" H 12375 10325 50  0000 L CNN
+F 1 "CONN_01x02" H 12250 10000 50  0000 L CNN
+F 2 "footprints:PinHeader_1x02_P2.54mm_Vertical" H 12325 10200 50  0001 C CNN
+F 3 "https://katalog.we-online.de/em/datasheet/6130xx11121.pdf" H 12425 10300 50  0001 C CNN
+F 4 "DK" H 12525 10400 50  0001 C CNN "MFN"
+F 5 "732-5315-ND" H 12625 10500 50  0001 C CNN "MPN"
+	1    12425 10200
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	12700 10050 12700 10200
+Wire Wire Line
+	12700 10200 12625 10200
+Wire Wire Line
+	12625 10100 12625 9850
+Wire Wire Line
+	12625 9850 12600 9850
+Wire Wire Line
+	14975 1750 15300 1750
+Wire Wire Line
+	14975 1425 14975 1450
+Wire Wire Line
+	14975 1450 15275 1450
+Connection ~ 14975 1450
+Wire Wire Line
+	15375 900  17200 900 
+Wire Wire Line
+	17200 900  17200 1350
+Connection ~ 17200 1350
+Wire Wire Line
+	17200 1350 17250 1350
+$Comp
+L formula:C_100nF C?
+U 1 1 61CFB379
+P 15475 1300
+F 0 "C?" H 15500 1375 50  0000 L CNN
+F 1 "C_100nF" H 15400 1500 50  0000 L CNN
+F 2 "footprints:C_0603_1608Metric" H 15513 1150 50  0001 C CNN
+F 3 "http://www.samsungsem.com/kr/support/product-search/mlcc/CL10A475KQ8NNNC.jsp" H 15500 1400 50  0001 C CNN
+F 4 "DK" H 15475 1300 60  0001 C CNN "MFN"
+F 5 "1276-6717-1-ND" H 15475 1300 60  0001 C CNN "MPN"
+F 6 "https://www.digikey.com/product-detail/en/samsung-electro-mechanics/CL10B104KA8WPNC/1276-6717-1-ND/5961576" H 15900 1800 60  0001 C CNN "PurchasingLink"
+	1    15475 1300
+	1    0    0    -1  
+$EndComp
+Connection ~ 15475 1450
+Wire Wire Line
+	15475 1450 15775 1450
+$Comp
+L formula:C_10uF_50V C?
+U 1 1 61D53CF1
+P 15275 1350
+F 0 "C?" H 15300 1475 50  0000 L CNN
+F 1 "C_10uF_50V" H 14900 1600 50  0000 L CNN
+F 2 "footprints:C_0805_OEM" H 15313 1950 50  0001 C CNN
+F 3 "http://www.samsungsem.com/kr/support/product-https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM21BR61H106KE43-01A.pdf" H 15300 2200 50  0001 C CNN
+F 4 "Murata" H 15275 1400 60  0001 C CNN "MFN"
+F 5 "GRM21BR61H106KE43L" H 15275 2100 60  0001 C CNN "MPN"
+F 6 "https://www.digikey.com/en/products/detail/murata-electronics/GRM21BR61H106KE43L/10326316" H 15700 1850 60  0001 C CNN "PurchasingLink"
+	1    15275 1350
+	1    0    0    -1  
+$EndComp
+Connection ~ 15275 1450
+Wire Wire Line
+	15275 1450 15475 1450
+Wire Wire Line
+	15375 1150 15475 1150
+Wire Wire Line
+	15375 900  15375 1150
+Wire Wire Line
+	15275 1150 15375 1150
+Connection ~ 15375 1150
 $EndSCHEMATC
