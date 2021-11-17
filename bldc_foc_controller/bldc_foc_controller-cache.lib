@@ -454,6 +454,31 @@ X ~ 2 0 -100 110 U 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
+# formula_C_10uF_50V
+#
+DEF formula_C_10uF_50V C 0 10 N Y 1 F N
+F0 "C" 25 150 50 H V L CNN
+F1 "formula_C_10uF_50V" 25 -50 50 H V L CNN
+F2 "footprints:C_0805_OEM" 38 600 50 H I C CNN
+F3 "" 25 850 50 H I C CNN
+F4 "Murata" 0 50 60 H I C CNN "MFN"
+F5 "GRM21BR61H106KE43L" 0 750 60 H I C CNN "MPN"
+F6 "https://www.digikey.com/en/products/detail/murata-electronics/GRM21BR61H106KE43L/10326316" 425 500 60 H I C CNN "PurchasingLink"
+$FPLIST
+ C?
+ C_????_*
+ C_????
+ SMD*_c
+ Capacitor*
+$ENDFPLIST
+DRAW
+P 2 0 1 20 -80 20 80 20 N
+P 2 0 1 20 -80 80 80 80 N
+X ~ 1 0 200 110 D 50 50 1 1 P
+X ~ 2 0 -100 110 U 50 50 1 1 P
+ENDDRAW
+ENDDEF
+#
 # formula_C_1uF
 #
 DEF formula_C_1uF C 0 10 N Y 1 F N
