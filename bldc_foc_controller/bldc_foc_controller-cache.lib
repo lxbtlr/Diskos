@@ -604,6 +604,30 @@ X 2 2 0 0 100 R 59 59 1 1 U
 ENDDRAW
 ENDDEF
 #
+# formula_LED_0805
+#
+DEF formula_LED_0805 D 0 40 N N 1 F N
+F0 "D" 0 -100 50 H V C CNN
+F1 "formula_LED_0805" 0 100 50 H V C CNN
+F2 "footprints:LED_0805_OEM" -100 0 50 H I C CNN
+F3 "http://www.osram-os.com/Graphics/XPic9/00078860_0.pdf" 0 100 50 H I C CNN
+F4 "DK" 0 0 60 H I C CNN "MFN"
+F5 "475-1410-1-ND" 0 0 60 H I C CNN "MPN"
+F6 "https://www.digikey.com/products/en?keywords=475-1410-1-ND" 400 500 60 H I C CNN "PurchasingLink"
+$FPLIST
+ LED*
+$ENDFPLIST
+DRAW
+P 2 0 1 8 -50 -50 -50 50 N
+P 2 0 1 0 -50 0 50 0 N
+P 4 0 1 8 50 -50 50 50 -50 0 50 -50 N
+P 5 0 1 0 -120 -30 -180 -90 -150 -90 -180 -90 -180 -60 N
+P 5 0 1 0 -70 -30 -130 -90 -100 -90 -130 -90 -130 -60 N
+X K 1 -150 0 100 R 50 50 1 1 P
+X A 2 150 0 100 L 50 50 1 1 P
+ENDDRAW
+ENDDEF
+#
 # formula_LMP8481ASQDGKRQ1
 #
 DEF formula_LMP8481ASQDGKRQ1 U 0 10 Y Y 1 F N
@@ -654,6 +678,27 @@ X ~SHDN 6 0 -300 300 R 59 59 1 1 U
 X FAULT 7 1550 -400 300 L 59 59 1 1 U
 X VOUT 8 1150 400 300 D 59 59 1 1 O
 X SENSE 9 850 400 300 D 59 59 1 1 U
+ENDDRAW
+ENDDEF
+#
+# formula_R_0_2512
+#
+DEF formula_R_0_2512 R 0 0 N Y 1 F N
+F0 "R" 80 0 50 V V C CNN
+F1 "formula_R_0_2512" -100 0 50 V V C CNN
+F2 "footprints:R_2512_OEM" -70 0 50 H I C CNN
+F3 "http://www.te.com/commerce/DocumentDelivery/DDEController?Action=srchrtrv&DocNm=9-1773463-7&DocType=DS&DocLang=English" 80 0 50 H I C CNN
+F4 "DK" 0 0 60 H I C CNN "MFN"
+F5 "A121322CT-ND" 0 0 60 H I C CNN "MPN"
+F6 "https://www.digikey.com/products/en?keywords=A121322CT-ND" 480 400 60 H I C CNN "PurchasingLink"
+$FPLIST
+ R_*
+ Resistor_*
+$ENDFPLIST
+DRAW
+S -40 -100 40 100 0 1 10 N
+X ~ 1 0 150 50 D 50 50 1 1 P
+X ~ 2 0 -150 50 U 50 50 1 1 P
 ENDDRAW
 ENDDEF
 #
