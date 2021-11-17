@@ -19,7 +19,7 @@ U 1 1 61844723
 P 6850 5375
 F 0 "J2" H 6900 6492 50  0000 C CNN
 F 1 "Conn_02x19_Odd_Even" H 6900 6401 50  0000 C CNN
-F 2 "" H 6850 5375 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_2x19_P2.54mm_Vertical_SMD" H 6850 5375 50  0001 C CNN
 F 3 "~" H 6850 5375 50  0001 C CNN
 	1    6850 5375
 	1    0    0    -1  
@@ -30,7 +30,7 @@ U 1 1 61848E15
 P 8700 5375
 F 0 "J3" H 8750 6492 50  0000 C CNN
 F 1 "Conn_02x19_Odd_Even" H 8750 6401 50  0000 C CNN
-F 2 "" H 8700 5375 50  0001 C CNN
+F 2 "Connector_PinSocket_2.54mm:PinSocket_2x19_P2.54mm_Vertical_SMD" H 8700 5375 50  0001 C CNN
 F 3 "~" H 8700 5375 50  0001 C CNN
 	1    8700 5375
 	1    0    0    -1  
@@ -119,20 +119,6 @@ F 2 "" H 7275 5375 50  0001 C CNN
 F 3 "" H 7275 5375 50  0001 C CNN
 	1    7275 5375
 	1    0    0    -1  
-$EndComp
-$Comp
-L formula:CONN_01X03 J6
-U 1 1 618C4A73
-P 12800 9800
-F 0 "J6" V 12713 9612 50  0000 R CNN
-F 1 "CONN_01X03" V 12622 9612 50  0000 R CNN
-F 2 "Pin_Headers:Pin_Header_Straight_1x03_Pitch2.54mm" H 12800 8600 50  0001 C CNN
-F 3 "https://www.mouser.com/datasheet/2/181/M20-999-1218971.pdf" H 12800 8600 50  0001 C CNN
-F 4 "Mouser" H 12800 9800 60  0001 C CNN "MFN"
-F 5 "855-M20-9990346" H 12800 9800 60  0001 C CNN "MPN"
-F 6 "https://www.mouser.com/ProductDetail/Harwin/M20-9990346?qs=sGAEpiMZZMs%252bGHln7q6pmzlZUuX%2f53qj1ROyRKct5o4%3d" H 13200 10400 60  0001 C CNN "PurchasingLink"
-	1    12800 9800
-	0    -1   -1   0   
 $EndComp
 $Comp
 L formula:CONN_01x02 J8
@@ -394,7 +380,7 @@ U 1 1 618EABCC
 P 3600 5025
 F 0 "L1" V 3525 5075 50  0000 C CNN
 F 1 "SRP0520-4R7K" V 3700 4900 50  0000 C CNN
-F 2 "" H 3600 5025 50  0001 C CNN
+F 2 "footprints:SRP0520-4R7K" H 3600 5025 50  0001 C CNN
 F 3 "https://www.bourns.com/docs/product-datasheets/srp0520.pdf" H 3600 5025 50  0001 C CNN
 	1    3600 5025
 	0    -1   -1   0   
@@ -666,17 +652,6 @@ Text Notes 14775 3350 0    91   ~ 0
 TI Gate Driver IC
 Text Notes 3525 4025 0    50   ~ 0
 LTC4368 for Precharge, OV/UV\nProtection, Overcurrent & \nReverse Current Protection 
-$Comp
-L Device:C C12
-U 1 1 61D36A19
-P 8125 1400
-F 0 "C12" V 7975 1350 50  0000 L CNN
-F 1 "C_10uF" V 8250 1250 50  0000 L CNN
-F 2 "footprints:C_1206_OEM" H 8163 1250 50  0001 C CNN
-F 3 "https://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/CL31A106KBHNNNE_Spec.pdf" H 8125 1400 50  0001 C CNN
-	1    8125 1400
-	1    0    0    -1  
-$EndComp
 $Comp
 L Device:C C17
 U 1 1 61D41163
@@ -982,8 +957,6 @@ $EndComp
 Connection ~ 8725 1550
 Wire Wire Line
 	8725 1550 8875 1550
-Text Notes 8350 1150 0    50   ~ 0
-1206 MLCC X5R Cap Bank\n10uF @50V \nDerates to 1.8uF @25V
 Wire Wire Line
 	9600 1250 10075 1250
 Connection ~ 9600 1250
@@ -1025,18 +998,6 @@ F 2 "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm" H 10475 1400 50  0001 C CNN
 F 3 "" H 10475 1400 50  0001 C CNN
 F 4 "THT 6.3mm 35v 100uF 50mohm alpolys for 15c each" H 10475 1400 50  0001 C CNN "Desc"
 	1    10475 1400
-	1    0    0    -1  
-$EndComp
-$Comp
-L Device:CP1 C35
-U 1 1 61ECCB07
-P 10875 1400
-F 0 "C35" V 10750 1350 50  0000 L CNN
-F 1 "C_100uF" V 11025 1200 50  0000 L CNN
-F 2 "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm" H 10875 1400 50  0001 C CNN
-F 3 "" H 10875 1400 50  0001 C CNN
-F 4 "THT 6.3mm 35v 100uF 50mohm alpolys for 15c each" H 10875 1400 50  0001 C CNN "Desc"
-	1    10875 1400
 	1    0    0    -1  
 $EndComp
 $Comp
@@ -3306,12 +3267,12 @@ Connection ~ 1775 5025
 $Comp
 L formula:TLS4120D0EPVXUMA1 U4
 U 1 1 6198C5F2
-P 1775 5025
-F 0 "U4" H 2575 5312 60  0000 C CNN
-F 1 "TLS4120D0EPVXUMA1" H 2575 5206 60  0000 C CNN
-F 2 "footprints:TLS4120D0EPVXUMA1" H 2475 4125 60  0001 C CNN
-F 3 "https://www.infineon.com/dgdl/Infineon-TLS4120D0EPV-DataSheet-v01_00-EN.pdf?fileId=5546d46270c4f93e01710b576dc53b30" H 2575 5206 60  0001 C CNN
-	1    1775 5025
+P 14575 7100
+F 0 "U4" H 15375 7387 60  0000 C CNN
+F 1 "TLS4120D0EPVXUMA1" H 15375 7281 60  0000 C CNN
+F 2 "footprints:TLS4120D0EPVXUMA1" H 15275 6200 60  0001 C CNN
+F 3 "https://www.infineon.com/dgdl/Infineon-TLS4120D0EPV-DataSheet-v01_00-EN.pdf?fileId=5546d46270c4f93e01710b576dc53b30" H 15375 7281 60  0001 C CNN
+	1    14575 7100
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
@@ -4131,4 +4092,43 @@ Wire Wire Line
 	3075 2200 3600 2200
 Text Label 3600 2500 2    50   ~ 0
 ~SHDN
+$Comp
+L Device:CP1 C35
+U 1 1 61ECCB07
+P 10875 1400
+F 0 "C35" V 10750 1350 50  0000 L CNN
+F 1 "C_100uF" V 11025 1200 50  0000 L CNN
+F 2 "Capacitor_THT:CP_Radial_D6.3mm_P2.50mm" H 10875 1400 50  0001 C CNN
+F 3 "" H 10875 1400 50  0001 C CNN
+F 4 "THT 6.3mm 35v 100uF 50mohm alpolys for 15c each" H 10875 1400 50  0001 C CNN "Desc"
+	1    10875 1400
+	1    0    0    -1  
+$EndComp
+Text Notes 8350 1150 0    50   ~ 0
+1206 MLCC X5R Cap Bank\n10uF @50V \nDerates to 1.8uF @25V
+$Comp
+L Device:C C12
+U 1 1 61D36A19
+P 8125 1400
+F 0 "C12" V 7975 1350 50  0000 L CNN
+F 1 "C_10uF" V 8250 1250 50  0000 L CNN
+F 2 "footprints:C_1206_OEM" H 8163 1250 50  0001 C CNN
+F 3 "https://media.digikey.com/pdf/Data%20Sheets/Samsung%20PDFs/CL31A106KBHNNNE_Spec.pdf" H 8125 1400 50  0001 C CNN
+	1    8125 1400
+	1    0    0    -1  
+$EndComp
+$Comp
+L formula:CONN_01X03 J6
+U 1 1 618C4A73
+P 12800 9800
+F 0 "J6" V 12713 9612 50  0000 R CNN
+F 1 "CONN_01X03" V 12622 9612 50  0000 R CNN
+F 2 "Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical_SMD_Pin1Left" H 12800 8600 50  0000 C CNN
+F 3 "https://www.mouser.com/datasheet/2/181/M20-999-1218971.pdf" H 12800 8600 50  0001 C CNN
+F 4 "Mouser" H 12800 9800 60  0001 C CNN "MFN"
+F 5 "855-M20-9990346" H 12800 9800 60  0001 C CNN "MPN"
+F 6 "https://www.mouser.com/ProductDetail/Harwin/M20-9990346?qs=sGAEpiMZZMs%252bGHln7q6pmzlZUuX%2f53qj1ROyRKct5o4%3d" H 13200 10400 60  0001 C CNN "PurchasingLink"
+	1    12800 9800
+	0    -1   -1   0   
+$EndComp
 $EndSCHEMATC
