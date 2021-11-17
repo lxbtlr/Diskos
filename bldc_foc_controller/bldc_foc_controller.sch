@@ -35,8 +35,6 @@ F 3 "~" H 8700 5375 50  0001 C CNN
 	1    8700 5375
 	1    0    0    -1  
 $EndComp
-Text Notes 7125 4175 0    50   ~ 0
-Header plugins for STM32G431 Nucleo board\nNucleo sits underneath motor drive PCB
 Text Notes 6750 6525 0    50   ~ 0
 Left Side \nconn CN7
 Text Notes 8550 6525 0    50   ~ 0
@@ -1068,17 +1066,12 @@ $EndComp
 Connection ~ 12250 1650
 Wire Wire Line
 	12250 1650 12475 1650
-Wire Wire Line
-	12950 1250 12475 1250
-Connection ~ 12475 1250
 Wire Notes Line
 	7700 800  13450 800 
 Wire Notes Line
 	13450 800  13450 3275
 Wire Notes Line
 	13450 3275 7700 3275
-Wire Notes Line
-	7700 3275 7700 800 
 Text Notes 7700 3450 0    91   ~ 0
 Input Cap Bank
 Text Notes 11300 3975 0    50   ~ 0
@@ -2190,30 +2183,6 @@ F 3 "" H 5800 1475 50  0001 C CNN
 	1    5800 1475
 	1    0    0    -1  
 $EndComp
-$Comp
-L formula:VBUS_20V #PWR0139
-U 1 1 666567BD
-P 12950 1250
-F 0 "#PWR0139" H 12950 1100 50  0001 C CNN
-F 1 "VBUS_20V" H 12965 1423 50  0000 C CNN
-F 2 "" H 12950 1250 50  0001 C CNN
-F 3 "" H 12950 1250 50  0001 C CNN
-	1    12950 1250
-	1    0    0    -1  
-$EndComp
-$Comp
-L formula:VBUS_20V #PWR0140
-U 1 1 6668523A
-P 8000 1250
-F 0 "#PWR0140" H 8000 1100 50  0001 C CNN
-F 1 "VBUS_20V" H 8015 1423 50  0000 C CNN
-F 2 "" H 8000 1250 50  0001 C CNN
-F 3 "" H 8000 1250 50  0001 C CNN
-	1    8000 1250
-	1    0    0    -1  
-$EndComp
-Wire Wire Line
-	8000 1250 8125 1250
 Connection ~ 8125 1250
 Wire Wire Line
 	15850 4075 16075 4075
@@ -2576,18 +2545,9 @@ F 4 "https://www.digikey.com/product-detail/en/yageo/CC0805ZKY5V9BB105/311-1909-
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
+	15050 1750 15300 1750
+Wire Wire Line
 	15300 1750 15300 1650
-$Comp
-L formula:VBUS_20V #PWR0148
-U 1 1 67E5888A
-P 15000 1450
-F 0 "#PWR0148" H 15000 1300 50  0001 C CNN
-F 1 "VBUS_20V" H 15015 1623 50  0000 C CNN
-F 2 "" H 15000 1450 50  0001 C CNN
-F 3 "" H 15000 1450 50  0001 C CNN
-	1    15000 1450
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	15775 1450 15775 1550
 Connection ~ 15775 1450
@@ -4569,8 +4529,6 @@ Wire Wire Line
 	16875 8400 16875 8450
 Wire Wire Line
 	16875 9050 16875 9100
-Wire Notes Line
-	15800 9300 15800 8175
 $Comp
 L formula:LED_0805 D7
 U 1 1 62C58B7B
@@ -4622,10 +4580,6 @@ F 3 "" H 16325 8400 50  0001 C CNN
 	1    16325 8400
 	1    0    0    -1  
 $EndComp
-Wire Notes Line
-	15800 8175 18750 8175
-Wire Notes Line
-	15800 9300 18750 9300
 Text Notes 17425 9450 0    91   ~ 0
 Test Points & LEDs
 $Comp
@@ -4652,97 +4606,147 @@ Wire Notes Line
 	550  4550 5600 4550
 Wire Notes Line
 	550  6425 5600 6425
+Wire Wire Line
+	17125 9050 17125 9100
 $Comp
-L formula:CONN_01x02 J5
-U 1 1 618CBBD0
-P 12400 10200
-F 0 "J5" H 12375 10000 50  0000 C CNN
-F 1 "CONN_01x02" V 12500 10025 50  0000 C CNN
-F 2 "footprints:PinHeader_1x02_P2.54mm_Vertical" H 12300 10200 50  0001 C CNN
-F 3 "https://katalog.we-online.de/em/datasheet/6130xx11121.pdf" H 12400 10300 50  0001 C CNN
-F 4 "DK" H 12500 10400 50  0001 C CNN "MFN"
-F 5 "732-5315-ND" H 12600 10500 50  0001 C CNN "MPN"
-	1    12400 10200
-	-1   0    0    1   
+L formula:LED_0805 D?
+U 1 1 63061182
+P 15725 8600
+F 0 "D?" V 15775 8825 50  0000 R CNN
+F 1 "LED_0805" V 15675 9050 50  0000 R CNN
+F 2 "footprints:LED_0805_OEM" H 15625 8600 50  0001 C CNN
+F 3 "http://www.osram-os.com/Graphics/XPic9/00078860_0.pdf" H 15725 8700 50  0001 C CNN
+F 4 "DK" H 15725 8600 60  0001 C CNN "MFN"
+F 5 "475-1410-1-ND" H 15725 8600 60  0001 C CNN "MPN"
+F 6 "https://www.digikey.com/products/en?keywords=475-1410-1-ND" H 16125 9100 60  0001 C CNN "PurchasingLink"
+	1    15725 8600
+	0    -1   -1   0   
 $EndComp
-Wire Wire Line
-	12600 9850 12600 10100
-Wire Wire Line
-	12600 10200 12700 10200
-Wire Wire Line
-	12700 10200 12700 10050
-Wire Wire Line
-	17100 1350 17150 1350
-Connection ~ 17150 1350
-Connection ~ 17250 1350
-Wire Wire Line
-	17250 1350 17750 1350
-Connection ~ 17250 1550
-Wire Wire Line
-	17150 1350 17250 1350
-Wire Wire Line
-	16825 1550 17250 1550
-Wire Wire Line
-	16975 1450 16975 900 
-Wire Wire Line
-	16975 900  15375 900 
-Connection ~ 16975 1450
-Wire Wire Line
-	16975 1450 17100 1450
 $Comp
-L formula:C_100nF C61
-U 1 1 6211320E
-P 15300 1300
-F 0 "C61" H 15325 1400 50  0000 L CNN
-F 1 "C_100nF" H 14975 1425 50  0000 L CNN
-F 2 "footprints:C_0603_1608Metric" H 15338 1150 50  0001 C CNN
-F 3 "http://www.samsungsem.com/kr/support/product-search/mlcc/CL10A475KQ8NNNC.jsp" H 15325 1400 50  0001 C CNN
-F 4 "DK" H 15300 1300 60  0001 C CNN "MFN"
-F 5 "1276-6717-1-ND" H 15300 1300 60  0001 C CNN "MPN"
-F 6 "https://www.digikey.com/product-detail/en/samsung-electro-mechanics/CL10B104KA8WPNC/1276-6717-1-ND/5961576" H 15725 1800 60  0001 C CNN "PurchasingLink"
-	1    15300 1300
+L Device:R R?
+U 1 1 63061188
+P 15725 8900
+F 0 "R?" H 15500 8975 50  0000 L CNN
+F 1 "R_68" H 15400 8850 50  0000 L CNN
+F 2 "footprints:R_0805_OEM" V 15655 8900 50  0001 C CNN
+F 3 "~" H 15725 8900 50  0001 C CNN
+	1    15725 8900
+	1    0    0    -1  
+$EndComp
+$Comp
+L power:GND #PWR?
+U 1 1 6306118E
+P 15725 9100
+F 0 "#PWR?" H 15725 8850 50  0001 C CNN
+F 1 "GND" H 15600 9025 50  0000 C CNN
+F 2 "" H 15725 9100 50  0001 C CNN
+F 3 "" H 15725 9100 50  0001 C CNN
+	1    15725 9100
 	1    0    0    -1  
 $EndComp
 Wire Wire Line
-	15375 1150 15375 900 
+	15725 8400 15725 8450
 Wire Wire Line
-	14975 1450 15000 1450
-Wire Wire Line
-	14975 1750 15300 1750
-Connection ~ 15000 1450
-Wire Wire Line
-	15000 1450 15300 1450
-Wire Wire Line
-	15775 1000 15775 1350
-Wire Wire Line
-	16825 1000 16825 1350
-Connection ~ 15375 1150
+	15725 9050 15725 9100
 $Comp
-L formula:C_10uF_50V C62
-U 1 1 62329AD1
-P 15500 1350
-F 0 "C62" H 15525 1500 50  0000 L CNN
-F 1 "C_10uF_50V" H 15375 1575 50  0000 L CNN
-F 2 "footprints:C_0805_OEM" H 15538 1950 50  0001 C CNN
-F 3 "http://www.samsungsem.com/kr/support/product-https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM21BR61H106KE43-01A.pdf" H 15525 2200 50  0001 C CNN
-F 4 "Murata" H 15500 1400 60  0001 C CNN "MFN"
-F 5 "GRM21BR61H106KE43L" H 15500 2100 60  0001 C CNN "MPN"
-F 6 "https://www.digikey.com/en/products/detail/murata-electronics/GRM21BR61H106KE43L/10326316" H 15925 1850 60  0001 C CNN "PurchasingLink"
-	1    15500 1350
+L formula:LED_0805 D?
+U 1 1 630B6073
+P 15125 8600
+F 0 "D?" V 15175 8825 50  0000 R CNN
+F 1 "LED_0805" V 15075 9050 50  0000 R CNN
+F 2 "footprints:LED_0805_OEM" H 15025 8600 50  0001 C CNN
+F 3 "http://www.osram-os.com/Graphics/XPic9/00078860_0.pdf" H 15125 8700 50  0001 C CNN
+F 4 "DK" H 15125 8600 60  0001 C CNN "MFN"
+F 5 "475-1410-1-ND" H 15125 8600 60  0001 C CNN "MPN"
+F 6 "https://www.digikey.com/products/en?keywords=475-1410-1-ND" H 15525 9100 60  0001 C CNN "PurchasingLink"
+	1    15125 8600
+	0    -1   -1   0   
+$EndComp
+$Comp
+L Device:R R?
+U 1 1 630B6079
+P 15125 8900
+F 0 "R?" H 14900 8975 50  0000 L CNN
+F 1 "R_68" H 14800 8850 50  0000 L CNN
+F 2 "footprints:R_0805_OEM" V 15055 8900 50  0001 C CNN
+F 3 "~" H 15125 8900 50  0001 C CNN
+	1    15125 8900
 	1    0    0    -1  
 $EndComp
-Connection ~ 15300 1450
+$Comp
+L power:GND #PWR?
+U 1 1 630B607F
+P 15125 9100
+F 0 "#PWR?" H 15125 8850 50  0001 C CNN
+F 1 "GND" H 15000 9025 50  0000 C CNN
+F 2 "" H 15125 9100 50  0001 C CNN
+F 3 "" H 15125 9100 50  0001 C CNN
+	1    15125 9100
+	1    0    0    -1  
+$EndComp
 Wire Wire Line
-	15500 1150 15375 1150
-Connection ~ 15500 1450
+	15125 8400 15125 8450
 Wire Wire Line
-	15375 1150 15300 1150
+	15125 9050 15125 9100
+Text Label 6650 4575 2    50   ~ 0
+PC12_LED
+Text Label 6650 6275 2    50   ~ 0
+PC3_LED
+Text Label 15125 8400 0    50   ~ 0
+PC12_LED
+Text Label 15725 8400 0    50   ~ 0
+PC3_LED
+Connection ~ 12475 1250
 Wire Wire Line
-	15300 1450 15500 1450
+	12950 1250 12475 1250
+Text Notes 7125 4175 0    50   ~ 0
+Header plugins for STM32G431 Nucleo board\nNucleo sits underneath motor drive PCB
 Wire Wire Line
-	15500 1450 15775 1450
+	8000 1250 8125 1250
 Wire Wire Line
-	15775 1000 16525 1000
-Text Notes 14950 2200 1    50   ~ 0
-16V X5R-X7R
+	15125 1450 15775 1450
+Wire Wire Line
+	15050 1450 15125 1450
+Connection ~ 15125 1450
+$Comp
+L formula:VBUS_20V #PWR0148
+U 1 1 67E5888A
+P 15125 1450
+F 0 "#PWR0148" H 15125 1300 50  0001 C CNN
+F 1 "VBUS_20V" H 15140 1623 50  0000 C CNN
+F 2 "" H 15125 1450 50  0001 C CNN
+F 3 "" H 15125 1450 50  0001 C CNN
+	1    15125 1450
+	1    0    0    -1  
+$EndComp
+$Comp
+L formula:VBUS_20V #PWR0139
+U 1 1 666567BD
+P 12950 1250
+F 0 "#PWR0139" H 12950 1100 50  0001 C CNN
+F 1 "VBUS_20V" H 12965 1423 50  0000 C CNN
+F 2 "" H 12950 1250 50  0001 C CNN
+F 3 "" H 12950 1250 50  0001 C CNN
+	1    12950 1250
+	1    0    0    -1  
+$EndComp
+$Comp
+L formula:VBUS_20V #PWR0140
+U 1 1 6668523A
+P 8000 1250
+F 0 "#PWR0140" H 8000 1100 50  0001 C CNN
+F 1 "VBUS_20V" H 8015 1423 50  0000 C CNN
+F 2 "" H 8000 1250 50  0001 C CNN
+F 3 "" H 8000 1250 50  0001 C CNN
+	1    8000 1250
+	1    0    0    -1  
+$EndComp
+Wire Notes Line
+	7700 3275 7700 800 
+Wire Notes Line
+	14625 8175 14625 9300
+Wire Notes Line
+	14625 8175 18750 8175
+Wire Notes Line
+	14625 9300 18750 9300
 $EndSCHEMATC
