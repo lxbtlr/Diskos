@@ -3929,10 +3929,10 @@ F 6 "https://www.digikey.com/en/products/detail/panasonic-electronic-components/
 	1    0    0    -1  
 $EndComp
 $Comp
-L formula:R_500 U5
+L formula:R_500 R51
 U 1 1 61D01F28
 P 2125 2750
-F 0 "U5" V 2079 2838 50  0000 L CNN
+F 0 "R51" V 2079 2838 50  0000 L CNN
 F 1 "R_500" V 2170 2838 50  0000 L CNN
 F 2 "footprints:R_0805_OEM" H 2125 2750 50  0001 C CNN
 F 3 "" H 2125 2750 50  0001 C CNN
