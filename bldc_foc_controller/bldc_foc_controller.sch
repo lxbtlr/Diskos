@@ -47,7 +47,7 @@ U 1 1 61872925
 P 2425 1075
 F 0 "U6" H 2400 1075 50  0000 L CNN
 F 1 "redcube-7461057" H 2100 1150 50  0000 L CNN
-F 2 "formula:redcube_pressfit_6pin" H 2425 1075 50  0001 C CNN
+F 2 "footprints:redcube_pressfit_6pin" H 2425 1075 50  0001 C CNN
 F 3 "https://www.mouser.com/datasheet/2/445/7461057-1723744.pdf" H 2425 1075 50  0001 C CNN
 F 4 "7461057" H 2425 1075 50  0001 C CNN "MPN"
 	1    2425 1075
@@ -59,7 +59,7 @@ U 1 1 61873E28
 P 1175 3650
 F 0 "U3" V 1071 3638 50  0000 L CNN
 F 1 "redcube-7461057" V 1300 3500 50  0000 L CNN
-F 2 "formula:redcube_pressfit_6pin" H 1175 3650 50  0001 C CNN
+F 2 "footprints:redcube_pressfit_6pin" H 1175 3650 50  0001 C CNN
 F 3 "https://www.mouser.com/datasheet/2/445/7461057-1723744.pdf" H 1175 3650 50  0001 C CNN
 F 4 "7461057" H 1175 3650 50  0001 C CNN "MPN"
 	1    1175 3650
@@ -71,7 +71,7 @@ U 1 1 61875E68
 P 675 1525
 F 0 "U1" V 571 1513 50  0000 L CNN
 F 1 "redcube-7461057" V 675 1500 50  0000 L CNN
-F 2 "formula:redcube_pressfit_6pin" H 675 1525 50  0001 C CNN
+F 2 "footprints:redcube_pressfit_6pin" H 675 1525 50  0001 C CNN
 F 3 "https://www.mouser.com/datasheet/2/445/7461057-1723744.pdf" H 675 1525 50  0001 C CNN
 F 4 "7461057" H 675 1525 50  0001 C CNN "MPN"
 	1    675  1525
@@ -166,7 +166,7 @@ U 1 1 61875E6F
 P 675 3600
 F 0 "U2" V 571 3588 50  0000 L CNN
 F 1 "redcube-7461057" V 675 2750 50  0000 L CNN
-F 2 "formula:redcube_pressfit_6pin" H 675 3600 50  0001 C CNN
+F 2 "footprints:redcube_pressfit_6pin" H 675 3600 50  0001 C CNN
 F 3 "https://www.mouser.com/datasheet/2/445/7461057-1723744.pdf" H 675 3600 50  0001 C CNN
 F 4 "7461057" H 675 3600 50  0001 C CNN "MPN"
 	1    675  3600
@@ -476,7 +476,7 @@ U 1 1 6196FF00
 P 5325 1675
 F 0 "C9" H 5440 1771 50  0000 L CNN
 F 1 "C_100uF+" H 5440 1680 50  0000 L CNN
-F 2 "footprints:C_100uF+" H 5363 2275 50  0001 C CNN
+F 2 "footprints:C_0805_OEM" H 5363 2275 50  0001 C CNN
 F 3 "https://www.nichicon.co.jp/english/products/pdfs/e-uuq.pdf" H 5350 2525 50  0001 C CNN
 F 4 "https://www.digikey.com/product-detail/en/nichicon/UUQ1H101MCL1GS/493-3209-2-ND/1965345" H 5750 2175 60  0001 C CNN "PurchasingLink"
 	1    5325 1675
@@ -1249,31 +1249,7 @@ Wire Wire Line
 	8300 10250 8400 10250
 Connection ~ 3575 1775
 Wire Wire Line
-	3775 1475 3825 1475
-Wire Wire Line
-	3825 1475 3825 925 
-Wire Wire Line
-	3775 925  3825 925 
-Connection ~ 3825 1475
-Wire Wire Line
-	3825 1475 3875 1475
-Connection ~ 3825 925 
-Wire Wire Line
-	3825 925  3875 925 
-Wire Wire Line
 	3500 1775 3575 1775
-Wire Wire Line
-	4075 1225 3875 1225
-Connection ~ 3875 1775
-Wire Wire Line
-	3875 1775 4075 1775
-Wire Wire Line
-	3575 1775 3775 1775
-Wire Wire Line
-	3575 1225 3775 1225
-Connection ~ 3775 1775
-Wire Wire Line
-	3775 1775 3875 1775
 $Comp
 L formula:C_100nF C2
 U 1 1 6426FEC2
@@ -2866,10 +2842,6 @@ F 3 "" H 11325 10725 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	11275 10725 11325 10725
-Wire Wire Line
-	3875 1225 3875 1775
-Wire Wire Line
-	3775 1225 3775 1775
 $Comp
 L formula:R_1 R22
 U 1 1 6198626D
@@ -3070,7 +3042,7 @@ U 1 1 61FF9FF0
 P 5850 2450
 F 0 "D5" V 6103 2346 60  0000 R CNN
 F 1 "D_TVS_35V" H 6250 2575 60  0000 R CNN
-F 2 "SMC_DIO" H 6050 2090 60  0001 C CNN
+F 2 "footprints:DO-214AB" H 6050 2090 60  0001 C CNN
 F 3 "https://www.diodes.com/assets/Datasheets/ds40741.pdf" H 5850 2450 60  0001 C CNN
 F 4 "SMCJ22A-13-F" H 6000 2700 50  0001 C CNN "MPN"
 	1    5850 2450
@@ -3219,7 +3191,7 @@ U 1 1 61ADF1C6
 P 1900 10075
 F 0 "D2" H 2275 10025 60  0000 R CNN
 F 1 "D_TVS_35V" V 2475 10000 60  0000 R CNN
-F 2 "SMC_DIO" H 2100 9715 60  0001 C CNN
+F 2 "footprints:DO-214AB" H 2100 9715 60  0001 C CNN
 F 3 "https://www.diodes.com/assets/Datasheets/ds40741.pdf" H 1900 10075 60  0001 C CNN
 F 4 "SMCJ22A-13-F" H 2050 10325 50  0001 C CNN "MPN"
 	1    1900 10075
@@ -3231,7 +3203,7 @@ U 1 1 61B241D5
 P 2100 10400
 F 0 "D3" H 2475 10350 60  0000 R CNN
 F 1 "D_TVS_35V" V 2900 10525 60  0000 R CNN
-F 2 "SMC_DIO" H 2300 10040 60  0001 C CNN
+F 2 "footprints:DO-214AB" H 2300 10040 60  0001 C CNN
 F 3 "https://www.diodes.com/assets/Datasheets/ds40741.pdf" H 2100 10400 60  0001 C CNN
 F 4 "SMCJ22A-13-F" H 2250 10650 50  0001 C CNN "MPN"
 	1    2100 10400
@@ -3243,7 +3215,7 @@ U 1 1 61B698BF
 P 2350 10725
 F 0 "D4" H 2725 10675 60  0000 R CNN
 F 1 "D_TVS_35V" V 3375 11100 60  0000 R CNN
-F 2 "SMC_DIO" H 2550 10365 60  0001 C CNN
+F 2 "footprints:DO-214AB" H 2550 10365 60  0001 C CNN
 F 3 "https://www.diodes.com/assets/Datasheets/ds40741.pdf" H 2350 10725 60  0001 C CNN
 F 4 "SMCJ22A-13-F" H 2500 10975 50  0001 C CNN "MPN"
 	1    2350 10725
@@ -3908,7 +3880,7 @@ U 1 1 61F5EEBD
 P 1825 2600
 F 0 "D1" H 2075 2475 60  0000 R CNN
 F 1 "D_TVS_35V" H 2250 2725 60  0000 R CNN
-F 2 "SMC_DIO" H 2025 2240 60  0001 C CNN
+F 2 "footprints:DO-214AB" H 2025 2240 60  0001 C CNN
 F 3 "https://www.diodes.com/assets/Datasheets/ds40741.pdf" H 1825 2600 60  0001 C CNN
 F 4 "SMCJ22A-13-F" H 1975 2850 50  0001 C CNN "MPN"
 	1    1825 2600
@@ -4774,7 +4746,7 @@ U 1 1 61CFB379
 P 15475 1300
 F 0 "C62" H 15500 1375 50  0000 L CNN
 F 1 "C_100nF" H 15400 1500 50  0000 L CNN
-F 2 "formula:C_0603_1608Metric" H 15513 1150 50  0001 C CNN
+F 2 "footprints:C_0805_OEM" H 15513 1150 50  0001 C CNN
 F 3 "http://www.samsungsem.com/kr/support/product-search/mlcc/CL10A475KQ8NNNC.jsp" H 15500 1400 50  0001 C CNN
 F 4 "DK" H 15475 1300 60  0001 C CNN "MFN"
 F 5 "1276-6717-1-ND" H 15475 1300 60  0001 C CNN "MPN"
@@ -4791,7 +4763,7 @@ U 1 1 61D53CF1
 P 15275 1350
 F 0 "C61" H 15300 1475 50  0000 L CNN
 F 1 "C_10uF_50V" H 14900 1600 50  0000 L CNN
-F 2 "formula:C_0805_OEM" H 15313 1950 50  0001 C CNN
+F 2 "footprints:C_0805_OEM" H 15313 1950 50  0001 C CNN
 F 3 "http://www.samsungsem.com/kr/support/product-https://search.murata.co.jp/Ceramy/image/img/A01X/G101/ENG/GRM21BR61H106KE43-01A.pdf" H 15300 2200 50  0001 C CNN
 F 4 "Murata" H 15275 1400 60  0001 C CNN "MFN"
 F 5 "GRM21BR61H106KE43L" H 15275 2100 60  0001 C CNN "MPN"
@@ -4815,4 +4787,28 @@ Wire Wire Line
 	17200 1350 17750 1350
 Wire Wire Line
 	16825 1550 17600 1550
+Wire Wire Line
+	3775 1475 3800 1475
+Wire Wire Line
+	3775 925  3800 925 
+Wire Wire Line
+	3575 1775 3850 1775
+Wire Wire Line
+	3575 1225 3850 1225
+Wire Wire Line
+	3850 1775 3850 1225
+Connection ~ 3850 1775
+Wire Wire Line
+	3850 1775 4075 1775
+Connection ~ 3850 1225
+Wire Wire Line
+	3850 1225 4075 1225
+Wire Wire Line
+	3800 1475 3800 925 
+Connection ~ 3800 1475
+Wire Wire Line
+	3800 1475 3875 1475
+Connection ~ 3800 925 
+Wire Wire Line
+	3800 925  3875 925 
 $EndSCHEMATC
