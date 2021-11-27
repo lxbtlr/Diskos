@@ -1156,7 +1156,7 @@ L Device:Q_NMOS_DGS Q4
 U 1 1 61F9201D
 P 4075 1575
 F 0 "Q4" V 4300 1575 50  0000 C CNN
-F 1 "HYG025N06LS1C2" V 4800 2050 50  0000 C CNN
+F 1 "HYG025N06LS1C2" V 4950 1625 50  0000 C CNN
 F 2 "footprints:PDFN_5X6MC_MCH" H 4275 1675 50  0001 C CNN
 F 3 "https://drive.google.com/file/d/1Gbielo2qQ6OtCDVvoQN8r_uS-8EwH9-v/view?usp=sharing" H 4075 1575 50  0001 C CNN
 	1    4075 1575
@@ -1169,7 +1169,7 @@ L Device:Q_NMOS_DGS Q3
 U 1 1 621683E5
 P 4075 1025
 F 0 "Q3" V 4300 1025 50  0000 C CNN
-F 1 "HYG025N06LS1C2" V 4325 1500 50  0000 C CNN
+F 1 "HYG025N06LS1C2" V 4475 1075 50  0000 C CNN
 F 2 "footprints:PDFN_5X6MC_MCH" H 4275 1125 50  0001 C CNN
 F 3 "https://drive.google.com/file/d/1Gbielo2qQ6OtCDVvoQN8r_uS-8EwH9-v/view?usp=sharing" H 4075 1025 50  0001 C CNN
 	1    4075 1025
@@ -1249,31 +1249,7 @@ Wire Wire Line
 	8300 10250 8400 10250
 Connection ~ 3575 1775
 Wire Wire Line
-	3775 1475 3825 1475
-Wire Wire Line
-	3825 1475 3825 925 
-Wire Wire Line
-	3775 925  3825 925 
-Connection ~ 3825 1475
-Wire Wire Line
-	3825 1475 3875 1475
-Connection ~ 3825 925 
-Wire Wire Line
-	3825 925  3875 925 
-Wire Wire Line
 	3500 1775 3575 1775
-Wire Wire Line
-	4075 1225 3875 1225
-Connection ~ 3875 1775
-Wire Wire Line
-	3875 1775 4075 1775
-Wire Wire Line
-	3575 1775 3775 1775
-Wire Wire Line
-	3575 1225 3775 1225
-Connection ~ 3775 1775
-Wire Wire Line
-	3775 1775 3875 1775
 $Comp
 L formula:C_100nF C2
 U 1 1 6426FEC2
@@ -2140,27 +2116,10 @@ Wire Notes Line
 Wire Notes Line
 	10625 3600 18750 3600
 Connection ~ 1900 3500
-$Comp
-L formula:R_1m_3W_1% R12
-U 1 1 661E27D9
-P 4525 1475
-F 0 "R12" H 4800 1475 60  0000 C CNN
-F 1 "R_1m_3W_1%" H 4825 1698 60  0000 C CNN
-F 2 "formula:WSL27261L000FEB" H 4775 1140 60  0001 C CNN
-F 3 "https://www.vishay.com/docs/30131/wsl2726.pdf" H 4525 1475 60  0001 C CNN
-F 4 "WSL27261L000FEB" H 4825 975 50  0001 C CNN "MPN"
-	1    4525 1475
-	1    0    0    -1  
-$EndComp
 Wire Wire Line
 	5125 1475 5325 1475
 Wire Wire Line
-	4350 925  4350 1475
-Connection ~ 4350 1475
-Wire Wire Line
-	4675 1475 4675 1800
-Wire Wire Line
-	4975 1800 4975 1475
+	4350 925  4350 975 
 $Comp
 L formula:VBUS_20V #PWR0137
 U 1 1 665F4682
@@ -2611,21 +2570,14 @@ Text Label 1100 3500 0    50   ~ 0
 REGEN_LOAD_-
 Wire Wire Line
 	1675 1175 2275 1175
-Text Label 4675 1700 2    50   ~ 0
+Text Label 4675 1800 1    50   ~ 0
 SYSTEM_SH_+
-Text Label 4950 2050 0    50   ~ 0
+Text Label 4950 1800 1    50   ~ 0
 SYSTEM_SH_-
 Wire Wire Line
 	4750 1800 4950 1800
 Wire Wire Line
-	4950 1800 4950 2050
-Connection ~ 4950 1800
-Wire Wire Line
-	4950 1800 4975 1800
-Wire Wire Line
 	4450 1800 4675 1800
-Wire Wire Line
-	4350 1475 4525 1475
 Wire Notes Line
 	14775 3200 14775 800 
 Text Label 9000 5075 0    50   ~ 0
@@ -2866,10 +2818,6 @@ F 3 "" H 11325 10725 50  0001 C CNN
 $EndComp
 Wire Wire Line
 	11275 10725 11325 10725
-Wire Wire Line
-	3875 1225 3875 1775
-Wire Wire Line
-	3775 1225 3775 1775
 $Comp
 L formula:R_1 R22
 U 1 1 6198626D
@@ -3125,7 +3073,7 @@ U 1 1 6246A93E
 P 3025 6100
 F 0 "NT1" H 3125 6250 50  0000 C CNN
 F 1 "Net-Tie_2" H 3000 6175 50  0000 C CNN
-F 2 "" H 3025 6100 50  0001 C CNN
+F 2 "NetTie:NetTie-2_SMD_Pad0.5mm" H 3025 6100 50  0001 C CNN
 F 3 "~" H 3025 6100 50  0001 C CNN
 	1    3025 6100
 	-1   0    0    1   
@@ -4815,4 +4763,53 @@ Wire Wire Line
 	17200 1350 17750 1350
 Wire Wire Line
 	16825 1550 17600 1550
+Wire Wire Line
+	3775 1475 3800 1475
+Wire Wire Line
+	3775 925  3800 925 
+Wire Wire Line
+	3575 1775 3850 1775
+Wire Wire Line
+	3575 1225 3850 1225
+Wire Wire Line
+	3850 1775 3850 1225
+Connection ~ 3850 1775
+Wire Wire Line
+	3850 1775 4075 1775
+Connection ~ 3850 1225
+Wire Wire Line
+	3850 1225 4075 1225
+Wire Wire Line
+	3800 1475 3800 925 
+Connection ~ 3800 1475
+Wire Wire Line
+	3800 1475 3875 1475
+Connection ~ 3800 925 
+Wire Wire Line
+	3800 925  3875 925 
+$Comp
+L formula:R_1m_3W_1% R12
+U 1 1 620B2503
+P 5100 975
+F 0 "R12" H 5375 975 60  0000 C CNN
+F 1 "R_1m_3W_1%" H 5400 1198 60  0000 C CNN
+F 2 "formula:WSL27261L000FEB" H 5350 640 60  0001 C CNN
+F 3 "https://www.vishay.com/docs/30131/wsl2726.pdf" H 5100 975 60  0001 C CNN
+F 4 "WSL27261L000FEB" H 5400 475 50  0001 C CNN "MPN"
+	1    5100 975 
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	4500 975  4350 975 
+Connection ~ 4350 975 
+Wire Wire Line
+	4350 975  4350 1475
+Wire Wire Line
+	5100 975  5125 975 
+Wire Wire Line
+	5125 975  5125 1475
+Text Label 4650 975  1    50   ~ 0
+SYSTEM_SH_+
+Text Label 4950 975  1    50   ~ 0
+SYSTEM_SH_-
 $EndSCHEMATC
