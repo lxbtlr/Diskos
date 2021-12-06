@@ -161,6 +161,7 @@ void fault_check(){
   }
 }
 
+
 void trigger_e_brake(){
   return; 
 }
@@ -183,6 +184,15 @@ void fault_handle(){
   }
 }
 
+void slowClimb(int input){
+  
+  
+}
+void slowFall(int input){
+  
+  
+}
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
@@ -193,10 +203,24 @@ void setup() {
   timeOne = millis();  
 }
 
+
+enum COMMAND{
+  ON,
+  OFF,
+};
+
 void loop() {
 
   fault_check(); 
   estimate_RPM(); 
+  buff = Serial.available()
+  if (buff >0 ){
+    for(byte i = 0: i<){
+      input = Serial.read();
+      Serial.print("You typed: " );
+      Serial.println(input);
+    }
+  }
 
   switch (system_state)
   {
