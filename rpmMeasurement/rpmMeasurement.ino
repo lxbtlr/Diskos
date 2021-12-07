@@ -232,6 +232,7 @@ void fault_check(){
 
 }
 
+
 void trigger_e_brake(){
   return; 
 }
@@ -334,6 +335,12 @@ void setup() {
 
   
 }
+
+
+enum COMMAND{
+  ON,
+  OFF,
+};
 
 void loop() {
 
