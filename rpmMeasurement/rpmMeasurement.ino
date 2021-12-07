@@ -20,7 +20,7 @@ Software todos
 #define     SHUTOFF_RPM                 6000
 #define     MAX_ALLOWABLE_RPM           150
 
-#define     POT_FILTER_SZ               10  // size for moving avg filter
+#define     POT_FILTER_SZ               10  // size for moving avg filter for pot & RPM 
 #define     POT_POLL_RATE               10  // Hz
 #define     FILTER_SZ                   5
 
@@ -114,13 +114,17 @@ void button_check(){
 //}
 
 
+
 // whenever rotations hits 7 we completed another rotation 
 void estimate_RPM_DIY_encoder(){
-//  rotations % 7 / total_run_time
-  
+  // estimate RPM 1x / second
   if(((millis()-timeOne))> 1000){
     timeOne = millis();
-    RPM[pointer] = rotations*15;
+
+    // actual RPM math 
+    RPM[pointer] = (rotations / 7) * 60; // needs 7 hits of encoder for a full revolution, multiply by 60 to get RPM (not RPS) 
+
+    // moving avg filter 
     pointer = (pointer + 1) % FILTER_SZ; 
 
     RPM_filtered = 0; 
