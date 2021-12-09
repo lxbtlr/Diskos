@@ -1,24 +1,65 @@
 /* V1 Software 
-Software todos 
++++ Software todos +++
+- port over to mega and test all features in mega 
 - define critical serial comms to be sent
-- seperate state machine for RPM Flywheel drive
-  - automated startup sequence
-  - soft shutoff sequence 
-  - test steady state PI control 
 - thermistor reads & temp shutoff 
+- over current checking
+- RPM reads
+
++++ General SW BACKLOG +++ 
 - CUI encoder driver
-- current sensor? / over current checking
-- Odrive interface? RPM reads? 
+- after verifying encoder add velocity checks to state machine 
+- pre-emptive error checking 
+
+
++++ Odrive todo w solomon +++
+- tune in PIDs
+  - startup 
+  - high RPM 
+- current_lim settings? 
+
+
++++ HW todo +++
+wire current sense 
+wire estop button 
+wire motor temp sense 
+wire thermistors 
+
 */
 #include <Servo.h>
 #include "Wire.h" // This library allows you to communicate with I2C devices.
+#include <HardwareSerial.h>
+#include <ODriveArduino.h>
 
 
 
 #define     MAX_SPEED_PERCENTAGE        85
 
-#define     SHUTOFF_RPM                 6000
-#define     MAX_ALLOWABLE_RPM           150
+// ODRIVE VELs
+#define     INPUT_VEL_LOW               20               
+#define     INPUT_VEL_MID               50               
+#define     INPUT_VEL_HIGH              80
+// #define     HIGH_INPUT_VEL              92
+
+#define     INPUT_VEL_REGEN             20
+
+// ODRIVE VEL RAMP RATES
+#define     VEL_RAMP_RATE_SLOW          3.0f
+#define     VEL_RAMP_RATE_FAST          20.0f   
+#define     VEL_RAMP_RATE_REGEN         3.0f    // Ramp rate to be used during regen 
+
+
+// ODRIVE WAIT TIMES 
+#define     WAIT_TIME_LOW               10000 // ms
+#define     WAIT_TIME_MID               10000 // ms
+#define     WAIT_TIME_HIGH              10000 // ms
+
+#define     REGEN_TIME                  20000 // ms 
+#define     SPINDOWN_TIME               20000 // ms 
+
+// #define     SHUTOFF_RPM                 6000
+// #define     MAX_ALLOWABLE_RPM           150
+
 
 #define     POT_FILTER_SZ               10  // size for moving avg filter for pot & RPM 
 #define     POT_POLL_RATE               10  // Hz
@@ -39,7 +80,7 @@ const int   pot_pin         = A1;
 const int   button_pin      = 4; 
 const int   interruptPin    = 2;
 const int   encoder_A_pin   = 3; // https://docs.revrobotics.com/sparkmax/feature-description/encoder-port
-
+const int   current_sense_pin = A7; // Todo fix.
 
 
 uint16_t  pot_value[POT_FILTER_SZ]     = { 0 }; 
@@ -57,20 +98,26 @@ bool      first_time_pot  = true;
 uint8_t pointer = 0; 
 float angularVelocity;
 
+bool      odrv_spindown_first_time = true; 
+bool     odrv_first_time = true; 
+uint32_t odrv_time = 0; 
+
+float regen_current = 0.0f; 
+float odrv_vbus     = 0.0f; 
+
 // PI Controller 
 
-const float kp  =     .01; // to test 
-const float ki  =     .0001; 
-volatile float err       =     0; 
-volatile float integral  =     0; 
-volatile uint8_t temp_dc =     0; 
-uint8_t max_dc  =     0; 
-uint8_t min_dc  =     100; 
-uint32_t RPM_setpoint    = 20; 
+// const float kp  =     .01; // to test 
+// const float ki  =     .0001; 
+// volatile float err       =     0; 
+// volatile float integral  =     0; 
+// volatile uint8_t temp_dc =     0; 
+// uint8_t max_dc  =     0; 
+// uint8_t min_dc  =     100; 
+// uint32_t RPM_setpoint    = 20; 
 
 
 // IMU setup 
-
 int16_t accelerometer_x, accelerometer_y, accelerometer_z; // variables for accelerometer raw data
 int16_t gyro_x, gyro_y, gyro_z; // variables for gyro raw data
 int16_t temperature; // variables for temperature data
@@ -78,16 +125,51 @@ uint32_t IMU_time = 0;
 
 char tmp_str[7]; // temporary variable used in convert function
 
+// odrive hardware init
+HardwareSerial& odrive_serial = Serial1;
 
-Servo ESC; // use this to easily create 50KHz PWM signal 
+ODriveArduino odrive(odrive_serial);
 
 
-enum FSM {
+
+
+// Servo ESC; // use this to easily create 50KHz PWM signal 
+
+
+enum SYSTEM_FSM {
   RUN, 
   STOP, 
 }; 
 
-FSM system_state = RUN; 
+enum ODRIVE_FSM {
+  FAULT, 
+  IDLE, 
+  STARTUP, 
+  REGEN_BRAKE, 
+  REGEN_SPINUP, 
+  SPINDOWN, 
+}; 
+
+// was hoping I didn't have to do this ... 
+enum STARTUP_FSM {
+  STOPPED, 
+  SPINUP, 
+  MID, 
+  HIGH, 
+}; 
+
+struct odrv_error_t {
+  uint16_t system; 
+  uint16_t axis; 
+  uint16_t motor; 
+  uint16_t encoder; 
+  uint16_t controller; 
+}; 
+
+SYSTEM_FSM system_state   = RUN; 
+ODRIVE_FSM odrive_state   = IDLE; 
+STARTUP_FSM startup_state = STOPPED; 
+odrv_error_t odrv_error   = { 0,0,0,0,0 }; // init with no errors 
 
 /* for IMU */
 char* convert_int16_to_str(int16_t i) { // converts int16 to string. Moreover, resulting strings will have the same length in the debug monitor.
@@ -176,41 +258,41 @@ void poll_filter_pot(){
 
 
 /* use PI controller to reach steady state setpoint value by driving PWM duty cycle*/
-void drive_PWM_PI(void){
-  temp_dc = 0;   
-  err = RPM_setpoint - RPM_filtered; // assumes access to updated RPM_filtered value
-  integral += err; 
+// void drive_PWM_PI(void){
+//   temp_dc = 0;   
+//   err = RPM_setpoint - RPM_filtered; // assumes access to updated RPM_filtered value
+//   integral += err; 
 
-  temp_dc = kp * err + ki * integral; 
+//   temp_dc = kp * err + ki * integral; 
   
-  if (temp_dc > max_dc){
-    temp_dc = max_dc; 
-  } else if (temp_dc < min_dc){
-    temp_dc = min_dc; 
-  }
+//   if (temp_dc > max_dc){
+//     temp_dc = max_dc; 
+//   } else if (temp_dc < min_dc){
+//     temp_dc = min_dc; 
+//   }
   
-  PWM_duty_cycle = temp_dc; 
+//   PWM_duty_cycle = temp_dc; 
   
-  ESC.write(PWM_duty_cycle);   
-}
+//   ESC.write(PWM_duty_cycle);   
+// }
 
-void drive_PWM_pot(){
-  poll_filter_pot(); 
+// void drive_PWM_pot(){
+//   poll_filter_pot(); 
 
-  // map 10 bit pot value to RPM 
-  if (millis() - start_time_esc > 800){
-//    if (motor_start){
-//      motor_start = false; 
-//      if PWM_duty_cycle > 
-//    }
-      PWM_duty_cycle = map(filtered_pot_value, 0, 1023, 0, 180); 
-  }
+//   // map 10 bit pot value to RPM 
+//   if (millis() - start_time_esc > 800){
+// //    if (motor_start){
+// //      motor_start = false; 
+// //      if PWM_duty_cycle > 
+// //    }
+//       PWM_duty_cycle = map(filtered_pot_value, 0, 1023, 0, 180); 
+//   }
 
   
-  ESC.write(PWM_duty_cycle); 
-//  Serial.print("pot value: "); Serial.print(filtered_pot_value); Serial.println(); 
-//  Serial.print("PWM value: "); Serial.print(PWM_duty_cycle); Serial.println(); 
-}
+//   ESC.write(PWM_duty_cycle); 
+// //  Serial.print("pot value: "); Serial.print(filtered_pot_value); Serial.println(); 
+// //  Serial.print("PWM value: "); Serial.print(PWM_duty_cycle); Serial.println(); 
+// }
 
 void serial_output(){
   Serial.print("RPM_filtered: "); Serial.print(RPM_filtered); Serial.println(); 
@@ -219,23 +301,22 @@ void serial_output(){
 //  } else {
 //    Serial.print("system_state: "); Serial.print("STOP"); Serial.println(); 
 //  }
+  print_IMU(); 
+
 }
 
 void fault_check(){
+  odrv_poll_errors(); 
   button_check(); 
   
-  if (RPM_filtered>SHUTOFF_RPM){
-    system_state = STOP; 
-    fault_flag &= 0b00000001; 
-  }
+  // if (RPM_filtered>SHUTOFF_RPM){
+  //   system_state = STOP; 
+  //   fault_flag &= 0b00000001; 
+  // }
 //  perform overtemp checks 
 
 }
 
-
-void trigger_e_brake(){
-  return; 
-}
 
 /* config for MPU 6050 on GY 57 breakout board */
 void config_IMU(){
@@ -271,7 +352,7 @@ void print_IMU(){
 
 /* poll IMU */
 void poll_IMU(){
-  if (IMU_time - millis() > 1){
+  if (IMU_time - m illis() > 1){
     IMU_time = millis(); 
     Wire.beginTransmission(MPU_ADDR);
     Wire.write(0x3B); // starting with register 0x3B (ACCEL_XOUT_H) [MPU-6000 and MPU-6050 Register Map and Descriptions Revision 4.2, p.40]
@@ -291,21 +372,171 @@ void poll_IMU(){
 }
 
 void sense(){
+  odrv_poll_aux(); 
   poll_IMU(); 
-  print_IMU(); 
 
 //  read temperatures
+  read_motor_temp(); 
+  read_thermistors(); 
 
 // read current from current sensor
+  sense_current(); 
 }
+
+
+void read_motor_temp(); 
+
+void read_thermistors(); 
+
+/* read current from ACHS 7124 current sensor */
+void sense_current(){
+  regen_current = ((float)(analogRead(current_sense_pin))-512.0)*4.88 / 50.0; 
+}
+
+/* poll auxillary sensor data like vbus, ibus */
+void odrv_poll_aux(){
+  odrive_serial << "r vbus_voltage \n";
+  odrv_vbus = odrive.readFloat(); 
+}
+
+/* how long does this operation take? */
+void odrv_poll_errors(){
+  // system 
+  odrive_serial << "r error \n";
+  odrv_error.system = odrive.readFloat(); 
+
+  // axis
+  odrive_serial << "r axis1.error \n";
+  odrv_error.axis = odrive.readFloat(); 
+
+  // motor
+  odrive_serial << "r axis1.motor.error \n";
+  odrv_error.motor = odrive.readFloat(); 
+
+  // encoder
+  odrive_serial << "r axis1.encoder.error \n";
+  odrv_error.encoder = odrive.readFloat(); 
+
+  // controller 
+  odrive_serial << "r axis1.controller.error \n";
+  odrv_error.controller = odrive.readFloat(); 
+}
+
+/* odrv helper fns */ 
+void odrv_set_input_vel(float vel){
+  odrive_serial << "w axis1.controller.input_vel " << vel << '\n';    
+}
+
+void odrv_set_vel_ramp_rate(float vel_ramp_rate){
+  odrive_serial << "w axis1.controller.config.vel_ramp_rate " << vel_ramp_rate << '\n'; 
+}
+
+/* async code to get to INPUT_VEL_HIGH */
+void odrv_startup(){
+  switch(startup_state){
+
+    case STOPPED: 
+      odrv_time = millis(); 
+
+      // begin spinup on exit of this state for code simplicity 
+      odrv_set_vel_ramp_rate(VEL_RAMP_RATE_FAST); 
+      odrv_set_input_vel(INPUT_VEL_LOW); 
+      startup_state = SPINUP; // immediately hop over to SPINUP without checking 
+      break; 
+
+    case SPINUP: 
+      // stay in here for WAIT_TIME_LOW, exists in 0 - low rpm 
+
+      if (millis() - odrv_time>WAIT_TIME_LOW){
+        // ready to exit spinup and move to MID 
+        odrv_set_vel_ramp_rate(VEL_RAMP_RATE_SLOW); 
+        odrv_set_input_vel(INPUT_VEL_MID); 
+        odrv_time = millis(); 
+        startup_state = MID; // immediately hop over to MID without checking 
+      }
+      break; 
+    
+    case MID: 
+      if (millis() - odrv_time>WAIT_TIME_MID){
+        // ready to exit MID and move to HIGH 
+        odrv_set_vel_ramp_rate(VEL_RAMP_RATE_SLOW); 
+        odrv_set_input_vel(INPUT_VEL_HIGH); 
+        odrv_time = millis(); 
+        startup_state = HIGH; // immediately hop over to HIGH without checking 
+      }
+
+      break; 
+    
+    case HIGH: 
+      if (millis() - odrv_time>WAIT_TIME_HIGH){
+        // ready to exit entire STARTUP state and move to regen braking.  
+        odrive_state = REGEN_BRAKE; 
+        odrv_first_time = true; 
+        // TODO: reset startup state? 
+      }
+
+      break; 
+  }
+}
+
+
+void odrv_regen_brake(){
+  if (odrv_first_time){
+    odrv_first_time = false; 
+    odrv_time = millis(); 
+
+    // set regen spin params 
+    odrv_set_vel_ramp_rate(VEL_RAMP_RATE_REGEN); 
+    odrv_set_input_vel(INPUT_VEL_REGEN); 
+
+  } else {
+    if (millis() - odrv_time > REGEN_TIME){
+      // regen completed. move into regen_spinup & reset first time 
+      odrive_state = REGEN_SPINUP; 
+      odrv_first_time = true; 
+    }
+  }
+}
+
+void odrv_regen_spinup(){
+  if (odrv_first_time){
+    // set appropriate params to enter into MID 
+    odrv_set_vel_ramp_rate(VEL_RAMP_RATE_SLOW); 
+    odrv_set_input_vel(INPUT_VEL_MID); 
+    odrv_time = millis(); 
+    startup_state = MID; 
+    odrv_first_time = false; // TODO: check that we are setting & using this correctly
+  }
+  odrv_startup(); 
+}
+
+
+
+void odrv_spindown(){
+  if (odrv_spindown_first_time){
+    odrv_time = millis(); 
+  }
+  odrv_set_vel_ramp_rate(VEL_RAMP_RATE_SLOW); 
+  odrv_set_input_vel(0.0f); 
+
+  if (millis() - odrv_time>SPINDOWN_TIME){
+    odrive_state = IDLE; // RIP, the end. 
+  }
+}
+
+
 
 void fault_handle(){
 
   // KILL PWM SIGNAL
-  ESC.write(0); 
+  // ESC.write(0); 
   
   // todo immediately trigger eddy current shutoff 
-  trigger_e_brake(); 
+
+  // set odrive state into SPINDOWN unless its already idle 
+  if (odrive_state != IDLE){
+    odrive_state = SPINDOWN; 
+  }
 
   
   // just SPAM Fault type for now 
@@ -321,10 +552,10 @@ void fault_handle(){
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
-  ESC.attach(9, 1000, 2000); // PWM signal on pin 9, min pulse width & max pulse width 
+  // ESC.attach(9, 1000, 2000); // PWM signal on pin 9, min pulse width & max pulse width 
   pinMode(button_pin, INPUT); 
-  pinMode(interruptPin, INPUT);
-  attachInterrupt(digitalPinToInterrupt(interruptPin), leading_edge_crossed, FALLING);
+  // pinMode(interruptPin, INPUT);
+  // attachInterrupt(digitalPinToInterrupt(interruptPin), leading_edge_crossed, FALLING);
   timeOne = millis();  
   IMU_time = millis(); 
 
@@ -333,14 +564,13 @@ void setup() {
   pinMode(encoder_A_pin, INPUT_PULLUP);    
   attachInterrupt(digitalPinToInterrupt(encoder_A_pin), leading_edge_crossed, RISING);
 
-  
+
+  // odrive setup 
+  odrive_serial.begin(115200); 
+  while(!odrive_serial); 
+
 }
 
-
-enum COMMAND{
-  ON,
-  OFF,
-};
 
 void loop() {
 
@@ -352,11 +582,44 @@ void loop() {
   switch (system_state)
   {
   case RUN:
-    drive_PWM_pot(); 
+    // drive_PWM_pot(); 
+    if (odrive_state == IDLE){
+      // kick odrive into startup 
+      odrive_state = STARTUP; 
+    }
     break;
   case STOP: 
     fault_handle(); 
     break;
+  }
+
+  switch(odrive_state){
+
+    case FAULT: // TODO remove this? 
+      // poll all odrive errors
+      break; 
+
+    case IDLE: 
+      // do nothing 
+      break; 
+
+    case STARTUP: 
+      odrv_startup(); 
+      break; 
+
+    case REGEN_BRAKE:
+      odrv_regen_brake(); 
+      break; 
+
+    case REGEN_SPINUP: 
+      // altered spinup procedure
+      odrv_regen_spinup(); 
+      break; 
+
+    case SPINDOWN: 
+      odrv_spindown(); 
+      break; 
+
   }
 //  serial_output(); 
 }

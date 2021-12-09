@@ -49,6 +49,10 @@ void setup() {
   Serial.println("ODriveArduino");
   Serial.println("Setting parameters...");
 
+  while(!odrive_serial); // try wait for odrive to open? 
+  
+  Serial.println("odrive_serial is open?");
+
   // In this example we set the same parameters to both motors.
   // You can of course set them different if you want.
   // See the documentation or play around in odrivetool to see the available parameters
@@ -58,8 +62,8 @@ void setup() {
     // This ends up writing something like "w axis0.motor.config.current_lim 10.0\n"
 //   }
 
-    odrive_serial << "r vbus_voltage\n";
-    Serial << "Vbus voltage: " << odrive.readFloat() << '\n';
+//    odrive_serial << "r odrv0.vbus_voltage\n";
+//    Serial << "Vbus voltage: " << odrive.readFloat() << '\n';
 
 //   Serial.println("Ready!");
 //   Serial.println("Send the character '0' or '1' to calibrate respective motor (you must do this before you can command movement)");
@@ -69,9 +73,49 @@ void setup() {
 }
 
 void loop() {
-    odrive_serial << "r vbus_voltage\n";
+    odrive_serial << "r vbus_voltage \n";
     Serial << "Vbus voltage: " << odrive.readFloat() << '\n';
+
+    odrive_serial << "w axis1.controller.input_vel " << 5.0f << '\n';
+    
+    odrive_serial << "r axis1.controller.input_vel \n";
+    Serial << "input_vel: " << odrive.readFloat() << '\n';  
+
+    delay(7000); 
+
+    odrive_serial << "w axis1.controller.input_vel " << 0.0f << '\n';    
+    odrive_serial << "r axis1.controller.input_vel \n";
+    Serial << "input_vel: " << odrive.readFloat() << '\n';  
+
+    delay(7000); 
+    
+//    odrive_serial << "r axis1.motor.current_control.Ibus \n";
+//    Serial << "Ibus current: " << odrive.readFloat() << '\n';
+
+    // check that setting current works! 
+//    odrive_serial << "w axis1.motor.config.current_lim " << 11.0f << '\n';
+//    
+//    odrive_serial << "r axis1.motor.config.current_lim \n";
+//    Serial << "current_lim_check: " << odrive.readFloat() << '\n';
+//
+//    odrive_serial << "w axis1.motor.config.current_lim " << 7.0f << '\n';
+//    
+//    odrive_serial << "r axis1.motor.config.current_lim \n";
+//    Serial << "current_lim_check: " << odrive.readFloat() << '\n';
+
+    // how to enable setting vel_ramp_enable to True 
+//    odrive_serial << "r odrv0.axis1.controller.vel_ramp_enable \n"; 
+//    Serial << "vel_ramp_enable: " << odrive.readInt() << '\n';
+//    
+//    odrive_serial << "r odrv0.axis1.controller.vel_ramp_enable True \n"; 
+//
+//    odrive_serial << "r odrv0.axis1.controller.vel_ramp_enable \n"; 
+//    Serial << "vel_ramp_enable: " << odrive.readInt() << '\n';
+
+    
     delay(1000); 
+
+//  
 
     
 

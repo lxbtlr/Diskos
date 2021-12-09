@@ -42,7 +42,7 @@ if __name__ == "__main__":
     odrv0.axis1.controller.config.vel_integrator_gain = 0 # play with this 
     odrv0.axis1.controller.config.vel_gain = .05 # play with this too
     odrv0.axis1.controller.config.setpoints_in_cpr = True
-    odrv0.axis1.controller.config.mode = CONTROL_MODE_VELOCITY_CONTROL
+    odrv0.axis1.controller.config.control_mode = CONTROL_MODE_VELOCITY_CONTROL
     
     # check errors 
     dump_errors(odrv0)
@@ -63,7 +63,35 @@ if __name__ == "__main__":
     # odrv0.axis1.controller.error
     # odrv0.axis1.controller.set_current_setpoint(5)
 
-    odrv0.axis1.controller.vel_setpoint = 20
+    # enable ramp mode 
+    odrv0.axis1.controller.config.input_mode = 2 
+
+    # set ramp_rate
+    odrv0.axis1.controller.config.vel_ramp_rate = 20 # what is this for flywheel? 
+    
+    # enable CLOSED_LOOP
+    odrv0.axis1.requested_state = AXIS_STATE_CLOSED_LOOP_CONTROL
+    
+    # set target
+    odrv0.axis1.controller.input_vel = 200 
+
+    # current settings
+    odrv0.axis1.motor.config.current_lim_margin = 30 
+    odrv0.axis1.motor.config.current_lim = 90
+
+    # set precalibrated to 2 
+
+
+
+
+
+    
+
+
+    # how to reboot & clear errors without hard reset? 
+
+
+    # using vel ramp rate 
 
 
 
@@ -81,4 +109,18 @@ if __name__ == "__main__":
 
 
 
+"""
+todo odrive related 
 
+retune PID with flywheel 
+
+config CUI encoder 
+
+setup arduino mega UART connection 
+
+# figure out arduino mega spinup code 
+
+
+
+
+"""
