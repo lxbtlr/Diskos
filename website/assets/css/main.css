@@ -1774,6 +1774,7 @@ input, select, textarea {
 
 	footer {
 		margin: 2.5em 0 0 0;
+		color:#ddd
 	}
 
 /* Image */
@@ -2161,7 +2162,10 @@ input, select, textarea {
 
 	#header {
 		position: relative;
-		background-image: url("../../images/new_header.jpg");
+		background-image: linear-gradient(
+                     rgba(0, 0, 0, 0.5), 
+                     rgba(255, 255, 255, 0.01)),
+                     url("../../images/new_header.jpg");
 		background-size: cover;
 		background-position: center center;
 		background-attachment: fixed;
@@ -2263,6 +2267,687 @@ input, select, textarea {
 	body.homepage.is-preload #header:after {
 		opacity: 1;
 	}
+
+	#mechanical {
+		position: relative;
+		
+		background-image: linear-gradient(
+                     rgba(0, 0, 0, 0.5), 
+                     rgba(255, 255, 255, 0.01)),
+                     url("../../images/mech.jpg");
+
+		background-size: cover;
+		background-position: center center;
+		background-attachment: fixed;
+		color: rgb(255, 255, 255);
+		text-align: center;
+		padding: 7.5em 0 2em 0;
+		cursor: default;
+	}
+
+		#mechanical:before {
+			content: '';
+			display: inline-block;
+			vertical-align: middle;
+			height: 100%;
+		}
+
+		#mechanical .inner {
+			position: relative;
+			z-index: 1;
+			margin: 0;
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		#mechanical header {
+			display: inline-block;
+		}
+
+			#mechanical header > p {
+				font-size: 1.25em;
+				margin: 0;
+			}
+
+		#mechanical h1 {
+			color: #fff;
+			font-size: 3em;
+			line-height: 1em;
+		}
+
+			#mechanical h1 a {
+				color: inherit;
+			}
+
+		#mechanical .button {
+			display: inline-block;
+			border-radius: 100%;
+			width: 4.5em;
+			height: 4.5em;
+			line-height: 4.5em;
+			text-align: center;
+			font-size: 1.25em;
+			padding: 0;
+		}
+
+		#mechanical hr {
+			top: 1.5em;
+			margin-bottom: 3em;
+			border-bottom-color: rgba(192, 192, 192, 0.35);
+			box-shadow: inset 0 1px 0 0 rgba(192, 192, 192, 0.35);
+		}
+
+			#mechanical hr:before, #mechanical hr:after {
+				background: rgba(192, 192, 192, 0.35);
+			}
+
+		#mechanical footer {
+			margin: 1em 0 0 0;
+		}
+		#mechanical:before {
+			content: '';
+			display: inline-block;
+			vertical-align: middle;
+			height: 100%;
+		}
+
+		#mechanical .inner {
+			position: relative;
+			z-index: 1;
+			margin: 0;
+			display: inline-block;
+			vertical-align: middle;
+		}
+
+		#mechanical header {
+			display: inline-block;
+		}
+
+			#mechanical header > p {
+				font-size: 1.25em;
+				margin: 0;
+			}
+
+		#mechanical h1 {
+			color: #fff;
+			font-size: 3em;
+			line-height: 1em;
+		}
+
+			#mechanical h1 a {
+				color: inherit;
+			}
+
+		#mechanical .button {
+			display: inline-block;
+			border-radius: 100%;
+			width: 4.5em;
+			height: 4.5em;
+			line-height: 4.5em;
+			text-align: center;
+			font-size: 1.25em;
+			padding: 0;
+		}
+
+		#mechanical hr {
+			top: 1.5em;
+			margin-bottom: 3em;
+			border-bottom-color: rgba(192, 192, 192, 0.35);
+			box-shadow: inset 0 1px 0 0 rgba(192, 192, 192, 0.35);
+		}
+
+			#mechanical hr:before, #mechanical hr:after {
+				background: rgba(192, 192, 192, 0.35);
+			}
+
+		#mechanical footer {
+			margin: 1em 0 0 0;
+		}
+
+	body.homepage #mechanical {
+		height: 100vh;
+		min-height: 40em;
+	}
+
+		body.homepage #mechanical h1 {
+			font-size: 4em;
+		}
+
+		body.homepage #mechanical:after {
+			content: '';
+			background: #1C0920;
+			display: block;
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+			-moz-transition: opacity 2.5s ease-in-out;
+			-webkit-transition: opacity 2.5s ease-in-out;
+			-ms-transition: opacity 2.5s ease-in-out;
+			transition: opacity 2.5s ease-in-out;
+			-moz-transition-delay: 0.5s;
+			-webkit-transition-delay: 0.5s;
+			-ms-transition-delay: 0.5s;
+			transition-delay: 0.5s;
+		}
+
+	body.homepage.is-preload #mechanical:after {
+		opacity: 1;
+	}
+
+/*########################################################*/
+
+#electrical {
+	position: relative;
+	
+	background-image: linear-gradient(
+				 rgba(0, 0, 0, 0.5), 
+				 rgba(255, 255, 255, 0.01)),
+				 url("../../images/electrical.jpg");
+
+	background-size: cover;
+	background-position: center center;
+	background-attachment: fixed;
+	color: rgb(255, 255, 255);
+	text-align: center;
+	padding: 7.5em 0 2em 0;
+	cursor: default;
+}
+
+	#electrical:before {
+		content: '';
+		display: inline-block;
+		vertical-align: middle;
+		height: 100%;
+	}
+
+	#electrical .inner {
+		position: relative;
+		z-index: 1;
+		margin: 0;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	#electrical header {
+		display: inline-block;
+	}
+
+		#electrical header > p {
+			font-size: 1.25em;
+			margin: 0;
+		}
+
+	#electrical h1 {
+		color: #fff;
+		font-size: 3em;
+		line-height: 1em;
+	}
+
+		#electrical h1 a {
+			color: inherit;
+		}
+
+	#electrical .button {
+		display: inline-block;
+		border-radius: 100%;
+		width: 4.5em;
+		height: 4.5em;
+		line-height: 4.5em;
+		text-align: center;
+		font-size: 1.25em;
+		padding: 0;
+	}
+
+	#electrical hr {
+		top: 1.5em;
+		margin-bottom: 3em;
+		border-bottom-color: rgba(192, 192, 192, 0.35);
+		box-shadow: inset 0 1px 0 0 rgba(192, 192, 192, 0.35);
+	}
+
+		#electrical hr:before, #electrical hr:after {
+			background: rgba(192, 192, 192, 0.35);
+		}
+
+	#electrical footer {
+		margin: 1em 0 0 0;
+	}
+	#electrical:before {
+		content: '';
+		display: inline-block;
+		vertical-align: middle;
+		height: 100%;
+	}
+
+	#electrical .inner {
+		position: relative;
+		z-index: 1;
+		margin: 0;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	#electrical header {
+		display: inline-block;
+	}
+
+		#electrical header > p {
+			font-size: 1.25em;
+			margin: 0;
+		}
+
+	#electrical h1 {
+		color: #fff;
+		font-size: 3em;
+		line-height: 1em;
+	}
+
+		#electrical h1 a {
+			color: inherit;
+		}
+
+	#electrical .button {
+		display: inline-block;
+		border-radius: 100%;
+		width: 4.5em;
+		height: 4.5em;
+		line-height: 4.5em;
+		text-align: center;
+		font-size: 1.25em;
+		padding: 0;
+	}
+
+	#electrical hr {
+		top: 1.5em;
+		margin-bottom: 3em;
+		border-bottom-color: rgba(192, 192, 192, 0.35);
+		box-shadow: inset 0 1px 0 0 rgba(192, 192, 192, 0.35);
+	}
+
+		#electrical hr:before, #electrical hr:after {
+			background: rgba(192, 192, 192, 0.35);
+		}
+
+	#electrical footer {
+		margin: 1em 0 0 0;
+	}
+
+body.homepage #electrical {
+	height: 100vh;
+	min-height: 40em;
+}
+
+	body.homepage #electrical h1 {
+		font-size: 4em;
+	}
+
+	body.homepage #electrical:after {
+		content: '';
+		background: #1C0920;
+		display: block;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		-moz-transition: opacity 2.5s ease-in-out;
+		-webkit-transition: opacity 2.5s ease-in-out;
+		-ms-transition: opacity 2.5s ease-in-out;
+		transition: opacity 2.5s ease-in-out;
+		-moz-transition-delay: 0.5s;
+		-webkit-transition-delay: 0.5s;
+		-ms-transition-delay: 0.5s;
+		transition-delay: 0.5s;
+	}
+
+body.homepage.is-preload #electrical:after {
+	opacity: 1;
+}
+
+
+/*#######################################*/
+#software {
+	position: relative;
+	
+	background-image: linear-gradient(
+				 rgba(0, 0, 0, 0.2), 
+				 rgba(255, 255, 255, 0.01)),
+				 url("../../images/softwareheader.jpg");
+
+	background-size: cover;
+	background-position: center center;
+	background-attachment: fixed;
+	color: rgb(255, 255, 255);
+	text-align: center;
+	padding: 7.5em 0 2em 0;
+	cursor: default;
+}
+
+	#software:before {
+		content: '';
+		display: inline-block;
+		vertical-align: middle;
+		height: 100%;
+	}
+
+	#software .inner {
+		position: relative;
+		z-index: 1;
+		margin: 0;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	#software header {
+		display: inline-block;
+	}
+
+		#software header > p {
+			font-size: 1.25em;
+			margin: 0;
+		}
+
+	#software h1 {
+		color: #fff;
+		font-size: 3em;
+		line-height: 1em;
+	}
+
+		#software h1 a {
+			color: inherit;
+		}
+
+	#software .button {
+		display: inline-block;
+		border-radius: 100%;
+		width: 4.5em;
+		height: 4.5em;
+		line-height: 4.5em;
+		text-align: center;
+		font-size: 1.25em;
+		padding: 0;
+	}
+
+	#software hr {
+		top: 1.5em;
+		margin-bottom: 3em;
+		border-bottom-color: rgba(192, 192, 192, 0.35);
+		box-shadow: inset 0 1px 0 0 rgba(192, 192, 192, 0.35);
+	}
+
+		#software hr:before, #software hr:after {
+			background: rgba(192, 192, 192, 0.35);
+		}
+
+	#software footer {
+		margin: 1em 0 0 0;
+	}
+	#software:before {
+		content: '';
+		display: inline-block;
+		vertical-align: middle;
+		height: 100%;
+	}
+
+	#software .inner {
+		position: relative;
+		z-index: 1;
+		margin: 0;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	#software header {
+		display: inline-block;
+	}
+
+		#software header > p {
+			font-size: 1.25em;
+			margin: 0;
+		}
+
+	#software h1 {
+		color: #fff;
+		font-size: 3em;
+		line-height: 1em;
+	}
+
+		#software h1 a {
+			color: inherit;
+		}
+
+	#software .button {
+		display: inline-block;
+		border-radius: 100%;
+		width: 4.5em;
+		height: 4.5em;
+		line-height: 4.5em;
+		text-align: center;
+		font-size: 1.25em;
+		padding: 0;
+	}
+
+	#software hr {
+		top: 1.5em;
+		margin-bottom: 3em;
+		border-bottom-color: rgba(192, 192, 192, 0.35);
+		box-shadow: inset 0 1px 0 0 rgba(192, 192, 192, 0.35);
+	}
+
+		#software hr:before, #software hr:after {
+			background: rgba(192, 192, 192, 0.35);
+		}
+
+	#software footer {
+		margin: 1em 0 0 0;
+	}
+
+body.homepage #software {
+	height: 100vh;
+	min-height: 40em;
+}
+
+	body.homepage #software h1 {
+		font-size: 4em;
+	}
+
+	body.homepage #software:after {
+		content: '';
+		background: #1C0920;
+		display: block;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		-moz-transition: opacity 2.5s ease-in-out;
+		-webkit-transition: opacity 2.5s ease-in-out;
+		-ms-transition: opacity 2.5s ease-in-out;
+		transition: opacity 2.5s ease-in-out;
+		-moz-transition-delay: 0.5s;
+		-webkit-transition-delay: 0.5s;
+		-ms-transition-delay: 0.5s;
+		transition-delay: 0.5s;
+	}
+
+body.homepage.is-preload #software:after {
+	opacity: 1;
+}
+/* #################################### */
+
+#article {
+	position: relative;
+	
+	background-image: linear-gradient(
+				 rgba(0, 0, 0, 0.4), 
+				 rgba(255, 255, 255, 0.01)),
+				 url("../../images/treeheader.jpg");
+
+	background-size: cover;
+	background-position: center center;
+	background-attachment: fixed;
+	color: rgb(255, 255, 255);
+	text-align: center;
+	padding: 7.5em 0 2em 0;
+	cursor: default;
+}
+
+	#article:before {
+		content: '';
+		display: inline-block;
+		vertical-align: middle;
+		height: 100%;
+	}
+
+	#article .inner {
+		position: relative;
+		z-index: 1;
+		margin: 0;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	#article header {
+		display: inline-block;
+	}
+
+		#article header > p {
+			font-size: 1.25em;
+			margin: 0;
+		}
+
+	#article h1 {
+		color: #fff;
+		font-size: 3em;
+		line-height: 1em;
+	}
+
+		#article h1 a {
+			color: inherit;
+		}
+
+	#article .button {
+		display: inline-block;
+		border-radius: 100%;
+		width: 4.5em;
+		height: 4.5em;
+		line-height: 4.5em;
+		text-align: center;
+		font-size: 1.25em;
+		padding: 0;
+	}
+
+	#article hr {
+		top: 1.5em;
+		margin-bottom: 3em;
+		border-bottom-color: rgba(192, 192, 192, 0.35);
+		box-shadow: inset 0 1px 0 0 rgba(192, 192, 192, 0.35);
+	}
+
+		#article hr:before, #article hr:after {
+			background: rgba(192, 192, 192, 0.35);
+		}
+
+	#article footer {
+		margin: 1em 0 0 0;
+	}
+	#article:before {
+		content: '';
+		display: inline-block;
+		vertical-align: middle;
+		height: 100%;
+	}
+
+	#article .inner {
+		position: relative;
+		z-index: 1;
+		margin: 0;
+		display: inline-block;
+		vertical-align: middle;
+	}
+
+	#article header {
+		display: inline-block;
+	}
+
+		#article header > p {
+			font-size: 1.25em;
+			margin: 0;
+		}
+
+	#article h1 {
+		color: #fff;
+		font-size: 3em;
+		line-height: 1em;
+	}
+
+		#article h1 a {
+			color: inherit;
+		}
+
+	#article .button {
+		display: inline-block;
+		border-radius: 100%;
+		width: 4.5em;
+		height: 4.5em;
+		line-height: 4.5em;
+		text-align: center;
+		font-size: 1.25em;
+		padding: 0;
+	}
+
+	#article hr {
+		top: 1.5em;
+		margin-bottom: 3em;
+		border-bottom-color: rgba(192, 192, 192, 0.35);
+		box-shadow: inset 0 1px 0 0 rgba(192, 192, 192, 0.35);
+	}
+
+		#article hr:before, #article hr:after {
+			background: rgba(192, 192, 192, 0.35);
+		}
+
+	#article footer {
+		margin: 1em 0 0 0;
+	}
+
+body.homepage #article {
+	height: 100vh;
+	min-height: 40em;
+}
+
+	body.homepage #article h1 {
+		font-size: 4em;
+	}
+
+	body.homepage #article:after {
+		content: '';
+		background: #1C0920;
+		display: block;
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		height: 100%;
+		opacity: 0;
+		-moz-transition: opacity 2.5s ease-in-out;
+		-webkit-transition: opacity 2.5s ease-in-out;
+		-ms-transition: opacity 2.5s ease-in-out;
+		transition: opacity 2.5s ease-in-out;
+		-moz-transition-delay: 0.5s;
+		-webkit-transition-delay: 0.5s;
+		-ms-transition-delay: 0.5s;
+		transition-delay: 0.5s;
+	}
+
+body.homepage.is-preload #article:after {
+	opacity: 1;
+}
 
 /* Nav */
 
@@ -2444,7 +3129,7 @@ input, select, textarea {
 	#footer {
 		position: relative;
 		overflow: hidden;
-		padding: 6em 0 6em 0;
+		padding: 2em 0 2em 0;
 		background: #2b252c;
 		color: #fff;
 	}
