@@ -85,13 +85,14 @@ uint32_t timeOne;
 
 uint8_t pointer_RPM = 0; 
 
-const int   button_pin      = 53; 
 // const int   interruptPin    = 2;
-const int   encoder_A_pin   = 2; // https://docs.revrobotics.com/sparkmax/feature-description/encoder-port
+//const int   encoder_A_pin   = 2; // https://docs.revrobotics.com/sparkmax/feature-description/encoder-port
 const int   current_sense_pin = A0; // Todo fix.
 const int   motor_temp_pin    = A1; 
 const int   red_led_pin       = 51; 
 const int   green_led_pin     = 49; 
+const int   button_pin      = 53; 
+
 
 
 // uint16_t  pot_value[POT_FILTER_SZ]     = { 0 }; 
@@ -366,6 +367,12 @@ void serial_output(){
 //    }
 //    }
 //    print_IMU();     
+    Serial.print((accelerometer_x)); Serial.print(":"); 
+    Serial.print((accelerometer_y)); Serial.print(":"); 
+    Serial.print((accelerometer_z)); Serial.print(":");  
+    Serial.print((gyro_x)); Serial.print(":"); 
+    Serial.print((gyro_y)); Serial.print(":"); 
+    Serial.print((gyro_z)); Serial.print(":"); 
     Serial.print("*/"); 
 
     Serial.println(); 
@@ -406,20 +413,7 @@ void config_IMU(){
 void print_IMU(){
   // print out IMU data over serial 
 //  Serial.print("aX = "); 
-  Serial.print(convert_int16_to_str(accelerometer_x)); Serial.print(":"); 
-//  Serial.print(" | aY = "); 
-  Serial.print(convert_int16_to_str(accelerometer_y)); Serial.print(":"); 
-//  Serial.print(" | aZ = "); 
-  Serial.print(convert_int16_to_str(accelerometer_z)); Serial.print(":"); 
-  // the following equation was taken from the documentation [MPU-6000/MPU-6050 Register Map and Description, p.30]
-//  Serial.print(" | tmp = "); 
-  Serial.print(temperature/340.00+36.53); Serial.print(":"); 
-//  Serial.print(" | gX = "); 
-  Serial.print(convert_int16_to_str(gyro_x)); Serial.print(":"); 
-//  Serial.print(" | gY = "); 
-  Serial.print(convert_int16_to_str(gyro_y)); Serial.print(":"); 
-//  Serial.print(" | gZ = "); 
-  Serial.print(convert_int16_to_str(gyro_z)); Serial.print(":"); 
+  
   Serial.println();
 }
 
@@ -479,7 +473,7 @@ void sense(){
   }
   
 //  read at 1KHz
-//  poll_IMU(); 
+  poll_IMU(); 
 //}
 }
 
@@ -663,7 +657,7 @@ void setup() {
   IMU_time = millis(); 
   serial_time = millis(); 
   odrv_poll_time = millis(); 
-  // config_IMU(); 
+   config_IMU(); 
 
 //   pinMode(encoder_A_pin, INPUT_PULLUP);    
 //   attachInterrupt(digitalPinToInterrupt(encoder_A_pin), leading_edge_crossed, RISING);
@@ -722,6 +716,6 @@ void loop() {
       break; 
 
   }
- serial_output(); 
- state_leds(); 
+  serial_output(); 
+  state_leds(); 
 }
