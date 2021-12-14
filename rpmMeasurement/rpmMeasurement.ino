@@ -64,7 +64,7 @@ template<>        inline Print& operator <<(Print &obj, float arg) { obj.print(a
 
 #define     REGEN_TIME                  20000 // ms 20000
 #define     SPINDOWN_TIME               60000 // ms 20000
-#define     MOTOR_OT_THRESHOLD          1023 // TODO adjust 
+#define     MOTOR_OT_THRESHOLD          80    // Deg C 
 
 // #define     SHUTOFF_RPM                 6000
 // #define     MAX_ALLOWABLE_RPM           150
@@ -87,20 +87,21 @@ uint8_t pointer_RPM = 0;
 
 // const int   interruptPin    = 2;
 //const int   encoder_A_pin   = 2; // https://docs.revrobotics.com/sparkmax/feature-description/encoder-port
-const int   current_sense_pin = A0; // Todo fix.
+const int   regen_I_sense_pin = A0; 
+const int   input_I_sense_pin = A2; 
 const int   motor_temp_pin    = A1; 
 const int   red_led_pin       = 51; 
 const int   green_led_pin     = 49; 
-const int   button_pin      = 53; 
-
+const int   switch_pin      = 53; 
+const int   button_pin      =54; 
 
 
 // uint16_t  pot_value[POT_FILTER_SZ]     = { 0 }; 
 // uint16_t  filtered_pot_value = 0; 
 
-float     motor_temp    = 0; 
+float     motor_temp    = 0.0f; 
 uint16_t  button_value  = 0; 
-
+uint16_t  button_value_2 = 0; 
 uint8_t fault_flag      = 0; 
 // uint8_t PWM_duty_cycle       = 0; 
 
@@ -117,22 +118,12 @@ bool      odrv_first_time = true;
 uint32_t  odrv_time = 0; 
 
 float regen_current = 0.0f; 
+float input_current = 0.0f; 
 float odrv_vbus     = 0.0f; 
 
 uint32_t serial_time      = 0; 
 uint32_t odrv_poll_time   = 0; 
-
-// PI Controller 
-
-// const float kp  =     .01; // to test 
-// const float ki  =     .0001; 
-// volatile float err       =     0; 
-// volatile float integral  =     0; 
-// volatile uint8_t temp_dc =     0; 
-// uint8_t max_dc  =     0; 
-// uint8_t min_dc  =     100; 
-// uint32_t RPM_setpoint    = 20; 
-
+uint32_t err_time         = 0; 
 
 // IMU setup 
 int16_t   accelerometer_x, accelerometer_y, accelerometer_z; // variables for accelerometer raw data
@@ -177,6 +168,7 @@ struct odrv_err_t {
   uint16_t      system_err; 
   uint16_t      axis; 
   uint16_t      motor; 
+  uint16_t      sensorless_estimator; 
   uint16_t      encoder; 
   uint16_t      controller; 
 }; 
@@ -184,7 +176,7 @@ struct odrv_err_t {
 SYSTEM_FSM    system_state    = RUN; 
 ODRIVE_FSM    odrive_state    = IDLE_; 
 STARTUP_FSM   startup_state   = STOPPED; 
-odrv_err_t    odrv_err        = { 0,0,0,0,0 }; // init with no errors 
+odrv_err_t    odrv_err        = { 0,0,0,0,0,0 }; // init with no errors 
 
 /* for IMU */
 char* convert_int16_to_str(int16_t i) { // converts int16 to string. Moreover, resulting strings will have the same length in the debug monitor.
@@ -192,9 +184,23 @@ char* convert_int16_to_str(int16_t i) { // converts int16 to string. Moreover, r
   return tmp_str;
 }
 
-void button_check(){
+
+void clear_err_button_check(){
   // read the state of the switch into a local variable:
-  button_value = digitalRead(button_pin);
+  button_value_2 = digitalRead(button_pin);
+
+  // VERY conservatively handle button press 
+  if (button_value_2 == HIGH && (millis() - err_time > 2000)) {
+    // call clear errors
+    odrv_clear_err(); 
+    err_time = millis(); 
+  }
+}
+
+
+void switch_check(){
+  // read the state of the switch into a local variable:
+  button_value = digitalRead(switch_pin);
 
   // VERY conservatively handle button press 
   if (button_value == HIGH) {
@@ -205,9 +211,11 @@ void button_check(){
     } 
   } 
   else {
+//    Serial.println("button low"); 
     // throw system into SHUTDOWN if it isn't already at rest 
     if (odrive_state != IDLE_ ){
       system_state = STOP; 
+      Serial.println("switch"); 
       fault_flag &= 0b00000010; 
     }
   }
@@ -353,6 +361,7 @@ void serial_output(){
       Serial.print(odrv_err.system_err, BIN); Serial.print(":"); 
       Serial.print(odrv_err.axis, BIN); Serial.print(":"); 
       Serial.print(odrv_err.motor, BIN); Serial.print(":"); 
+      Serial.print(odrv_err.sensorless_estimator, BIN); Serial.print(":"); 
       Serial.print(odrv_err.encoder, BIN); Serial.print(":");  
       Serial.print(odrv_err.controller, BIN); Serial.print(":"); 
 //      Serial.println(); 
@@ -373,6 +382,9 @@ void serial_output(){
     Serial.print((gyro_x)); Serial.print(":"); 
     Serial.print((gyro_y)); Serial.print(":"); 
     Serial.print((gyro_z)); Serial.print(":"); 
+
+    Serial.print(input_current); Serial.print(":"); 
+    
     Serial.print("*/"); 
 
     Serial.println(); 
@@ -439,21 +451,22 @@ void poll_IMU(){
 }
 
 void read_motor_temp(){
-  motor_temp = ((float) analogRead(motor_temp_pin)) * .00488; 
+  float v_out = ((float) analogRead(motor_temp_pin)) * .00488; 
+  float R = (v_out*10000.0)/(5-v_out);
+  motor_temp = (298.15*3984) / (3984 - 298.15 * log(10000.0/R)) - 273.15; 
 }
 
 void read_thermistors(); 
 
 /* read current from ACHS 7124 current sensor */
 void sense_current(){
-  regen_current = ((float)(analogRead(current_sense_pin))-512.0)*4.88 / 50.0; 
+  regen_current = ((float)(analogRead(regen_I_sense_pin)-512))*4.88 / 50.0;
+  input_current = ((float)(analogRead(input_I_sense_pin)-512))*4.88 / 50.0;
 }
 
 /* poll auxillary sensor data like vbus, ibus */
 void odrv_poll_aux(){
   // poll at 5 Hz 
-  
-//    poll rpm and vbus 
 
     odrive_serial << "r vbus_voltage \n";
     odrv_vbus = odrive.readFloat(); 
@@ -477,6 +490,17 @@ void sense(){
 //}
 }
 
+void odrv_clear_err(){
+  // clears system, axis, motor, encoder, controller
+  uint8_t e = 0; 
+  odrive_serial << "w error " << e << '\n';
+  odrive_serial << "w axis1.error " << e << '\n';
+  odrive_serial << "w axis1.motor.error " << e << '\n';
+  odrive_serial << "w axis1.encoder.error " << e << '\n';
+  odrive_serial << "w axis1.sensorless_estimator.error " << e << '\n';
+  odrive_serial << "w axis1.controller.error " << e << '\n';
+     
+}
 
 /* how long does this operation take? */
 void odrv_poll_errors(){
@@ -491,6 +515,9 @@ void odrv_poll_errors(){
   // motor
   odrive_serial << "r axis1.motor.error \n";
   odrv_err.motor = odrive.readFloat(); 
+
+  odrive_serial << "r axis1.sensorless_estimator.error \n";
+  odrv_err.sensorless_estimator = odrive.readFloat(); 
 
   // encoder
   odrive_serial << "r axis1.encoder.error \n";
@@ -609,7 +636,7 @@ void odrv_spindown(){
 void fault_check(){
   // TODO: test
   odrv_poll_errors(); 
-  button_check(); 
+  switch_check(); 
   
   // if (RPM_filtered>SHUTOFF_RPM){
   //   system_state = STOP; 
@@ -621,10 +648,12 @@ void fault_check(){
 //    Serial.println("TEMP FAULT"); 
     fault_flag &= 0b00000100; // TODO: note temp fault ig 
     system_state = STOP; 
+    Serial.println("temp"); 
   }
 //  check odrive fault 
-  if (odrv_err.system_err + odrv_err.axis + odrv_err.motor + odrv_err.encoder + odrv_err.controller != 0){
+  if (odrv_err.system_err + odrv_err.axis + odrv_err.motor + odrv_err.encoder + odrv_err.sensorless_estimator + odrv_err.controller != 0){
     system_state = STOP; 
+    Serial.println("odrv err"); 
 //    odrive has entered fault state
   }
 
@@ -648,16 +677,19 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(230400);
   // ESC.attach(9, 1000, 2000); // PWM signal on pin 9, min pulse width & max pulse width 
-  pinMode(button_pin, INPUT); 
+  pinMode(switch_pin, INPUT); 
   // pinMode(interruptPin, INPUT);
   pinMode(red_led_pin, OUTPUT); 
   pinMode(green_led_pin, OUTPUT); 
 //  attachInterrupt(digitalPinToInterrupt(interruptPin), leading_edge_crossed, FALLING);
+
+
   timeOne = millis();  
   IMU_time = millis(); 
   serial_time = millis(); 
   odrv_poll_time = millis(); 
-   config_IMU(); 
+  err_time = millis(); 
+  config_IMU(); 
 
 //   pinMode(encoder_A_pin, INPUT_PULLUP);    
 //   attachInterrupt(digitalPinToInterrupt(encoder_A_pin), leading_edge_crossed, RISING);
@@ -672,8 +704,8 @@ void setup() {
 
 
 void loop() {
-
-  fault_check(); 
+  clear_err_button_check(); 
+  fault_check();  
 ////  estimate_RPM_DIY_encoder(); 
 //
    sense(); // for sensing suite 
