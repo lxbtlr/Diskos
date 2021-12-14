@@ -72,15 +72,16 @@ template<>        inline Print& operator <<(Print &obj, float arg) { obj.print(a
 
 #define     POT_FILTER_SZ               10  // size for moving avg filter for pot & RPM 
 #define     POT_POLL_RATE               10  // Hz
-#define     FILTER_SZ                   5
+#define     FILTER_SZ                   3 
 
 
 const int MPU_ADDR = 0x68; // I2C address of the MPU-6050. If AD0 pin is set to HIGH, the I2C address will be 0x69.
 
 
-uint64_t    rotations = 0; 
-uint32_t RPM[FILTER_SZ] = { 0 };
-uint32_t RPM_filtered = 0; 
+uint64_t    rotations           = 0; 
+float input_current[FILTER_SZ]  = { 0 };
+float input_current_filtered    = 0; 
+float power_in                  = 0; 
 uint32_t timeOne;
 
 uint8_t pointer_RPM = 0; 
@@ -92,8 +93,8 @@ const int   input_I_sense_pin = A2;
 const int   motor_temp_pin    = A1; 
 const int   red_led_pin       = 51; 
 const int   green_led_pin     = 49; 
-const int   switch_pin      = 53; 
-const int   button_pin      =54; 
+const int   switch_pin        = 53; 
+const int   button_pin        = 54; 
 
 
 // uint16_t  pot_value[POT_FILTER_SZ]     = { 0 }; 
@@ -118,7 +119,7 @@ bool      odrv_first_time = true;
 uint32_t  odrv_time = 0; 
 
 float regen_current = 0.0f; 
-float input_current = 0.0f; 
+//float input_current = 0.0f; 
 float odrv_vbus     = 0.0f; 
 
 uint32_t serial_time      = 0; 
@@ -215,7 +216,7 @@ void switch_check(){
     // throw system into SHUTDOWN if it isn't already at rest 
     if (odrive_state != IDLE_ ){
       system_state = STOP; 
-      Serial.println("switch"); 
+//      Serial.println("switch"); 
       fault_flag &= 0b00000010; 
     }
   }
@@ -224,27 +225,27 @@ void switch_check(){
 
 
 // whenever rotations hits 7 we completed another rotation 
-void estimate_RPM_DIY_encoder(){
-  // estimate RPM 1x / second
-  if(((millis()-timeOne))> 1000){
-    timeOne = millis();
-
-    // actual RPM math 
-    RPM[pointer] = (rotations / 7) * 60; // needs 7 hits of encoder for a full revolution, multiply by 60 to get RPM (not RPS) 
-
-    // moving avg filter 
-    pointer = (pointer + 1) % FILTER_SZ; 
-
-    RPM_filtered = 0; 
-//    calculated filtered value
-    for (int i = 0; i< FILTER_SZ; i++){
-      RPM_filtered += RPM[i]; 
-    }
-
-    RPM_filtered /= FILTER_SZ;
-    rotations = 0;
-  }
-}
+//void estimate_RPM_DIY_encoder(){
+//  // estimate RPM 1x / second
+//  if(((millis()-timeOne))> 1000){
+//    timeOne = millis();
+//
+//    // actual RPM math 
+//    input_current[pointer] = ; // needs 7 hits of encoder for a full revolution, multiply by 60 to get RPM (not RPS) 
+//
+//    // moving avg filter 
+//    pointer = (pointer + 1) % FILTER_SZ; 
+//
+//    input_current_filtered = 0; 
+////    calculated filtered value
+//    for (int i = 0; i< FILTER_SZ; i++){
+//      input_current_filtered += RPM[i]; 
+//    }
+//
+//    input_current_filtered /= FILTER_SZ;
+////    rotations = 0;
+//  }
+//}
 
 
 void leading_edge_crossed() {
@@ -383,7 +384,8 @@ void serial_output(){
     Serial.print((gyro_y)); Serial.print(":"); 
     Serial.print((gyro_z)); Serial.print(":"); 
 
-    Serial.print(input_current); Serial.print(":"); 
+    Serial.print(input_current_filtered); Serial.print(":"); 
+    Serial.print(power_in); Serial.print(":"); 
     
     Serial.print("*/"); 
 
@@ -431,7 +433,7 @@ void print_IMU(){
 
 /* poll IMU */
 void poll_IMU(){
-  if (IMU_time - millis() > 1){
+  if (IMU_time - millis() > 10){ // TODO set at 100hz instead of 1Khz
     IMU_time = millis(); 
     Wire.beginTransmission(MPU_ADDR);
     Wire.write(0x3B); // starting with register 0x3B (ACCEL_XOUT_H) [MPU-6000 and MPU-6050 Register Map and Descriptions Revision 4.2, p.40]
@@ -461,7 +463,21 @@ void read_thermistors();
 /* read current from ACHS 7124 current sensor */
 void sense_current(){
   regen_current = ((float)(analogRead(regen_I_sense_pin)-512))*4.88 / 50.0;
-  input_current = ((float)(analogRead(input_I_sense_pin)-512))*4.88 / 50.0;
+  
+  input_current[pointer] = ((float)(analogRead(input_I_sense_pin)-512))*4.88 / 50.0; 
+
+    // moving avg filter 
+    pointer = (pointer + 1) % FILTER_SZ; 
+
+    input_current_filtered = 0; 
+    for (int i = 0; i< FILTER_SZ; i++){
+      input_current_filtered += input_current[i]; 
+    }
+
+    input_current_filtered /= FILTER_SZ;
+
+    // calculate power output
+    power_in = input_current_filtered * odrv_vbus; 
 }
 
 /* poll auxillary sensor data like vbus, ibus */
@@ -486,8 +502,9 @@ void sense(){
   }
   
 //  read at 1KHz
-  poll_IMU(); 
+//  poll_IMU(); 
 //}
+  
 }
 
 void odrv_clear_err(){
