@@ -323,39 +323,51 @@ void serial_output(){
   if (millis() - serial_time > 50){ // 20 Hz rn kinda works up to 250 Hz 
     serial_time = millis(); 
     // Serial.print("RPM_filtered: "); Serial.print(RPM_filtered); Serial.println(); 
-    Serial.print("odrive_state: "); Serial.print(odrive_state); Serial.println(); 
-    Serial.print("system_state: "); Serial.print(system_state); Serial.println();   
-    Serial.print("startup_state: "); Serial.print(startup_state); Serial.println(); 
-    Serial.print("regen current: "); Serial.println(regen_current); 
-    Serial.print("motor_temp: "); Serial.println(motor_temp); 
-    Serial.print("odrv_rpm: "); Serial.println(odrv_rpm); 
+//    Serial.print("odrive_state: "); 
+    Serial.print("/*"); 
+    Serial.print(odrive_state); Serial.print(":"); 
+//    Serial.print("system_state: "); 
+    Serial.print(system_state); Serial.print(":");    
+//    Serial.print("startup_state: "); 
+    Serial.print(startup_state); Serial.print(":");  
+//    Serial.print("regen current: "); 
+    Serial.print(regen_current); Serial.print(":"); 
+//    Serial.print("motor_temp: "); 
+    Serial.print(motor_temp); Serial.print(":"); 
+//    Serial.print("odrv_rpm: "); 
+    Serial.print(odrv_rpm); Serial.print(":"); 
 
-    if (odrv_vbus != 0.0){
-      Serial.print("odrv online, vbus: "); Serial.print(odrv_vbus); Serial.println(); 
-    } else {
-      Serial.println("odrv offline."); 
-    }
-    if (odrv_err.system_err + odrv_err.axis + odrv_err.motor + odrv_err.encoder + odrv_err.controller == 0){
-      Serial.println("No odrv err");  
-    } else {
-      Serial.print("ODRV ERR: "); 
-      Serial.print(odrv_err.system_err, BIN); Serial.print(" "); 
-      Serial.print(odrv_err.axis, BIN); Serial.print(" "); 
-      Serial.print(odrv_err.motor, BIN); Serial.print(" "); 
-      Serial.print(odrv_err.encoder, BIN); Serial.print(" "); 
-      Serial.print(odrv_err.controller, BIN); Serial.print(" "); 
-      Serial.println(); 
-    }
+    Serial.print(odrv_vbus); Serial.print(":"); 
+    
+//    if (odrv_vbus != 0.0){
+//      Serial.print("odrv online, vbus: "); Serial.print(odrv_vbus); Serial.println(); 
+//    } else {
+//      Serial.println("odrv offline."); 
+//    }
 
-    if (system_state == STOP){
-      Serial.println("!!FAULT!!: "); 
+//    if (odrv_err.system_err + odrv_err.axis + odrv_err.motor + odrv_err.encoder + odrv_err.controller == 0){
+//      Serial.println("No odrv err");  
+//    } else {
+//      Serial.print("ODRV ERR: "); 
+      Serial.print(odrv_err.system_err, BIN); Serial.print(":"); 
+      Serial.print(odrv_err.axis, BIN); Serial.print(":"); 
+      Serial.print(odrv_err.motor, BIN); Serial.print(":"); 
+      Serial.print(odrv_err.encoder, BIN); Serial.print(":");  
+      Serial.print(odrv_err.controller, BIN); Serial.print(":"); 
+//      Serial.println(); 
+//    }
+//
+//    if (system_state == STOP){
+//      Serial.println("!!FAULT!!: "); 
 //    if (fault_flag == 0b00000001){
 //      Serial.println("RPM FAULT"); 
 //    } else if (fault_flag == 0b00000010){
 //      Serial.println("ESTOP FAULT"); 
 //    }
-    }
-    //  print_IMU();     
+//    }
+//    print_IMU();     
+    Serial.print("*/"); 
+
     Serial.println(); 
 
   }
@@ -393,14 +405,21 @@ void config_IMU(){
 
 void print_IMU(){
   // print out IMU data over serial 
-  Serial.print("aX = "); Serial.print(convert_int16_to_str(accelerometer_x));
-  Serial.print(" | aY = "); Serial.print(convert_int16_to_str(accelerometer_y));
-  Serial.print(" | aZ = "); Serial.print(convert_int16_to_str(accelerometer_z));
+//  Serial.print("aX = "); 
+  Serial.print(convert_int16_to_str(accelerometer_x)); Serial.print(":"); 
+//  Serial.print(" | aY = "); 
+  Serial.print(convert_int16_to_str(accelerometer_y)); Serial.print(":"); 
+//  Serial.print(" | aZ = "); 
+  Serial.print(convert_int16_to_str(accelerometer_z)); Serial.print(":"); 
   // the following equation was taken from the documentation [MPU-6000/MPU-6050 Register Map and Description, p.30]
-  Serial.print(" | tmp = "); Serial.print(temperature/340.00+36.53);
-  Serial.print(" | gX = "); Serial.print(convert_int16_to_str(gyro_x));
-  Serial.print(" | gY = "); Serial.print(convert_int16_to_str(gyro_y));
-  Serial.print(" | gZ = "); Serial.print(convert_int16_to_str(gyro_z));
+//  Serial.print(" | tmp = "); 
+  Serial.print(temperature/340.00+36.53); Serial.print(":"); 
+//  Serial.print(" | gX = "); 
+  Serial.print(convert_int16_to_str(gyro_x)); Serial.print(":"); 
+//  Serial.print(" | gY = "); 
+  Serial.print(convert_int16_to_str(gyro_y)); Serial.print(":"); 
+//  Serial.print(" | gZ = "); 
+  Serial.print(convert_int16_to_str(gyro_z)); Serial.print(":"); 
   Serial.println();
 }
 
@@ -605,7 +624,7 @@ void fault_check(){
 //  perform overtemp checks 
 
   if (motor_temp > MOTOR_OT_THRESHOLD){
-    Serial.println("TEMP FAULT"); 
+//    Serial.println("TEMP FAULT"); 
     fault_flag &= 0b00000100; // TODO: note temp fault ig 
     system_state = STOP; 
   }
