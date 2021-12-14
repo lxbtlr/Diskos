@@ -27,6 +27,11 @@ wire motor temp sense
 expose encoder sense 
 wire thermistors 
 LED's for 
+
+clear errors function 
+reset AXIS_STATE_CLOSED_LOOP 
+fix odrive timeout when not connected. 
+
 */
 #include <Servo.h>
 #include "Wire.h" // This library allows you to communicate with I2C devices.
@@ -39,30 +44,27 @@ template<>        inline Print& operator <<(Print &obj, float arg) { obj.print(a
 
 
 
-
-#define     MAX_SPEED_PERCENTAGE        85
-
 // ODRIVE VELs
 #define     INPUT_VEL_LOW               20               
-#define     INPUT_VEL_MID               50               
-#define     INPUT_VEL_HIGH              80
-// #define     HIGH_INPUT_VEL              92
+#define     INPUT_VEL_MID               40               
+#define     INPUT_VEL_HIGH              70
 
-#define     INPUT_VEL_REGEN             30
+#define     INPUT_VEL_REGEN             30 // defines vel setpoint to fall to during regen
 
 // ODRIVE VEL RAMP RATES
-#define     VEL_RAMP_RATE_SLOW          3.0f
-#define     VEL_RAMP_RATE_FAST          20.0f   
-#define     VEL_RAMP_RATE_REGEN         3.0f    // Ramp rate to be used during regen 
+#define     VEL_RAMP_RATE_SLOW          1.0f
+#define     VEL_RAMP_RATE_FAST          .5f   
+#define     VEL_RAMP_RATE_REGEN         .5f    // Ramp rate to be used during regen 
 
 
 // ODRIVE WAIT TIMES 
-#define     WAIT_TIME_LOW               7000 // ms 10000
-#define     WAIT_TIME_MID               7000 // ms 10000
-#define     WAIT_TIME_HIGH              7000 // ms 10000
+#define     WAIT_TIME_LOW               20000 // ms 10000
+#define     WAIT_TIME_MID               20000// ms 10000
+#define     WAIT_TIME_HIGH              38000// ms 10000
 
-#define     REGEN_TIME                  12000 // ms 20000
-#define     SPINDOWN_TIME               20000 // ms 20000
+#define     REGEN_TIME                  20000 // ms 20000
+#define     SPINDOWN_TIME               60000 // ms 20000
+#define     MOTOR_OT_THRESHOLD          1023 // TODO adjust 
 
 // #define     SHUTOFF_RPM                 6000
 // #define     MAX_ALLOWABLE_RPM           150
@@ -83,15 +85,19 @@ uint32_t timeOne;
 
 uint8_t pointer_RPM = 0; 
 
-// const int   pot_pin         = A1;
 const int   button_pin      = 53; 
 // const int   interruptPin    = 2;
-const int   encoder_A_pin   = 3; // https://docs.revrobotics.com/sparkmax/feature-description/encoder-port
+const int   encoder_A_pin   = 2; // https://docs.revrobotics.com/sparkmax/feature-description/encoder-port
 const int   current_sense_pin = A0; // Todo fix.
+const int   motor_temp_pin    = A1; 
+const int   red_led_pin       = 51; 
+const int   green_led_pin     = 49; 
 
 
 // uint16_t  pot_value[POT_FILTER_SZ]     = { 0 }; 
 // uint16_t  filtered_pot_value = 0; 
+
+float     motor_temp    = 0; 
 uint16_t  button_value  = 0; 
 
 uint8_t fault_flag      = 0; 
@@ -103,7 +109,7 @@ uint8_t fault_flag      = 0;
 // bool      first_time_pot  = true; 
 
 uint8_t   pointer = 0; 
-float     angularVelocity;
+float     odrv_rpm;
 
 bool      odrv_spindown_first_time = true; 
 bool      odrv_first_time = true; 
@@ -113,7 +119,7 @@ float regen_current = 0.0f;
 float odrv_vbus     = 0.0f; 
 
 uint32_t serial_time      = 0; 
-uint32_t power_on_time    = 0; 
+uint32_t odrv_poll_time   = 0; 
 
 // PI Controller 
 
@@ -195,17 +201,18 @@ void button_check(){
     if (system_state == RUN && odrive_state == IDLE_){ // TODO: perform RTD checks with RTD LED 
       // kick odrive into startup 
       odrive_state = STARTUP; 
-      power_on_time = millis(); 
     } 
-    // SHUTDOWN 
-    else {
-      if (millis() - power_on_time > 3000){ // TODO better resolution? is this safe? assumes that motor will spin for at least 3 seconds before shutoff
-        system_state = STOP; 
-        fault_flag &= 0b00000010; 
-      }
+  } 
+  else {
+    // throw system into SHUTDOWN if it isn't already at rest 
+    if (odrive_state != IDLE_ ){
+      system_state = STOP; 
+      fault_flag &= 0b00000010; 
     }
   }
 }
+
+
 
 // whenever rotations hits 7 we completed another rotation 
 void estimate_RPM_DIY_encoder(){
@@ -304,21 +311,30 @@ void leading_edge_crossed() {
 // //  Serial.print("PWM value: "); Serial.print(PWM_duty_cycle); Serial.println(); 
 // }
 
+
+///* polls odrive estimate of RPM */
+//void odrv_poll_RPM(){
+//  
+//  
+//}
+
 /* This defines the entire serial interface for the controller */
 void serial_output(){
-  if (millis() - serial_time > 500){
+  if (millis() - serial_time > 50){ // 20 Hz rn kinda works up to 250 Hz 
     serial_time = millis(); 
     // Serial.print("RPM_filtered: "); Serial.print(RPM_filtered); Serial.println(); 
     Serial.print("odrive_state: "); Serial.print(odrive_state); Serial.println(); 
     Serial.print("system_state: "); Serial.print(system_state); Serial.println();   
     Serial.print("startup_state: "); Serial.print(startup_state); Serial.println(); 
+    Serial.print("regen current: "); Serial.println(regen_current); 
+    Serial.print("motor_temp: "); Serial.println(motor_temp); 
+    Serial.print("odrv_rpm: "); Serial.println(odrv_rpm); 
 
     if (odrv_vbus != 0.0){
       Serial.print("odrv online, vbus: "); Serial.print(odrv_vbus); Serial.println(); 
     } else {
       Serial.println("odrv offline."); 
     }
-  //  print_IMU(); 
     if (odrv_err.system_err + odrv_err.axis + odrv_err.motor + odrv_err.encoder + odrv_err.controller == 0){
       Serial.println("No odrv err");  
     } else {
@@ -339,24 +355,22 @@ void serial_output(){
 //      Serial.println("ESTOP FAULT"); 
 //    }
     }
-    
+    //  print_IMU();     
     Serial.println(); 
+
   }
 }
 
-void fault_check(){
-  // TODO: test
-  odrv_poll_errors(); 
-  button_check(); 
-  
-  // if (RPM_filtered>SHUTOFF_RPM){
-  //   system_state = STOP; 
-  //   fault_flag &= 0b00000001; 
-  // }
-//  perform overtemp checks 
-
+/* visualize state with LED*/
+void state_leds(){
+  if (system_state == RUN){
+    digitalWrite(red_led_pin, LOW); 
+    digitalWrite(green_led_pin, HIGH); 
+  } else {
+    digitalWrite(red_led_pin, HIGH); 
+    digitalWrite(green_led_pin, LOW); 
+  }
 }
-
 
 /* config for MPU 6050 on GY 57 breakout board */
 void config_IMU(){
@@ -411,24 +425,11 @@ void poll_IMU(){
   
 }
 
-void read_motor_temp(); 
-
-void read_thermistors(); 
-
-void sense(){
-  odrv_poll_aux(); 
-//  poll_IMU(); 
-//
-////  read temperatures
-//  read_motor_temp(); 
-//  read_thermistors(); 
-//
-//// read current from current sensor
-//  sense_current(); 
+void read_motor_temp(){
+  motor_temp = ((float) analogRead(motor_temp_pin)) * .00488; 
 }
 
-
-
+void read_thermistors(); 
 
 /* read current from ACHS 7124 current sensor */
 void sense_current(){
@@ -437,10 +438,32 @@ void sense_current(){
 
 /* poll auxillary sensor data like vbus, ibus */
 void odrv_poll_aux(){
-  odrive_serial << "r vbus_voltage \n";
+  // poll at 5 Hz 
   
-  odrv_vbus = odrive.readFloat(); 
+//    poll rpm and vbus 
+
+    odrive_serial << "r vbus_voltage \n";
+    odrv_vbus = odrive.readFloat(); 
+
+    odrive_serial << "r axis1.encoder.vel_estimate \n";
+    odrv_rpm = odrive.readFloat() * 60.0; // odrv estimate is in rps, not rpm 
 }
+
+void sense(){
+  if (millis() - odrv_poll_time > 200){
+    read_motor_temp(); 
+    odrv_poll_aux(); 
+    sense_current(); 
+//  read_thermistors(); 
+
+    odrv_poll_time = millis(); 
+  }
+  
+//  read at 1KHz
+//  poll_IMU(); 
+//}
+}
+
 
 /* how long does this operation take? */
 void odrv_poll_errors(){
@@ -570,6 +593,29 @@ void odrv_spindown(){
 }
 
 
+void fault_check(){
+  // TODO: test
+  odrv_poll_errors(); 
+  button_check(); 
+  
+  // if (RPM_filtered>SHUTOFF_RPM){
+  //   system_state = STOP; 
+  //   fault_flag &= 0b00000001; 
+  // }
+//  perform overtemp checks 
+
+  if (motor_temp > MOTOR_OT_THRESHOLD){
+    Serial.println("TEMP FAULT"); 
+    fault_flag &= 0b00000100; // TODO: note temp fault ig 
+    system_state = STOP; 
+  }
+//  check odrive fault 
+  if (odrv_err.system_err + odrv_err.axis + odrv_err.motor + odrv_err.encoder + odrv_err.controller != 0){
+    system_state = STOP; 
+//    odrive has entered fault state
+  }
+
+}
 
 void fault_handle(){
 
@@ -587,35 +633,38 @@ void fault_handle(){
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(115200);
+  Serial.begin(230400);
   // ESC.attach(9, 1000, 2000); // PWM signal on pin 9, min pulse width & max pulse width 
   pinMode(button_pin, INPUT); 
   // pinMode(interruptPin, INPUT);
-  // attachInterrupt(digitalPinToInterrupt(interruptPin), leading_edge_crossed, FALLING);
+  pinMode(red_led_pin, OUTPUT); 
+  pinMode(green_led_pin, OUTPUT); 
+//  attachInterrupt(digitalPinToInterrupt(interruptPin), leading_edge_crossed, FALLING);
   timeOne = millis();  
   IMU_time = millis(); 
   serial_time = millis(); 
-
+  odrv_poll_time = millis(); 
   // config_IMU(); 
 
-  // pinMode(encoder_A_pin, INPUT_PULLUP);    
-  // attachInterrupt(digitalPinToInterrupt(encoder_A_pin), leading_edge_crossed, RISING);
+//   pinMode(encoder_A_pin, INPUT_PULLUP);    
+//   attachInterrupt(digitalPinToInterrupt(encoder_A_pin), leading_edge_crossed, RISING);
 
 
   // odrive setup 
   odrive_serial.begin(115200); 
-  while(!odrive_serial); 
-
+  while(!odrive_serial);
 }
+
+
 
 
 void loop() {
 
   fault_check(); 
-//  estimate_RPM_DIY_encoder(); 
-
+////  estimate_RPM_DIY_encoder(); 
+//
    sense(); // for sensing suite 
-
+//
   switch (system_state)
   {
   case RUN:
@@ -625,7 +674,7 @@ void loop() {
     fault_handle(); 
     break;
   }
-
+//
   switch(odrive_state){
 
     case FAULT: // TODO remove this? 
@@ -655,4 +704,5 @@ void loop() {
 
   }
  serial_output(); 
+ state_leds(); 
 }

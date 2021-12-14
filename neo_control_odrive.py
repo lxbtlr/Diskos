@@ -39,8 +39,8 @@ if __name__ == "__main__":
     # solomon magic: 
     odrv0.axis1.controller.config.vel_limit = 10000
     odrv0.axis1.controller.current_lim = 60
-    odrv0.axis1.controller.config.vel_integrator_gain = 0 # play with this 
-    odrv0.axis1.controller.config.vel_gain = .05 # play with this too
+    odrv0.axis1.controller.config.vel_integrator_gain = 0 # play with this .4
+    odrv0.axis1.controller.config.vel_gain = .05 # play with this too .1
     odrv0.axis1.controller.config.setpoints_in_cpr = True
     odrv0.axis1.controller.config.control_mode = CONTROL_MODE_VELOCITY_CONTROL
     
