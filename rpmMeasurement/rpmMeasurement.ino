@@ -64,7 +64,7 @@ template<>        inline Print& operator <<(Print &obj, float arg) { obj.print(a
 
 #define     REGEN_TIME                  20000 // ms 20000
 #define     SPINDOWN_TIME               60000 // ms 20000
-#define     MOTOR_OT_THRESHOLD          1023 // TODO adjust 
+#define     MOTOR_OT_THRESHOLD          80 // TODO adjust 
 
 // #define     SHUTOFF_RPM                 6000
 // #define     MAX_ALLOWABLE_RPM           150
@@ -112,11 +112,13 @@ uint8_t fault_flag      = 0;
 uint8_t   pointer = 0; 
 float     odrv_rpm;
 
+bool      debug = false; 
 bool      odrv_spindown_first_time = true; 
 bool      odrv_first_time = true; 
 uint32_t  odrv_time = 0; 
 
 float regen_current = 0.0f; 
+float input_current = 0.0f; 
 float odrv_vbus     = 0.0f; 
 
 uint32_t serial_time      = 0; 
@@ -321,7 +323,7 @@ void leading_edge_crossed() {
 
 /* This defines the entire serial interface for the controller */
 void serial_output(){
-  if (millis() - serial_time > 50){ // 20 Hz rn kinda works up to 250 Hz 
+  if (millis() - serial_time > 10){ // 100 Hz rn kinda works up to 250 Hz 
     serial_time = millis(); 
     // Serial.print("RPM_filtered: "); Serial.print(RPM_filtered); Serial.println(); 
 //    Serial.print("odrive_state: "); 
@@ -389,6 +391,9 @@ void state_leds(){
     digitalWrite(red_led_pin, HIGH); 
     digitalWrite(green_led_pin, LOW); 
   }
+  if (debug){
+    Serial.println("leds"); 
+  }
 }
 
 /* config for MPU 6050 on GY 57 breakout board */
@@ -419,7 +424,7 @@ void print_IMU(){
 
 /* poll IMU */
 void poll_IMU(){
-  if (IMU_time - millis() > 1){
+  if (IMU_time - millis() > 10){
     IMU_time = millis(); 
     Wire.beginTransmission(MPU_ADDR);
     Wire.write(0x3B); // starting with register 0x3B (ACCEL_XOUT_H) [MPU-6000 and MPU-6050 Register Map and Descriptions Revision 4.2, p.40]
@@ -473,8 +478,11 @@ void sense(){
   }
   
 //  read at 1KHz
-  poll_IMU(); 
+//  poll_IMU(); 
 //}
+  if (debug){
+    Serial.println("sense"); 
+  }
 }
 
 
@@ -512,6 +520,9 @@ void odrv_set_vel_ramp_rate(float vel_ramp_rate){
 
 /* async code to get to INPUT_VEL_HIGH */
 void odrv_startup(){
+  if (debug){
+    Serial.println("startup"); 
+  }
   switch(startup_state){
 
     case STOPPED: 
@@ -607,6 +618,7 @@ void odrv_spindown(){
 
 
 void fault_check(){
+  
   // TODO: test
   odrv_poll_errors(); 
   button_check(); 
@@ -627,7 +639,9 @@ void fault_check(){
     system_state = STOP; 
 //    odrive has entered fault state
   }
-
+  if (debug){
+    Serial.println("faultcheck"); 
+  }
 }
 
 void fault_handle(){
@@ -646,7 +660,7 @@ void fault_handle(){
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(230400);
+  Serial.begin(115200);
   // ESC.attach(9, 1000, 2000); // PWM signal on pin 9, min pulse width & max pulse width 
   pinMode(button_pin, INPUT); 
   // pinMode(interruptPin, INPUT);
@@ -687,6 +701,9 @@ void loop() {
     fault_handle(); 
     break;
   }
+  if (debug){
+    Serial.println("system state machine"); 
+  }
 //
   switch(odrive_state){
 
@@ -715,6 +732,9 @@ void loop() {
       odrv_spindown(); 
       break; 
 
+  }
+  if (debug){
+    Serial.println("odrive state machine"); 
   }
   serial_output(); 
   state_leds(); 
