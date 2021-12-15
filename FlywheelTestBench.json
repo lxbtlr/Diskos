@@ -1,0 +1,310 @@
+{
+    "frameEnd": "",
+    "frameStart": "",
+    "groups": [
+        {
+            "datasets": [
+                {
+                    "alarm": 1,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": false,
+                    "led": true,
+                    "log": false,
+                    "max": 1,
+                    "min": 0,
+                    "title": "Odrive State",
+                    "units": "State",
+                    "value": "%1",
+                    "widget": ""
+                },
+                {
+                    "alarm": 1,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": false,
+                    "led": true,
+                    "log": false,
+                    "max": 1,
+                    "min": 0,
+                    "title": "System State -- May need to adjust in arduino to be binary states",
+                    "units": "State",
+                    "value": "%2",
+                    "widget": ""
+                },
+                {
+                    "alarm": 0,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": false,
+                    "led": true,
+                    "log": false,
+                    "max": 0,
+                    "min": 0,
+                    "title": "Startup State",
+                    "units": "State",
+                    "value": "%3",
+                    "widget": ""
+                }
+            ],
+            "title": "States",
+            "widget": ""
+        },
+        {
+            "datasets": [
+                {
+                    "alarm": 30,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": true,
+                    "led": false,
+                    "log": true,
+                    "max": 30,
+                    "min": 0,
+                    "title": "Accelerometer X",
+                    "units": "m/s²",
+                    "value": "%14",
+                    "widget": "x"
+                },
+                {
+                    "alarm": 30,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": true,
+                    "led": false,
+                    "log": true,
+                    "max": 30,
+                    "min": 0,
+                    "title": "Accelerometer Y",
+                    "units": "m/s²",
+                    "value": "%15",
+                    "widget": "y"
+                },
+                {
+                    "alarm": 30,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": true,
+                    "led": false,
+                    "log": true,
+                    "max": 30,
+                    "min": 0,
+                    "title": "Accelerometer Z",
+                    "units": "m/s²",
+                    "value": "%16",
+                    "widget": "z"
+                }
+            ],
+            "title": "Bearing Block IMU",
+            "widget": "accelerometer"
+        },
+        {
+            "datasets": [
+                {
+                    "alarm": 60,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": true,
+                    "led": false,
+                    "log": false,
+                    "max": 360,
+                    "min": 0,
+                    "title": "Gyro Roll",
+                    "units": "°",
+                    "value": "%17",
+                    "widget": "roll"
+                },
+                {
+                    "alarm": 60,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": true,
+                    "led": false,
+                    "log": false,
+                    "max": 360,
+                    "min": 0,
+                    "title": "Gyro Pitch",
+                    "units": "°",
+                    "value": "%18",
+                    "widget": "pitch"
+                },
+                {
+                    "alarm": 60,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": true,
+                    "led": false,
+                    "log": false,
+                    "max": 360,
+                    "min": 0,
+                    "title": "Gyro Yaw",
+                    "units": "°",
+                    "value": "%19",
+                    "widget": "yaw"
+                }
+            ],
+            "title": "Gyroscope",
+            "widget": "gyro"
+        },
+        {
+            "datasets": [
+                {
+                    "alarm": 0,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": false,
+                    "led": true,
+                    "log": false,
+                    "max": 0,
+                    "min": 0,
+                    "title": "System Error",
+                    "units": "",
+                    "value": "%8",
+                    "widget": ""
+                },
+                {
+                    "alarm": 0,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": false,
+                    "led": true,
+                    "log": false,
+                    "max": 0,
+                    "min": 0,
+                    "title": "System Axis",
+                    "units": "",
+                    "value": "%9",
+                    "widget": ""
+                },
+                {
+                    "alarm": 0,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": false,
+                    "led": true,
+                    "log": false,
+                    "max": 0,
+                    "min": 0,
+                    "title": "Motor Error",
+                    "units": "",
+                    "value": "%10",
+                    "widget": ""
+                },
+                {
+                    "alarm": 0,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": false,
+                    "led": true,
+                    "log": false,
+                    "max": 0,
+                    "min": 0,
+                    "title": "Encoder Error",
+                    "units": "",
+                    "value": "%12",
+                    "widget": ""
+                },
+                {
+                    "alarm": 0,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": false,
+                    "led": true,
+                    "log": false,
+                    "max": 0,
+                    "min": 0,
+                    "title": "Controller Error",
+                    "units": "",
+                    "value": "%13",
+                    "widget": ""
+                },
+                {
+                    "alarm": 0,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": false,
+                    "led": false,
+                    "log": false,
+                    "max": 0,
+                    "min": 0,
+                    "title": "New dataset",
+                    "units": "",
+                    "value": "%11",
+                    "widget": ""
+                }
+            ],
+            "title": "Error",
+            "widget": ""
+        },
+        {
+            "datasets": [
+                {
+                    "alarm": 20,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": true,
+                    "led": false,
+                    "log": false,
+                    "max": 30,
+                    "min": 0,
+                    "title": "Vbus",
+                    "units": "Volts",
+                    "value": "%7",
+                    "widget": "bar"
+                },
+                {
+                    "alarm": 10,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": true,
+                    "led": false,
+                    "log": false,
+                    "max": 15,
+                    "min": 0,
+                    "title": "Regen Current",
+                    "units": "Amps",
+                    "value": "%4",
+                    "widget": "bar"
+                }
+            ],
+            "title": "Electrical Metrics",
+            "widget": "multiplot"
+        },
+        {
+            "datasets": [
+                {
+                    "alarm": 1023,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": true,
+                    "led": false,
+                    "log": false,
+                    "max": 1023,
+                    "min": 0,
+                    "title": "Motor Temperature",
+                    "units": "",
+                    "value": "%5",
+                    "widget": "gauge"
+                },
+                {
+                    "alarm": 5800,
+                    "fft": false,
+                    "fftSamples": 1,
+                    "graph": false,
+                    "led": false,
+                    "log": false,
+                    "max": 5800,
+                    "min": 0,
+                    "title": "Motor RPM",
+                    "units": "RPM",
+                    "value": "%6",
+                    "widget": "gauge"
+                }
+            ],
+            "title": "Other metrics",
+            "widget": ""
+        }
+    ],
+    "separator": ":",
+    "title": "Flywheel"
+}
