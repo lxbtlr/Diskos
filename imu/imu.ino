@@ -71,5 +71,5 @@ void loop() {
   Serial.println();
   
   // delay
-  delay(1);
+  delay(100);
 }

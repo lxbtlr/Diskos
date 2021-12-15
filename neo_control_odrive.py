@@ -1,10 +1,12 @@
 import odrive
 from odrive.enums import AXIS_STATE_CLOSED_LOOP_CONTROL, AXIS_STATE_FULL_CALIBRATION_SEQUENCE, CONTROL_MODE_VELOCITY_CONTROL, MOTOR_TYPE_HIGH_CURRENT
+import time 
 
 NEO_KV = 473
 
 
-if __name__ == "__main__": 
+
+def setup_test(): 
     odrv0 = odrive.find_any()
     # current limit cmd
     odrv0.axis1.motor.config.current_lim = 10
@@ -124,3 +126,29 @@ setup arduino mega UART connection
 
 
 """
+
+
+if __name__ == "__main__": 
+
+    start = time.time()
+    odrv0 = odrive.find_any()
+    print(odrv0)
+
+    vel = 5
+    odrv0.axis1.controller.input_vel = 5
+    odrv0.axis1.controller.config.vel_ramp_rate = .5 # what is this for flywheel? 
+
+
+
+    while (True): 
+        if time.time() - start>30:
+            start = time.time()
+
+            if odrv0.axis1.controller.input_vel > 5500/60:  
+                odrv0.axis1.controller.input_vel = 0 
+                break 
+            
+            odrv0.axis1.controller.input_vel += vel 
+            print('vel: ', odrv0.axis1.controller.input_vel)
+
+    print('done')
