@@ -32,6 +32,9 @@ clear errors function
 reset AXIS_STATE_CLOSED_LOOP 
 fix odrive timeout when not connected. 
 
+odrv_poll_aux
+odrv_poll_err
+
 */
 #include <Servo.h>
 #include "Wire.h" // This library allows you to communicate with I2C devices.
@@ -47,9 +50,9 @@ template<>        inline Print& operator <<(Print &obj, float arg) { obj.print(a
 // ODRIVE VELs
 #define     INPUT_VEL_LOW               20               
 #define     INPUT_VEL_MID               40               
-#define     INPUT_VEL_HIGH              70
+#define     INPUT_VEL_HIGH              93
 
-#define     INPUT_VEL_REGEN             30 // defines vel setpoint to fall to during regen
+#define     INPUT_VEL_REGEN             45 // defines vel setpoint to fall to during regen
 
 // ODRIVE VEL RAMP RATES
 #define     VEL_RAMP_RATE_SLOW          1.0f
@@ -58,11 +61,11 @@ template<>        inline Print& operator <<(Print &obj, float arg) { obj.print(a
 
 
 // ODRIVE WAIT TIMES 
-#define     WAIT_TIME_LOW               20000 // ms 10000
-#define     WAIT_TIME_MID               20000// ms 10000
-#define     WAIT_TIME_HIGH              38000// ms 10000
+#define     WAIT_TIME_LOW               30000 // ms 10000
+#define     WAIT_TIME_MID               30000 // ms 10000
+#define     WAIT_TIME_HIGH              80000 // ms 10000
 
-#define     REGEN_TIME                  20000 // ms 20000
+#define     REGEN_TIME                  60000 // ms 20000
 #define     SPINDOWN_TIME               60000 // ms 20000
 #define     MOTOR_OT_THRESHOLD          80    // Deg C 
 
@@ -72,7 +75,7 @@ template<>        inline Print& operator <<(Print &obj, float arg) { obj.print(a
 
 #define     POT_FILTER_SZ               10  // size for moving avg filter for pot & RPM 
 #define     POT_POLL_RATE               10  // Hz
-#define     FILTER_SZ                   3 
+#define     FILTER_SZ                   20
 
 
 const int MPU_ADDR = 0x68; // I2C address of the MPU-6050. If AD0 pin is set to HIGH, the I2C address will be 0x69.
@@ -84,6 +87,7 @@ float input_current_filtered    = 0;
 float power_in                  = 0; 
 uint32_t timeOne;
 
+uint32_t start_time = 0; 
 uint8_t pointer_RPM = 0; 
 
 // const int   interruptPin    = 2;
@@ -330,6 +334,10 @@ void leading_edge_crossed() {
 
 /* This defines the entire serial interface for the controller */
 void serial_output(){
+  if (millis() - start_time > 30000){
+    Serial.println(";"); 
+    start_time = millis(); 
+  }
   if (millis() - serial_time > 50){ // 20 Hz rn kinda works up to 250 Hz 
     serial_time = millis(); 
     // Serial.print("RPM_filtered: "); Serial.print(RPM_filtered); Serial.println(); 
@@ -377,16 +385,16 @@ void serial_output(){
 //    }
 //    }
 //    print_IMU();     
-    Serial.print((accelerometer_x)); Serial.print(":"); 
-    Serial.print((accelerometer_y)); Serial.print(":"); 
-    Serial.print((accelerometer_z)); Serial.print(":");  
-    Serial.print((gyro_x)); Serial.print(":"); 
-    Serial.print((gyro_y)); Serial.print(":"); 
-    Serial.print((gyro_z)); Serial.print(":"); 
+//    Serial.print((accelerometer_x)); Serial.print(":"); 
+//    Serial.print((accelerometer_y)); Serial.print(":"); 
+//    Serial.print((accelerometer_z)); Serial.print(":");  
+//    Serial.print((gyro_x)); Serial.print(":"); 
+//    Serial.print((gyro_y)); Serial.print(":"); 
+//    Serial.print((gyro_z)); Serial.print(":"); 
 
-    Serial.print(input_current_filtered); Serial.print(":"); 
+    Serial.print(input_current_filtered); Serial.print(","); 
     Serial.print(power_in); Serial.print(":"); 
-    
+//    
     Serial.print("*/"); 
 
     Serial.println(); 
@@ -477,7 +485,7 @@ void sense_current(){
     input_current_filtered /= FILTER_SZ;
 
     // calculate power output
-    power_in = input_current_filtered * odrv_vbus; 
+    power_in = input_current_filtered * 20; //  
 }
 
 /* poll auxillary sensor data like vbus, ibus */
@@ -715,6 +723,7 @@ void setup() {
   // odrive setup 
   odrive_serial.begin(115200); 
   while(!odrive_serial);
+  start_time = millis(); 
 }
 
 
